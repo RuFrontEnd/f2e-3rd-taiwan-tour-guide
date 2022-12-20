@@ -17,5 +17,3 @@
 ## Remark
 
 Design by [Stephanie Chang](https://www.linkedin.com/in/chixuanchang/)
-
-Taiwan photo by <a href="https://unsplash.com/@jcs_chen?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">JCS Chen</a> on <a href="https://www.linkedin.com/in/chixuanchang/">Unsplash</a>
