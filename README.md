@@ -16,5 +16,6 @@
 
 ## Remark
 
-Design by [Stephanie Chang](https://www.linkedin.com/in/chixuanchang/)\n
+Design by [Stephanie Chang](https://www.linkedin.com/in/chixuanchang/)
+
 Design Guide [Figma](https://www.figma.com/file/LG7ZiO3cjQwI93G14d2BWH/2021-F2E?node-id=0%3A1&t=ybLi7lyvLq0Dduyl-0)
