@@ -14,6 +14,14 @@
 |- 首頁 /home
 ```
 
+## Tech Stack
+
+- REACT v18.2.0
+
+- Typescript v4.9.4
+
+- Bootstrap v5.2.3
+
 ## Remark
 
 Design by [Stephanie Chang](https://www.linkedin.com/in/chixuanchang/)
