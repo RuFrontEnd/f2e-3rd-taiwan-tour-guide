@@ -1,10 +1,17 @@
-/* The following block can be included in a custom.scss */
-
-/* make the customizations */
-$theme-colors: (
-    "info": tomato,
-    "danger": teal,
-);
+/* customize bootstrap style*/
 
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
+
+// container padding
+@mixin make-container($padding-x: $container-padding-x, $multiple: 0.833333335) {
+    width: 100%;
+    padding-right: $padding-x * $multiple;
+    padding-left: $padding-x * $multiple;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container {
+    @include make-container();
+}

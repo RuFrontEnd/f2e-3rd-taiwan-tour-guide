@@ -1,12 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import constants from "constants/";
 import "./App.scss";
-import "./custom.scss";
+import Home from "pages/home/";
 
 const browserRouter = [
   {
     path: "/",
-    element: <div>home</div>,
+    element: <Home />,
   },
   {
     path: "/list",
