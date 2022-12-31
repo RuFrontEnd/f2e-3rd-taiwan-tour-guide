@@ -152,6 +152,36 @@ $utilities: map-merge(
     )
 );
 
+// // color
+$project-colors: (
+    tint: #fff1ca,
+    light: #ffdc7b,
+    default: #f8aa4b,
+    dark: #d9a318,
+    a11y: #854b05,
+    black-core: #000000,
+    black-900: #2d2d2d,
+    black-800: #4b4b4b,
+    black-700: #6f6f6f,
+    black-600: #909090,
+    black-500: #cccccc,
+    black-400: #ececec,
+    black-300: #f2f2f2,
+    black-200: #f6f6f6,
+    black-100: #f9f9f9,
+    white: #ffffff,
+);
+
+$utilities: map-merge(
+    $utilities,
+    (
+        "color": (
+            property: color,
+            values: $project-colors,
+        ),
+    )
+);
+
 // 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
 @import "~bootstrap/scss/utilities/api";
 
