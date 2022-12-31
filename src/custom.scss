@@ -23,8 +23,14 @@
 
 // 6. Optionally include any other parts as needed
 @import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/containers";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/helpers";
 
-// container padding
+// container padding ---
 @mixin make-container($padding-x: $container-padding-x, $multiple: 0.833333335) {
     width: 100%;
     padding-right: $padding-x * $multiple;
@@ -37,34 +43,114 @@
     @include make-container();
 }
 
-// font size
+// font size ---
+$font-size-base: 1rem;
+
+$line-height-base: 1.25;
+$line-height-sm: 1;
+$line-height-lg: 1.4;
+
+$h1-font-size: $font-size-base * 2.5; // 40
+$h2-font-size: $font-size-base * 2; // 32
+$h3-font-size: $font-size-base * 1.75; // 28
+$h4-font-size: $font-size-base * 1.5; // 24
+$h5-font-size: $font-size-base * 1.25; // 20
+$h6-font-size: $font-size-base * 1.125; // 18
+$t-font-size: $font-size-base; // 16
+$st-font-size: $font-size-base * 0.875; // 14
+$bd1-font-size: $font-size-base; // 16
+$bd2-font-size: $font-size-base * 0.875; // 14
+$cp1-font-size: $font-size-base * 0.75; // 12
+$cp2-font-size: $font-size-base * 0.75; // 12
+
+$font-sizes: (
+    1: $h1-font-size,
+    2: $h2-font-size,
+    3: $h3-font-size,
+    4: $h4-font-size,
+    5: $h5-font-size,
+    6: $h6-font-size,
+    t: $t-font-size,
+    st: $st-font-size,
+    bd1: $bd1-font-size,
+    bd2: $bd1-font-size,
+    cp1: $cp1-font-size,
+    cp2: $cp2-font-size,
+);
+
+$utilities: (
+    "font-size": (
+        rfs: true,
+        property: font-size,
+        class: fs,
+        values: $font-sizes,
+    ),
+);
+
+$font-family-noto-sans: "Noto Sans";
+
+$font: (
+    1: $font-weight-bold
+        (
+            $h1-font-size,
+        ) / $line-height-base $font-family-noto-sans,
+    2: $font-weight-bold
+        (
+            $h2-font-size,
+        ) / $line-height-base $font-family-noto-sans,
+    3: $font-weight-bold
+        (
+            $h3-font-size,
+        ) / $line-height-base $font-family-noto-sans,
+    4: $font-weight-bold
+        (
+            $h4-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    5: $font-weight-bold
+        (
+            $h5-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    6: $font-weight-bold
+        (
+            $h6-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    t: $font-weight-bold
+        (
+            $t-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    st: $font-weight-bold
+        (
+            $st-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    bd1: $font-weight-normal
+        (
+            $bd1-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    bd2: $font-weight-normal
+        (
+            $bd2-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    cp1: $font-weight-bold
+        (
+            $cp1-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    cp2: $font-weight-normal
+        (
+            $cp2-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+);
 
 $utilities: map-merge(
     $utilities,
     (
-        "font-size":
-            map-merge(
-                map-get($utilities, "font-size"),
-                (
-                    values:
-                        map-merge(
-                            map-get(map-get($utilities, "font-size"), "values"),
-                            (
-                                1: 100px,
-                            )
-                        ),
-                )
-            ),
+        "font": (
+            property: font,
+            class: f,
+            responsive: true,
+            values: $font,
+        ),
     )
 );
-
-@import "bootstrap/scss/utilities/api"; // revise utilities
-@import "~bootstrap/scss/reboot";
-@import "~bootstrap/scss/type";
-@import "~bootstrap/scss/images";
-@import "~bootstrap/scss/containers";
-@import "~bootstrap/scss/grid";
-@import "~bootstrap/scss/helpers";
 
 // 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
 @import "~bootstrap/scss/utilities/api";

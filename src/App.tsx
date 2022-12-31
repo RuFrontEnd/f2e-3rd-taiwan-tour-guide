@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import constants from "constants/";
 import "./App.scss";
+import Guide from "pages/guide/";
 import Home from "pages/home/";
 
 const browserRouter = [
@@ -16,8 +17,8 @@ const browserRouter = [
 
 if (window.location.hostname === constants.url.LOCALHOST) {
   browserRouter.push({
-    path: "/component",
-    element: <div>component</div>,
+    path: "/guide",
+    element: <Guide />,
   });
 } // 建立單獨 component 使用
 

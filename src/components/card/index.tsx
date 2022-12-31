@@ -9,18 +9,36 @@ import { ReactComponent as Clock } from "assets/icon/clock.svg";
 const Card = (props: Types.Props) => {
   return (
     <>
-    <div className="fs-1 w-10 opacity-40">123</div>
       <div className="card" style={{ width: "18rem" }}>
         <img src="..." className="card-img-top" alt="..." />
         <div className="card-body">
-          <h5 className="card-title">Card title</h5>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          <a href="#" className="btn btn-primary">
-            Go somewhere
-          </a>
+          <h5 className="card-title fw-bold mb-2 fs-4">{props?.title}</h5>
+          <div className="fw-normal mb-2">
+            <div className="row">
+              <div className="col">
+                <div className="d-flex align-items-center">
+                  <Location className="me-2" />
+                  連江縣莒光鄉福正村56號之1
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <div className="d-flex align-items-center">
+                  <Telephone className="me-2" />
+                  08-9672026
+                </div>
+              </div>
+              <div className="col">
+                <div className="d-flex align-items-center">
+                  <Clock className="me-2" />
+                  全天
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="card-text ">{props?.text}</p>
+
         </div>
       </div>
     </>
