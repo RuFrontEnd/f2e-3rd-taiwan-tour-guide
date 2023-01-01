@@ -1,82 +1,41 @@
-// import CardRef from "react-bootstrap/Card";
 import Types from "./type.d";
-import Styles from "./styles.module.scss";
-// import { Container, Row, Col } from "react-bootstrap";
 import { ReactComponent as Location } from "assets/icon/location.svg";
 import { ReactComponent as Telephone } from "assets/icon/telephone.svg";
 import { ReactComponent as Clock } from "assets/icon/clock.svg";
 
 const Card = (props: Types.Props) => {
   return (
-    <>
-      <div className="card" style={{ width: "18rem" }}>
-        <img src="..." className="card-img-top" alt="..." />
-        <div className="card-body">
-          <h5 className="card-title fw-bold mb-2 fs-4">{props?.title}</h5>
-          <div className="fw-normal mb-2">
-            <div className="row">
-              <div className="col">
-                <div className="d-flex align-items-center">
-                  <Location className="me-2" />
-                  連江縣莒光鄉福正村56號之1
-                </div>
+    <div className="card">
+      <img src="..." className="card-img-top" alt="..." />
+      <div className="card-body px-2 py-3">
+        <h6 className="card-title fw-bold mb-2 f-6">{props?.title}</h6>
+        <div className="fw-normal mb-2">
+          <div className="row mb-1">
+            <div className="col">
+              <div className="d-flex align-items-center f-cp2 text-black-700">
+                <Location className="me-2" />
+                連江縣莒光鄉福正村56號之1
               </div>
             </div>
-            <div className="row">
-              <div className="col">
-                <div className="d-flex align-items-center">
+          </div>
+          <div className="row">
+            <div className="col">
+              <div className="d-flex">
+                <div className="d-flex align-items-center f-cp2 text-black-700 me-4">
                   <Telephone className="me-2" />
                   08-9672026
                 </div>
-              </div>
-              <div className="col">
-                <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center f-cp2 text-black-700">
                   <Clock className="me-2" />
                   全天
                 </div>
               </div>
             </div>
           </div>
-          <p className="card-text ">{props?.text}</p>
-
         </div>
+        <p className="card-text f-bd2">{props?.text}</p>
       </div>
-    </>
-    // <CardRef>
-    //   <div className="fs-1 w-10 opacity-40">123</div>
-    //   {props?.src && <CardRef.Img variant="top" src={props?.src} />}
-    //   <CardRef.Body>
-    //     <CardRef.Title className="fw-bold mb-2 fs-5" title={props?.title}>
-    //       {props?.title}
-    //     </CardRef.Title>
-    //     {/* TODO: 地址 / 聯絡方式 / 開放時段 待製作 */}
-    //     <div className="fw-normal mb-2">
-    //       <Row>
-    //         <Col>
-    //           <div className="d-flex align-items-center">
-    //             <Location className="me-2" />
-    //             連江縣莒光鄉福正村56號之1
-    //           </div>
-    //         </Col>
-    //       </Row>
-    //       <Row>
-    //         <Col>
-    //           <div className="d-flex align-items-center">
-    //             <Telephone className="me-2" />
-    //             08-9672026
-    //           </div>
-    //         </Col>
-    //         <Col>
-    //           <div className="d-flex align-items-center">
-    //             <Clock className="me-2" />
-    //             全天
-    //           </div>
-    //         </Col>
-    //       </Row>
-    //     </div>
-    //     <CardRef.Text className="fw-normal">{props?.text}</CardRef.Text>
-    //   </CardRef.Body>
-    // </CardRef>
+    </div>
   );
 };
 
