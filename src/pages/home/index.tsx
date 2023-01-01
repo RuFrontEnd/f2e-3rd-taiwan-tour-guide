@@ -7,8 +7,8 @@ const keys = [1, 2, 3];
 const Home = () => {
   return (
     <div className="container">
-      <div className="row">
-        <div className="col">
+      <div className="row g-4">
+        <div className="col-md-4 col-sm-6">
           <Card
             src={lighthouse}
             title={"東莒島燈塔(東犬燈塔)"}
@@ -17,7 +17,7 @@ const Home = () => {
             }
           />
         </div>
-        <div className="col">
+        <div className="col-md-4 col-sm-6">
           <Card
             src={lighthouse}
             title={"東莒島燈塔(東犬燈塔)"}
@@ -26,7 +26,7 @@ const Home = () => {
             }
           />
         </div>
-        <div className="col">
+        <div className="col-md-4 col-sm-6">
           <Card
             src={lighthouse}
             title={"東莒島燈塔(東犬燈塔)"}
