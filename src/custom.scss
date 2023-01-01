@@ -1,18 +1,386 @@
+/* customize bootstrap style*/
+
+/* import bootstrap to set changes */
+@import "~bootstrap/scss/bootstrap";
+
+// Custom.scss
+// Option B: Include parts of Bootstrap
+
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
-@import "../node_modules/bootstrap/scss/functions";
+@import "~bootstrap/scss/functions";
 
 // 2. Include any default variable overrides here
 
 // 3. Include remainder of required Bootstrap stylesheets
-@import "../node_modules/bootstrap/scss/variables";
-@import "../node_modules/bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
 
-// 4. Include any optional Bootstrap components as you like
-@import "../node_modules/bootstrap/scss/root";
-@import "../node_modules/bootstrap/scss/reboot";
-@import "../node_modules/bootstrap/scss/type";
-@import "../node_modules/bootstrap/scss/images";
-@import "../node_modules/bootstrap/scss/containers";
-@import "../node_modules/bootstrap/scss/grid";
+// 4. Include any default map overrides here
 
-// 5. Add additional custom code here
+// 5. Include remainder of required parts
+@import "~bootstrap/scss/maps";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/root";
+
+// 6. Optionally include any other parts as needed
+@import "~bootstrap/scss/utilities";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/containers";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/helpers";
+
+// container padding ---
+@mixin make-container($padding-x: $container-padding-x, $multiple: 0.833333335) {
+    width: 100%;
+    padding-right: $padding-x * $multiple;
+    padding-left: $padding-x * $multiple;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.container {
+    @include make-container();
+}
+
+// font size ---
+$font-size-base: 1rem;
+
+$line-height-base: 1.25;
+$line-height-sm: 1;
+$line-height-lg: 1.4;
+
+$h1-font-size: $font-size-base * 2.5; // 40
+$h2-font-size: $font-size-base * 2; // 32
+$h3-font-size: $font-size-base * 1.75; // 28
+$h4-font-size: $font-size-base * 1.5; // 24
+$h5-font-size: $font-size-base * 1.25; // 20
+$h6-font-size: $font-size-base * 1.125; // 18
+$t-font-size: $font-size-base; // 16
+$st-font-size: $font-size-base * 0.875; // 14
+$bd1-font-size: $font-size-base; // 16
+$bd2-font-size: $font-size-base * 0.875; // 14
+$cp1-font-size: $font-size-base * 0.75; // 12
+$cp2-font-size: $font-size-base * 0.75; // 12
+
+$font-sizes: (
+    1: $h1-font-size,
+    2: $h2-font-size,
+    3: $h3-font-size,
+    4: $h4-font-size,
+    5: $h5-font-size,
+    6: $h6-font-size,
+    t: $t-font-size,
+    st: $st-font-size,
+    bd1: $bd1-font-size,
+    bd2: $bd1-font-size,
+    cp1: $cp1-font-size,
+    cp2: $cp2-font-size,
+);
+
+$utilities: (
+    "font-size": (
+        rfs: true,
+        property: font-size,
+        class: fs,
+        values: $font-sizes,
+    ),
+);
+
+$font-family-noto-sans: "Noto Sans";
+
+$font: (
+    1: $font-weight-bold
+        (
+            $h1-font-size,
+        ) / $line-height-base $font-family-noto-sans,
+    2: $font-weight-bold
+        (
+            $h2-font-size,
+        ) / $line-height-base $font-family-noto-sans,
+    3: $font-weight-bold
+        (
+            $h3-font-size,
+        ) / $line-height-base $font-family-noto-sans,
+    4: $font-weight-bold
+        (
+            $h4-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    5: $font-weight-bold
+        (
+            $h5-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    6: $font-weight-bold
+        (
+            $h6-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    t: $font-weight-bold
+        (
+            $t-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    st: $font-weight-bold
+        (
+            $st-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    bd1: $font-weight-normal
+        (
+            $bd1-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    bd2: $font-weight-normal
+        (
+            $bd2-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    cp1: $font-weight-bold
+        (
+            $cp1-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+    cp2: $font-weight-normal
+        (
+            $cp2-font-size,
+        ) / $line-height-lg $font-family-noto-sans,
+);
+
+$utilities: map-merge(
+    $utilities,
+    (
+        "font": (
+            property: font,
+            class: f,
+            responsive: true,
+            values: $font,
+        ),
+    )
+);
+
+// color
+$project-colors: (
+    tint: #fff1ca,
+    light: #ffdc7b,
+    default: #f8aa4b,
+    dark: #d9a318,
+    a11y: #854b05,
+    black-core: #000000,
+    black-900: #2d2d2d,
+    black-800: #4b4b4b,
+    black-700: #6f6f6f,
+    black-600: #909090,
+    black-500: #cccccc,
+    black-400: #ececec,
+    black-300: #f2f2f2,
+    black-200: #f6f6f6,
+    black-100: #f9f9f9,
+    white: #ffffff,
+);
+
+$utilities: map-merge(
+    $utilities,
+    (
+        "color": (
+            property: color,
+            class: "text",
+            values: $project-colors,
+        ),
+    )
+);
+
+// spacing
+$spacer: 1rem;
+$spacers: (
+    0: 0,
+    1: $spacer * 0.25,
+    2: $spacer * 0.5,
+    3: $spacer * 0.75,
+    4: $spacer * 1,
+    6: $spacer * 1.25,
+);
+
+$utilities: map-merge(
+    $utilities,
+    (
+        "margin": (
+            responsive: true,
+            property: margin,
+            class: m,
+            values:
+                map-merge(
+                    $spacers,
+                    (
+                        auto: auto,
+                    )
+                ),
+        ),
+        "margin-x": (
+            responsive: true,
+            property: margin-right margin-left,
+            class: mx,
+            values:
+                map-merge(
+                    $spacers,
+                    (
+                        auto: auto,
+                    )
+                ),
+        ),
+        "margin-y": (
+            responsive: true,
+            property: margin-top margin-bottom,
+            class: my,
+            values:
+                map-merge(
+                    $spacers,
+                    (
+                        auto: auto,
+                    )
+                ),
+        ),
+        "margin-top": (
+            responsive: true,
+            property: margin-top,
+            class: mt,
+            values:
+                map-merge(
+                    $spacers,
+                    (
+                        auto: auto,
+                    )
+                ),
+        ),
+        "margin-end": (
+            responsive: true,
+            property: margin-right,
+            class: me,
+            values:
+                map-merge(
+                    $spacers,
+                    (
+                        auto: auto,
+                    )
+                ),
+        ),
+        "margin-bottom": (
+            responsive: true,
+            property: margin-bottom,
+            class: mb,
+            values:
+                map-merge(
+                    $spacers,
+                    (
+                        auto: auto,
+                    )
+                ),
+        ),
+        "margin-start": (
+            responsive: true,
+            property: margin-left,
+            class: ms,
+            values:
+                map-merge(
+                    $spacers,
+                    (
+                        auto: auto,
+                    )
+                ),
+        ),
+        // Negative margin utilities
+        "negative-margin":
+            (
+                responsive: true,
+                property: margin,
+                class: m,
+                values: $negative-spacers,
+            ),
+        "negative-margin-x": (
+            responsive: true,
+            property: margin-right margin-left,
+            class: mx,
+            values: $negative-spacers,
+        ),
+        "negative-margin-y": (
+            responsive: true,
+            property: margin-top margin-bottom,
+            class: my,
+            values: $negative-spacers,
+        ),
+        "negative-margin-top": (
+            responsive: true,
+            property: margin-top,
+            class: mt,
+            values: $negative-spacers,
+        ),
+        "negative-margin-end": (
+            responsive: true,
+            property: margin-right,
+            class: me,
+            values: $negative-spacers,
+        ),
+        "negative-margin-bottom": (
+            responsive: true,
+            property: margin-bottom,
+            class: mb,
+            values: $negative-spacers,
+        ),
+        "negative-margin-start": (
+            responsive: true,
+            property: margin-left,
+            class: ms,
+            values: $negative-spacers,
+        ),
+        // Padding utilities
+        "padding":
+            (
+                responsive: true,
+                property: padding,
+                class: p,
+                values: $spacers,
+            ),
+        "padding-x": (
+            responsive: true,
+            property: padding-right padding-left,
+            class: px,
+            values: $spacers,
+        ),
+        "padding-y": (
+            responsive: true,
+            property: padding-top padding-bottom,
+            class: py,
+            values: $spacers,
+        ),
+        "padding-top": (
+            responsive: true,
+            property: padding-top,
+            class: pt,
+            values: $spacers,
+        ),
+        "padding-end": (
+            responsive: true,
+            property: padding-right,
+            class: pe,
+            values: $spacers,
+        ),
+        "padding-bottom": (
+            responsive: true,
+            property: padding-bottom,
+            class: pb,
+            values: $spacers,
+        ),
+        "padding-start": (
+            responsive: true,
+            property: padding-left,
+            class: ps,
+            values: $spacers,
+        ),
+        // Gap utility
+        "gap":
+            (
+                responsive: true,
+                property: gap,
+                class: gap,
+                values: $spacers,
+            ),
+    )
+);
+
+// 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "~bootstrap/scss/utilities/api";
+
+// 8. Add additional custom code here

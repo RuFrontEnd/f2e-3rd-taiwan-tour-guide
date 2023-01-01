@@ -1,20 +1,28 @@
-import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import logo from "./logo.svg";
-import "./App.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "./custom.scss";
+import constants from "constants/";
+import "./App.scss";
+import Guide from "pages/guide/";
+import Home from "pages/home/";
 
-const router = createBrowserRouter([
+const browserRouter = [
   {
     path: "/",
-    element: <div>home</div>,
+    element: <Home />,
   },
   {
     path: "/list",
     element: <div>list</div>,
   },
-]);
+];
+
+if (window.location.hostname === constants.url.LOCALHOST) {
+  browserRouter.push({
+    path: "/guide",
+    element: <Guide />,
+  });
+} // 建立單獨 component 使用
+
+const router = createBrowserRouter(browserRouter);
 
 function App() {
   return <RouterProvider router={router} />;
