@@ -1,12 +1,37 @@
-// import { Container, Row, Col } from "react-bootstrap";
 import Card from "components/card";
 import lighthouse from "assets/fake/lighthouse.png";
+import useGetProducts from "hooks/useGetProducts";
+import { useEffect, useState } from "react";
 
 const keys = [1, 2, 3];
 
 const Home = () => {
+  const [getProductParam, setGetProductParam] = useState({
+    skip: 0,
+    limit: 5,
+  });
+  const product = useGetProducts(getProductParam);
+
+  useEffect(() => {
+    // TODO: 測試 infinite scroll 用
+    console.log("getProductParam", getProductParam);
+  }, [getProductParam]);
+
   return (
     <div className="container">
+      <button
+        onClick={() => {
+          // TODO: 測試 infinite scroll 用
+          setGetProductParam({
+            skip: 5,
+            limit: 10,
+          });
+
+          product.setLoading(true);
+        }}
+      >
+        click me
+      </button>
       <div className="row g-4">
         <div className="col-md-4 col-sm-6">
           <Card
