@@ -1,3 +1,4 @@
-const LOCALHOST = "localhost";
+const LOCALHOST = "localhost",
+  GETPRODUCTS = "https://dummyjson.com/products";
 
-export { LOCALHOST };
+export { LOCALHOST, GETPRODUCTS };

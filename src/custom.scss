@@ -27,6 +27,19 @@
 @import "~bootstrap/scss/type";
 @import "~bootstrap/scss/images";
 @import "~bootstrap/scss/containers";
+
+// grid gutter
+$grid-gutter-width: 5rem !default;
+$gutters: (
+    0: 0,
+    1: $spacer * 0.25,
+    2: $spacer * 0.5,
+    3: $spacer * 0.75,
+    4: $spacer * 1,
+    5: $spacer * 1.25,
+    6: $spacer * 1.5,
+);
+
 @import "~bootstrap/scss/grid";
 @import "~bootstrap/scss/helpers";
 
@@ -379,7 +392,6 @@ $utilities: map-merge(
             ),
     )
 );
-
 // 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
 @import "~bootstrap/scss/utilities/api";
 
