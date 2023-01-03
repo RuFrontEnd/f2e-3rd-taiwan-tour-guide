@@ -8,7 +8,7 @@ const keys = [1, 2, 3];
 const Home = () => {
   const [getProductParam, setGetProductParam] = useState({
     skip: 0,
-    limit: 5,
+    limit: 10,
   });
   const product = useGetProducts(getProductParam);
 
@@ -32,34 +32,19 @@ const Home = () => {
       >
         click me
       </button>
-      <div className="row g-4">
-        <div className="col-md-4 col-sm-6">
-          <Card
-            src={lighthouse}
-            title={"東莒島燈塔(東犬燈塔)"}
-            text={
-              "碧海藍天下走過百年歲月的潔白燈塔 東莒島燈塔，又名「東犬燈塔」，位在東莒島的東北方，清朝因鴉片戰..."
-            }
-          />
-        </div>
-        <div className="col-md-4 col-sm-6">
-          <Card
-            src={lighthouse}
-            title={"東莒島燈塔(東犬燈塔)"}
-            text={
-              "碧海藍天下走過百年歲月的潔白燈塔 東莒島燈塔，又名「東犬燈塔」，位在東莒島的東北方，清朝因鴉片戰..."
-            }
-          />
-        </div>
-        <div className="col-md-4 col-sm-6">
-          <Card
-            src={lighthouse}
-            title={"東莒島燈塔(東犬燈塔)"}
-            text={
-              "碧海藍天下走過百年歲月的潔白燈塔 東莒島燈塔，又名「東犬燈塔」，位在東莒島的東北方，清朝因鴉片戰..."
-            }
-          />
-        </div>
+      <div className="row gx-4">
+        {product.photos.map((photo) => (
+          <div className="col-md-4 col-sm-6">
+            <Card
+              className="mb-4"
+              src={lighthouse}
+              title={"東莒島燈塔(東犬燈塔)"}
+              text={
+                "碧海藍天下走過百年歲月的潔白燈塔 東莒島燈塔，又名「東犬燈塔」，位在東莒島的東北方，清朝因鴉片戰..."
+              }
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
