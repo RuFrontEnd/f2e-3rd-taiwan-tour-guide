@@ -196,6 +196,17 @@ $utilities: map-merge(
     )
 );
 
+$utilities: map-merge(
+    $utilities,
+    (
+        "background-color": (
+            property: background-color,
+            class: bg,
+            values: $project-colors,
+        ),
+    )
+);
+
 // spacing
 $spacer: 1rem;
 $spacers: (
