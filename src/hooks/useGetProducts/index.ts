@@ -18,10 +18,8 @@ const useGetProducts = (props?: Types.Props) => {
         },
       })
       .then((res) => {
-        // TODO: 測試 infinite scroll 用
-        console.log("res", res);
         setLoading(false);
-        // TODO: 之後要 set response 進 photos state
+        setPhotos(res.data.products);
       });
   }, [loading]);
 
