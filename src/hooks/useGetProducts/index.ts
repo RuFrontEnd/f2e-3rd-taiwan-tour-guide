@@ -9,11 +9,6 @@ const useGetProducts = (props?: Types.Props) => {
     [photos, setPhotos] = useState([]);
 
   useEffect(() => {
-     // TODO: 觀察 infinite scroll 用
-    console.log("props", props);
-  }, [props?.limit]);
-
-  useEffect(() => {
     if (!loading) return;
     axios
       .get(constants.url.GETPRODUCTS, {
@@ -23,12 +18,8 @@ const useGetProducts = (props?: Types.Props) => {
         },
       })
       .then((res) => {
-        // TODO: 測試 infinite scroll 用
-        console.log("res", res);
-        console.log("props", props);
         setLoading(false);
         setPhotos(res.data.products);
-        // TODO: 之後要 set response 進 photos state
       });
   }, [loading]);
 

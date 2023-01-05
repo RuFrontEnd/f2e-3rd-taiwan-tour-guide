@@ -3,67 +3,58 @@ import lighthouse from "assets/fake/lighthouse.png";
 import useGetProducts from "hooks/useGetProducts";
 import { useEffect, useState } from "react";
 
-const keys = [1, 2, 3];
-
 const Home = () => {
   const [getProductParam, setGetProductParam] = useState({
       skip: 0,
       limit: 10,
     }),
     [targetIndex, setTargetIndex] = useState(6);
+
   const product = useGetProducts(getProductParam);
 
-  useEffect(() => {
-    let options = {
-      root: document,
-      rootMargin: "0px",
-      threshold: 1.0,
-    };
+  const observerOptions = {
+    root: document,
+    rootMargin: "0px",
+    threshold: 1.0,
+  };
 
-    let observer = new IntersectionObserver((observe) => {
-      // TODO: 觀察 infinite scroll 用
-      console.log("observe", observe[0].isIntersecting);
+  let observer = new IntersectionObserver((observe) => {
+    const inView = observe[0].isIntersecting;
 
-      const inView = observe[0].isIntersecting;
+    if (inView) {
+      setGetProductParam((getProductParam) => ({
+        skip: getProductParam.skip,
+        limit: getProductParam.limit + 10,
+      }));
 
-      if (inView) {
-        // TODO: 觀察 infinite scroll 用
-        console.log("AAA");
-        setGetProductParam((getProductParam) => ({
-          skip: getProductParam.skip,
-          limit: getProductParam.limit + 10,
-        }));
-        product.setLoading(true);
-        setTargetIndex((targetIndex) => targetIndex + 10);
+      product.setLoading(true);
+
+      setTargetIndex((targetIndex) => targetIndex + 10);
+
+      const target = document.getElementById(`loadMoreTarget${targetIndex}`);
+
+      if (target) {
+        observer.unobserve(target);
       }
-    }, options);
+    }
+  }, observerOptions);
 
+  useEffect(() => {
     const target = document.getElementById(`loadMoreTarget${targetIndex}`);
 
     if (target) {
       observer.observe(target);
     }
-  }, [product.photos]);
 
-  // useEffect(() => {
-  //   product.setLoading(true);
-  // }, [getProductParam]);
+    return () => {
+      if (target) {
+        observer.unobserve(target);
+      }
+    };
+  }, [product.photos]);
 
   return (
     <div className="container">
-      {/* <button
-        onClick={() => {
-          // TODO: 測試 infinite scroll 用
-          setGetProductParam({
-            skip: 5,
-            limit: 10,
-          });
-
-          product.setLoading(true);
-        }}
-      >
-        click me
-      </button> */}
       <div className="row gx-4">
         {product.photos.map((photo, photoIndex) => (
           <div className="col-md-4 col-sm-6">
@@ -80,9 +71,7 @@ const Home = () => {
                 <small
                   id={`loadMoreTarget${targetIndex}`}
                   className="position-absolute top-0 start-0"
-                >
-                  123
-                </small>
+                />
               )}
             </div>
           </div>
