@@ -15,19 +15,21 @@ const Home = () => {
 
   return (
     <header className="bg-light">
-      <div className="container">
+      <div className="container-lg">
         <div className="row">
-          <div className="col">
-            <div className="d-flex justify-content-center align-items-center">
-              <img src={travelingByTrain} className="mb-sm-2 w-100"></img>
+          <div className="col-12 col-sm-6 g-0">
+            <div className="d-flex justify-content-center align-items-center pt-6 px-8 pb-2 pt-sm-0 px-sm-0 pb-sm-0">
+              <img src={travelingByTrain} className="w-100 mh-540px object-fit-contain"></img>
             </div>
           </div>
 
-          <div className="col">
-            <div className="h-100 d-flex justify-content-center align-items-center">
-              <div>
-                <h1 className="f-sm-1 f-3 text-a11y mb-0">台灣景點</h1>
-                <h1 className="f-sm-1 f-3 text-a11y mb-0 text-end">一手掌握</h1>
+          <div className="col-12 col-sm-6 g-0">
+            <div className="h-100 d-flex justify-content-center align-items-center pb-4 pb-sm-0">
+              <div className="d-flex flex-sm-column">
+                <h1 className="f-3 f-md-1 text-a11y mb-0 me-2 me-sm-0 pe-sm-22 pe-md-30">
+                  台灣景點
+                </h1>
+                <h1 className="f-3 f-md-1 text-a11y mb-0 text-end">一手掌握</h1>
               </div>
             </div>
           </div>
