@@ -1,4 +1,4 @@
-import travelingByTrain from "picture/png/traveling-by-train.png";
+import travelingByTrain from "assets/picture/traveling-by-train.png";
 
 const Header = () => {
   return (
