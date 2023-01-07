@@ -1,18 +1,6 @@
-import Card from "components/card";
-import lighthouse from "assets/fake/lighthouse.png";
-import travelingByTrain from "assets/png/traveling-by-train.png";
-import useGetProducts from "hooks/useGetProducts";
-import { useEffect, useState } from "react";
+import travelingByTrain from "picture/png/traveling-by-train.png";
 
-const keys = [1, 2, 3];
-
-const Home = () => {
-  const [getProductParam, setGetProductParam] = useState({
-    skip: 0,
-    limit: 5,
-  });
-  const product = useGetProducts(getProductParam);
-
+const Header = () => {
   return (
     <header className="bg-light">
       <div className="container-fluid container-lg">
@@ -39,4 +27,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Header;
