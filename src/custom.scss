@@ -91,13 +91,16 @@ $font-sizes: (
     cp2: $cp2-font-size,
 );
 
-$utilities: (
-    "font-size": (
-        rfs: true,
-        property: font-size,
-        class: fs,
-        values: $font-sizes,
-    ),
+$utilities: map-merge(
+    $utilities,
+    (
+        "font-size": (
+            rfs: true,
+            property: font-size,
+            class: fs,
+            values: $font-sizes,
+        ),
+    )
 );
 
 $font-family-noto-sans: "Noto Sans";
@@ -214,13 +217,16 @@ $spacers: (
     1: $spacer * 0.25,
     2: $spacer * 0.5,
     3: $spacer * 0.75,
+    3_5: $spacer * 0.875,
     4: $spacer * 1,
+    4_5: $spacer * 1.125,
     5: $spacer * 1.25,
     6: $spacer * 1.5,
     7: $spacer * 1.75,
     8: $spacer * 2,
     9: $spacer * 2.25,
     10: $spacer * 2.5,
+    10_5: $spacer * 2.625,
     11: $spacer * 2.75,
     12: $spacer * 3,
     13: $spacer * 3.25,
@@ -230,6 +236,10 @@ $spacers: (
     22: $spacer * 5.5,
     26: $spacer * 6.5,
     30: $spacer * 7.5,
+    50: $spacer * 10,
+    0p: 0%,
+    50p: 50%,
+    100p: 100%,
 );
 
 $utilities: map-merge(
@@ -511,6 +521,52 @@ $utilities: map-merge(
     )
 );
 
+// border
+$utilities: map-merge(
+    $utilities,
+    (
+        "border-color": (
+            responsive: true,
+            property: border-color,
+            class: bd-color,
+            values: $project-colors,
+        ),
+        "border-style": (
+            responsive: true,
+            property: border-style,
+            class: bd-style,
+            values: (
+                solid: solid,
+            ),
+        ),
+    )
+);
+
+// position
+
+$utilities: map-merge(
+    $utilities,
+    (
+        "top": (
+            property: top,
+            values: $spacers,
+        ),
+        "bottom": (
+            property: bottom,
+            values: $spacers,
+        ),
+        "start": (
+            property: left,
+            class: start,
+            values: $spacers,
+        ),
+        "end": (
+            property: right,
+            class: end,
+            values: $spacers,
+        ),
+    )
+);
 // 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
 @import "~bootstrap/scss/utilities/api";
 

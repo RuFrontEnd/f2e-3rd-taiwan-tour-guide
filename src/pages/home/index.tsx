@@ -2,6 +2,7 @@ import Card from "components/card";
 import lighthouse from "assets/fake/lighthouse.png";
 import useGetProducts from "hooks/useGetProducts";
 import Header from "./header";
+import SearchInput from "components/searchInput";
 import { useEffect, useState } from "react";
 
 const Home = () => {
@@ -9,7 +10,8 @@ const Home = () => {
       skip: 0,
       limit: 10,
     }),
-    [targetIndex, setTargetIndex] = useState(6);
+    [targetIndex, setTargetIndex] = useState(6),
+    [keyword, setKeyword] = useState("");
 
   const product = useGetProducts(getProductParam);
 
@@ -57,6 +59,9 @@ const Home = () => {
   return (
     <>
       <Header />
+      <div className="py-4">
+        <SearchInput value={keyword} placeholder={"試試看 台北古蹟"} />
+      </div>
       <div className="container">
         <div className="row gx-4">
           {product.photos.map((photo, photoIndex) => (
