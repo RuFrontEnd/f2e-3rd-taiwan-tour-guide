@@ -1,10 +1,8 @@
 /* customize bootstrap style*/
 
-/* import bootstrap to set changes */
-@import "~bootstrap/scss/bootstrap";
-
-// Custom.scss
-// Option B: Include parts of Bootstrap
+input:focus {
+    outline: none;
+}
 
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "~bootstrap/scss/functions";
