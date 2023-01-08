@@ -543,7 +543,6 @@ $utilities: map-merge(
 );
 
 // position
-
 $utilities: map-merge(
     $utilities,
     (
@@ -567,6 +566,27 @@ $utilities: map-merge(
         ),
     )
 );
+
+$zIndex: (
+    base: 1,
+    10: 10,
+    100: 100,
+    1000: 1000,
+    10000: 10000,
+);
+
+// z-index
+$utilities: map-merge(
+    $utilities,
+    (
+        "z-index": (
+            property: z-index,
+            className: z-index,
+            values: $zIndex,
+        ),
+    )
+);
+
 // 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
 @import "~bootstrap/scss/utilities/api";
 
