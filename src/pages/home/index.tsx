@@ -59,7 +59,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      <div className="py-4 px-12">
+      <div className="container py-4 px-12">
         <SearchInput value={keyword} placeholder={"試試看 台北古蹟"} />
       </div>
       <div className="container">

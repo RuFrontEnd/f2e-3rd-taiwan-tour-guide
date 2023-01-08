@@ -1,3 +1,4 @@
+@use "sass:map";
 /* customize bootstrap style*/
 
 input:focus {
@@ -519,6 +520,21 @@ $utilities: map-merge(
     )
 );
 
+$border: (
+    null: var(--#{$prefix}border-width) var(--#{$prefix}border-style) map-get($project-colors, "black-core"),
+    0: 0,
+    1: 1px var(--#{$prefix}border-style) map-get($project-colors, "black-core"),
+);
+
+$border-radius: (
+    0: 0px,
+    1: 1px,
+    2: 2px,
+    3: 3px,
+    4: 4px,
+    5: 5px,
+);
+
 // border
 $utilities: map-merge(
     $utilities,
@@ -526,7 +542,7 @@ $utilities: map-merge(
         "border-color": (
             responsive: true,
             property: border-color,
-            class: bd-color,
+            class: border-color,
             values: $project-colors,
         ),
         "border-style": (
@@ -536,6 +552,53 @@ $utilities: map-merge(
             values: (
                 solid: solid,
             ),
+        ),
+        "border": (
+            property: border,
+            values: $border,
+        ),
+        "border-top": (
+            property: border-top,
+            values: $border,
+        ),
+        "border-end": (
+            property: border-right,
+            class: border-end,
+            values: $border,
+        ),
+        "border-bottom": (
+            property: border-bottom,
+            values: $border,
+        ),
+        "border-start": (
+            property: border-left,
+            class: border-start,
+            values: $border,
+        ),
+        "border-radius": (
+            property: border-radius,
+            class: border-radius,
+            values: $border-radius,
+        ),
+        "border-top-left-radius": (
+            property: border-top-left-radius,
+            class: border-top-left-radius,
+            values: $border-radius,
+        ),
+        "border-top-right-radius": (
+            property: border-top-right-radius,
+            class: border-top-right-radius,
+            values: $border-radius,
+        ),
+        "border-bottom-left-radius": (
+            property: border-bottom-left-radius,
+            class: border-bottom-left-radius,
+            values: $border-radius,
+        ),
+        "border-bottom-right-radius": (
+            property: border-bottom-right-radius,
+            class: border-bottom-right-radius,
+            values: $border-radius,
         ),
     )
 );
