@@ -60,7 +60,7 @@ const Home = () => {
     <>
       <Header />
       <div className="container py-4 px-12">
-        <SearchInput value={keyword} placeholder={"試試看 台北古蹟"} />
+        <SearchInput value={keyword} placeholder={"想去哪？"} type={"filter"} />
       </div>
       <div className="container">
         <div className="row gx-4">

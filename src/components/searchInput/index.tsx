@@ -1,7 +1,9 @@
 import Types from "./type";
+import Divider from "components/divider/";
 import { useState, useRef, useEffect, MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { ReactComponent as Magnifier } from "assets/icon/magnifier.svg";
+import { ReactComponent as Sieve } from "assets/icon/sieve.svg";
 
 const hotKeywords = [
   "台南文化",
@@ -21,12 +23,14 @@ const variants = {
 };
 
 const hotKeyWordsDropdownVariants = {
-  open: { opacity: 1, y: "-10px" },
+  open: { opacity: 1, y: "-14px" },
   closed: { opacity: 0, y: "0px" },
 };
 
 const SearchInput = (props: Types.Props) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const filterType = props.type === "filter";
 
   const closeDropdown = () => {
     setDropdownVisible(false);
@@ -63,13 +67,22 @@ const SearchInput = (props: Types.Props) => {
       />
 
       <motion.input
-        className="border-1 border-color-black-core py-3_5 ps-10_5 pe-4_5"
+        className={`border-1 border-color-black-core py-3 ps-10_5 pe-4_5 ${
+          filterType && "pe-10_5"
+        }`}
         placeholder={props?.placeholder}
         value={props.value}
         animate={dropdownVisible ? "open" : "closed"}
         variants={variants}
         transition={{ duration: 0.15 }}
       />
+
+      {filterType && (
+        <div className="position-absolute top-50p end-4_5 translate-middle-y border-start-1 border-color-black-500 ps-2">
+          <Sieve width={18} height={18} className={""} />
+        </div>
+      )}
+
       <motion.div
         className="position-absolute top-15 z-index-10 w-100 border-top-0 border-1 border-bottom-left-radius-5 border-bottom-right-radius-5 bg-white px-4 py-3 pt-0"
         role={"search-input-dropdown"}
@@ -77,14 +90,14 @@ const SearchInput = (props: Types.Props) => {
         variants={hotKeyWordsDropdownVariants}
         transition={{ duration: 0.15 }}
       >
-        <div className="border-bottom " />
+        <Divider />
         <caption className="f-cp1 d-block p-0 pt-3">熱門關鍵字</caption>
         <ul>
           {hotKeywords.map((hotKeyword, hotKeywordIndex) => (
             <>
               <li className="pt-3 f-bd1">{hotKeyword}</li>
               {hotKeywordIndex !== hotKeywords.length - 1 && (
-                <div className="pt-3 border-bottom border-color-black-500" />
+                <Divider className="mt-3" color={"#cccccc"} />
               )}
             </>
           ))}
