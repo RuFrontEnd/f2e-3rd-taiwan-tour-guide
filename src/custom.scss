@@ -535,6 +535,15 @@ $border-radius: (
     5: 5px,
 );
 
+$border-width: (
+    0: 0px,
+    1: 1px,
+    2: 2px,
+    3: 3px,
+    4: 4px,
+    5: 5px,
+);
+
 // border
 $utilities: map-merge(
     $utilities,
@@ -548,7 +557,7 @@ $utilities: map-merge(
         "border-style": (
             responsive: true,
             property: border-style,
-            class: bd-style,
+            class: border-style,
             values: (
                 solid: solid,
             ),
@@ -599,6 +608,16 @@ $utilities: map-merge(
             property: border-bottom-right-radius,
             class: border-bottom-right-radius,
             values: $border-radius,
+        ),
+        "border-width": (
+            property: border-width,
+            class: border-width,
+            values: $border-width,
+        ),
+        "border-bottom-width": (
+            property: border-bottom-width,
+            class: border-bottom-width,
+            values: $border-width,
         ),
     )
 );
