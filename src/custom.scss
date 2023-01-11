@@ -236,6 +236,9 @@ $spacers: (
     26: $spacer * 6.5,
     30: $spacer * 7.5,
     50: $spacer * 10,
+);
+
+$percentage: (
     0p: 0%,
     50p: 50%,
     100p: 100%,
@@ -426,7 +429,6 @@ $utilities: map-merge(
             ),
     )
 );
-
 // sizing
 $utilities: map-merge(
     $utilities,
@@ -434,13 +436,13 @@ $utilities: map-merge(
         "width": (
             property: width,
             class: w,
-            values: (
-                25: 25%,
-                50: 50%,
-                75: 75%,
-                100: 100%,
-                auto: auto,
-            ),
+            values:
+                map-merge(
+                    map-merge($spacers, $percentage),
+                    (
+                        auto: auto,
+                    )
+                ),
         ),
         "max-width": (
             property: max-width,
@@ -466,13 +468,13 @@ $utilities: map-merge(
         "height": (
             property: height,
             class: h,
-            values: (
-                25: 25%,
-                50: 50%,
-                75: 75%,
-                100: 100%,
-                auto: auto,
-            ),
+            values:
+                map-merge(
+                    map-merge($spacers, $percentage),
+                    (
+                        auto: auto,
+                    )
+                ),
         ),
         "max-height": (
             property: max-height,
@@ -628,21 +630,21 @@ $utilities: map-merge(
     (
         "top": (
             property: top,
-            values: $spacers,
+            values: map-merge($spacers, $percentage),
         ),
         "bottom": (
             property: bottom,
-            values: $spacers,
+            values: map-merge($spacers, $percentage),
         ),
         "start": (
             property: left,
             class: start,
-            values: $spacers,
+            values: map-merge($spacers, $percentage),
         ),
         "end": (
             property: right,
             class: end,
-            values: $spacers,
+            values: map-merge($spacers, $percentage),
         ),
     )
 );
@@ -663,6 +665,17 @@ $utilities: map-merge(
             property: z-index,
             className: z-index,
             values: $zIndex,
+        ),
+    )
+);
+
+// cursor
+$utilities: map-merge(
+    $utilities,
+    (
+        "cursor": (
+            property: cursor,
+            values: pointer,
         ),
     )
 );
