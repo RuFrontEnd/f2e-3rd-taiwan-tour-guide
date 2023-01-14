@@ -1,4 +1,5 @@
-import Types from "types/components/";
+import type * as Types from "types/components/";
+import type * as AccordionTypes from "types/components/accordion/";
 import Divider from "components/divider/";
 import Checkbox from "components/checkbox/";
 import Accordion from "components/accordion/";
@@ -6,7 +7,6 @@ import { useState, useRef, useEffect, MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { ReactComponent as Magnifier } from "assets/icon/magnifier.svg";
 import { ReactComponent as Sieve } from "assets/icon/sieve.svg";
-import { ReactComponent as Arrow } from "assets/icon/arrow.svg";
 
 const hotKeywords = [
     "台南文化",
@@ -14,13 +14,6 @@ const hotKeywords = [
     "台東自然風景",
     "屏東國家風景區",
     "新竹遊憩",
-  ],
-  areas = [
-    { title: "北部", counties: ["台北市", "新北市"] },
-    { title: "中部", counties: ["台北市", "新北市"] },
-    { title: "南部", counties: ["台北市", "新北市"] },
-    { title: "東部", counties: ["台北市", "新北市"] },
-    { title: "離島", counties: ["台北市", "新北市"] },
   ],
   classifications = ["文化", "生態", "自然風景", "國家風景區"];
 
@@ -160,13 +153,13 @@ const SearchInput = (props: Types.SearchInput.Props) => {
           >
             <caption className="f-cp1 d-block p-0 pt-3">縣市</caption>
             <ul>
-              {areas.map((area, areaIndex) => (
+              {props.accordion.areas.map((area: Types.SearchInput.Area) => (
                 <li>
                   <Accordion
                     title={area.title}
-                    options={area.counties}
-                    collapse={false}
-                    onClick={props.onClickAccordion}
+                    options={area.options}
+                    collapse={area.title === props.accordion.opened}
+                    onClick={props.accordion.onClick}
                   />
                 </li>
               ))}

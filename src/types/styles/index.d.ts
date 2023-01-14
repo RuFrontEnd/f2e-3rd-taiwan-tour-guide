@@ -1,3 +1,5 @@
-import type * as ClassName from "./className";
+type ClassName = {
+  className?: string;
+};
 
-export { ClassName };
+export type { ClassName };

@@ -13,6 +13,20 @@ const Home = () => {
     [targetIndex, setTargetIndex] = useState(6),
     [keyword, setKeyword] = useState("");
 
+  const accordion = {
+    opened: null,
+    areas: [
+      { title: "北部", options: ["台北市", "新北市"] },
+      { title: "中部", options: ["台北市", "新北市"] },
+      { title: "南部", options: ["台北市", "新北市"] },
+      { title: "東部", options: ["台北市", "新北市"] },
+      { title: "離島", options: ["台北市", "新北市"] },
+    ],
+    onClick: () => {
+      console.log("click accordion");
+    },
+  };
+
   const product = useGetProducts(getProductParam);
 
   const observerOptions = {
@@ -60,7 +74,12 @@ const Home = () => {
     <>
       <Header />
       <div className="container py-4 px-12">
-        <SearchInput value={keyword} placeholder={"想去哪？"} type={"filter"} />
+        <SearchInput
+          value={keyword}
+          placeholder={"想去哪？"}
+          type={"filter"}
+          accordion={accordion}
+        />
       </div>
       <div className="container">
         <div className="row gx-4">

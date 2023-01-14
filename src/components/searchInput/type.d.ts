@@ -1,4 +1,4 @@
-import StyleTypes from "types/styles/className";
+import StyleTypes from "types/styles/abz";
 
 type Props = {
   placeholder?: string;
