@@ -1,6 +1,7 @@
-import Types from "./type";
+import Types from "types/components/";
 import Divider from "components/divider/";
 import Checkbox from "components/checkbox/";
+import Accordion from "components/accordion/";
 import { useState, useRef, useEffect, MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { ReactComponent as Magnifier } from "assets/icon/magnifier.svg";
@@ -14,7 +15,13 @@ const hotKeywords = [
     "屏東國家風景區",
     "新竹遊憩",
   ],
-  areas = ["北部", "中部", "南部", "東部", "離島"],
+  areas = [
+    { title: "北部", counties: ["台北市", "新北市"] },
+    { title: "中部", counties: ["台北市", "新北市"] },
+    { title: "南部", counties: ["台北市", "新北市"] },
+    { title: "東部", counties: ["台北市", "新北市"] },
+    { title: "離島", counties: ["台北市", "新北市"] },
+  ],
   classifications = ["文化", "生態", "自然風景", "國家風景區"];
 
 const variants = {
@@ -36,7 +43,7 @@ const filterDropdownVariants = {
   closed: { opacity: 0, y: "0px" },
 };
 
-const SearchInput = (props: Types.Props) => {
+const SearchInput = (props: Types.SearchInput.Props) => {
   const [searchDropdownVisible, setSearchDropdownVisible] = useState(false),
     [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
 
@@ -154,24 +161,14 @@ const SearchInput = (props: Types.Props) => {
             <caption className="f-cp1 d-block p-0 pt-3">縣市</caption>
             <ul>
               {areas.map((area, areaIndex) => (
-                <>
-                  <li className="d-flex justify-content-between align-items-center pt-3 f-bd1">
-                    {area}
-                    <div className="cursor-pointer">
-                      <Arrow />
-                    </div>
-                  </li>
-                  <Divider className="mt-3" color={"#cccccc"} />
-                  <ul>
-                    {classifications.map((classification) => (
-                      <li className="pt-3">
-                        <Checkbox />
-                        &nbsp;
-                        <span className="f-bd-2 mb-0">{classification}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </>
+                <li>
+                  <Accordion
+                    title={area.title}
+                    options={area.counties}
+                    collapse={false}
+                    onClick={props.onClickAccordion}
+                  />
+                </li>
               ))}
             </ul>
             <caption className="f-cp1 d-block p-0 pt-3">分類</caption>

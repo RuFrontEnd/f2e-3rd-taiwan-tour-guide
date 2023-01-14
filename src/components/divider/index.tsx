@@ -1,6 +1,6 @@
-import Types from "./type";
+import Types from "types/components/";
 
-const Divider = (props: Types.Props) => {
+const Divider = (props: Types.Divider.Props) => {
   return (
     <div
       className={`border-width-0 border-bottom-width-1 border-style-solid ${
