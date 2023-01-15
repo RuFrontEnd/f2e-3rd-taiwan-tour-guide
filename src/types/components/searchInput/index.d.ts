@@ -4,15 +4,20 @@ import type * as AccordionTypes from "../accordion/";
 type Placeholder = string;
 type Value = string;
 type Type = "filter";
+type Option = {
+  name: AccordionTypes.Option["name"];
+  checked: AccordionTypes.Option["checked"];
+};
 type Area = {
   title: AccordionTypes.Title;
-  options: AccordionTypes.Options;
+  options: Option[];
 };
 type Opened = null | string;
 type Accordion = {
   opened: Opened;
   areas: Area[];
   onClick: AccordionTypes.OnClick;
+  onCheckboxChange: AccordionTypes.OnCheckboxChange;
 };
 
 type Props = {

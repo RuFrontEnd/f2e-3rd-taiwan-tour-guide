@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import constants from "constants/";
+import * as urlConstants from "constants/url";
 import "./App.scss";
 import Guide from "pages/guide/";
 import Home from "pages/home/";
@@ -15,7 +15,7 @@ const browserRouter = [
   },
 ];
 
-if (window.location.hostname === constants.url.LOCALHOST) {
+if (window.location.hostname === urlConstants.LOCALHOST) {
   browserRouter.push({
     path: "/guide",
     element: <Guide />,

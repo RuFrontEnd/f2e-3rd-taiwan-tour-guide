@@ -160,6 +160,7 @@ const SearchInput = (props: Types.SearchInput.Props) => {
                     options={area.options}
                     collapse={area.title === props.accordion.opened}
                     onClick={props.accordion.onClick}
+                    onCheckboxChange={props.accordion.onCheckboxChange}
                   />
                 </li>
               ))}
