@@ -5,7 +5,8 @@ type Title = string;
 type Option = string;
 type Options = Option[];
 type Collapse = boolean;
-type OnClick = React.MouseEventHandler;
+type Event = React.MouseEvent;
+type OnClick = (e: Event, title: Title) => void;
 type Props = {
   title: Title;
   options: Options;
@@ -13,4 +14,4 @@ type Props = {
   onClick?: OnClick;
 } & StyleTypes.ClassName;
 
-export type { Title, Option, Options, Collapse, OnClick, Props };
+export type { Title, Option, Options, Collapse, Event, OnClick, Props };

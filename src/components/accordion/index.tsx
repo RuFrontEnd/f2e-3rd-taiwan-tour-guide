@@ -16,7 +16,11 @@ const variants = {
 
 const Accordion = (props: Types.Accordion.Props) => {
   return (
-    <div onClick={props.onClick}>
+    <div
+      onClick={(e) => {
+        props.onClick && props.onClick(e, props.title);
+      }}
+    >
       <div className="d-flex justify-content-between align-items-center pt-3 f-bd1">
         {props.title}
         <div className="cursor-pointer">

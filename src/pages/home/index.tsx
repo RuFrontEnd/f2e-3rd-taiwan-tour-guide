@@ -1,6 +1,7 @@
 import Card from "components/card";
 import lighthouse from "assets/fake/lighthouse.png";
 import useGetProducts from "hooks/useGetProducts";
+import ComponentsTypes from "types/components/";
 import Header from "./header";
 import SearchInput from "components/searchInput";
 import { useEffect, useState } from "react";
@@ -11,10 +12,11 @@ const Home = () => {
       limit: 10,
     }),
     [targetIndex, setTargetIndex] = useState(6),
-    [keyword, setKeyword] = useState("");
+    [keyword, setKeyword] = useState(""),
+    [openedAccordion, setOpenedAccordion] = useState<null | string>(null);
 
   const accordion = {
-    opened: null,
+    opened: openedAccordion,
     areas: [
       { title: "北部", options: ["台北市", "新北市"] },
       { title: "中部", options: ["台北市", "新北市"] },
@@ -22,8 +24,12 @@ const Home = () => {
       { title: "東部", options: ["台北市", "新北市"] },
       { title: "離島", options: ["台北市", "新北市"] },
     ],
-    onClick: () => {
-      console.log("click accordion");
+    onClick: (
+      e: ComponentsTypes.Accordion.Event,
+      title: ComponentsTypes.Accordion.Title
+    ) => {
+      setOpenedAccordion(title);
+      console.log("title", title);
     },
   };
 
