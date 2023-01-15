@@ -1,7 +1,7 @@
-import Types from "types/components/";
+import Types from "types/";
 import { ReactComponent as Tick } from "assets/icon/tick.svg";
 
-const Checkbox = (props: Types.Checkbox.Props) => {
+const Checkbox = (props: Types.Components.Checkbox.Props) => {
   return (
     <div
       className={`${props.className ? props.className : ""} ${

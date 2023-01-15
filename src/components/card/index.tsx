@@ -1,9 +1,9 @@
-import Types from "types/components/";
+import Types from "types/";
 import { ReactComponent as Location } from "assets/icon/location.svg";
 import { ReactComponent as Telephone } from "assets/icon/telephone.svg";
 import { ReactComponent as Clock } from "assets/icon/clock.svg";
 
-const Card = (props: Types.Card.Props) => {
+const Card = (props: Types.Components.Card.Props) => {
   return (
     <div className={`card ${props.className}`}>
       <img src="..." className="card-img-top" alt="..." />

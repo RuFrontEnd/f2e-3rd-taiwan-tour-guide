@@ -1,9 +1,8 @@
-import type * as Types from "types/components/";
-import type * as AccordionTypes from "types/components/accordion/";
+import type * as Types from "types/";
 import Divider from "components/divider/";
 import Checkbox from "components/checkbox/";
 import Accordion from "components/accordion/";
-import { useState, useRef, useEffect, MouseEvent } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { ReactComponent as Magnifier } from "assets/icon/magnifier.svg";
 import { ReactComponent as Sieve } from "assets/icon/sieve.svg";
@@ -36,7 +35,7 @@ const filterDropdownVariants = {
   closed: { opacity: 0, y: "0px" },
 };
 
-const SearchInput = (props: Types.SearchInput.Props) => {
+const SearchInput = (props: Types.Components.SearchInput.Props) => {
   const [searchDropdownVisible, setSearchDropdownVisible] = useState(false),
     [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
 
@@ -153,17 +152,19 @@ const SearchInput = (props: Types.SearchInput.Props) => {
           >
             <caption className="f-cp1 d-block p-0 pt-3">縣市</caption>
             <ul>
-              {props.accordion.areas.map((area: Types.SearchInput.Area) => (
-                <li>
-                  <Accordion
-                    title={area.title}
-                    options={area.options}
-                    collapse={area.title === props.accordion.opened}
-                    onClick={props.accordion.onClick}
-                    onCheckboxChange={props.accordion.onCheckboxChange}
-                  />
-                </li>
-              ))}
+              {props.accordion.areas.map(
+                (area: Types.Components.SearchInput.Area) => (
+                  <li>
+                    <Accordion
+                      title={area.title}
+                      options={area.options}
+                      collapse={area.title === props.accordion.opened}
+                      onClick={props.accordion.onClick}
+                      onCheckboxChange={props.accordion.onCheckboxChange}
+                    />
+                  </li>
+                )
+              )}
             </ul>
             <caption className="f-cp1 d-block p-0 pt-3">分類</caption>
             <ul>

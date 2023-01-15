@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import * as urlVariables from "variables/url";
+import * as variables from "variables/";
 import type * as Types from "./types";
 
 // for mocking API
@@ -11,7 +11,7 @@ const useGetProducts = (props?: Types.Props) => {
   useEffect(() => {
     if (!loading) return;
     axios
-      .get(urlVariables.getFake, {
+      .get(variables.urls.getFake, {
         params: {
           skip: props?.skip,
           limit: props?.limit,
