@@ -1,4 +1,4 @@
-import type * as StyleTypes from "types/styles/";
+import type * as StyleTypes from "../../styles"
 
 type Color = string;
 

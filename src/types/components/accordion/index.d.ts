@@ -1,5 +1,5 @@
 import React from "react";
-import type * as StyleTypes from "types/styles/";
+import type * as StyleTypes from "../../styles"
 
 type Title = string;
 type Option = { name: string; checked: boolean };

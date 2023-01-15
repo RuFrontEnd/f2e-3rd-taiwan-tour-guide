@@ -1,12 +1,12 @@
 import _ from "lodash";
-import * as cityVariables from "variables/cities";
 import Card from "components/card";
 import lighthouse from "assets/fake/lighthouse.png";
 import useGetProducts from "hooks/useGetProducts";
-import ComponentsTypes from "types/components/";
+import Types from "types/";
 import Header from "./header";
 import SearchInput from "components/searchInput";
 import { useEffect, useState } from "react";
+import * as cityVariables from "variables/cities";
 
 const translateCHCityNameToEN = (chinese: string) => {
   switch (chinese) {
@@ -275,14 +275,14 @@ const Home = () => {
       },
     ],
     onClick: (
-      e: ComponentsTypes.Accordion.Event,
-      title: ComponentsTypes.Accordion.Title
+      e: Types.Components.Accordion.Event,
+      title: Types.Components.Accordion.Title
     ) => {
       setOpenedAccordion(title);
     },
     onCheckboxChange: (
-      e: ComponentsTypes.Accordion.Event,
-      option: ComponentsTypes.Accordion.Option
+      e: Types.Components.Accordion.Event,
+      option: Types.Components.Accordion.Option
     ) => {
       if (!option.name) return;
 

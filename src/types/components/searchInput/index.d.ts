@@ -1,4 +1,4 @@
-import type * as StyleTypes from "types/styles/";
+import type * as StyleTypes from "../../styles"
 import type * as AccordionTypes from "../accordion/";
 
 type Placeholder = string;

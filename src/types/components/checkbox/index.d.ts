@@ -1,5 +1,5 @@
 import React from "react";
-import type * as StyleTypes from "types/styles/";
+import type * as StyleTypes from "../../styles"
 
 type Checked = boolean;
 type OnChange = React.FormEventHandler<HTMLDivElement>;
