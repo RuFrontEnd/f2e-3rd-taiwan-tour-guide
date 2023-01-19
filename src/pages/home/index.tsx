@@ -278,7 +278,9 @@ const Home = () => {
       e: Types.Components.Accordion.Event,
       title: Types.Components.Accordion.Title
     ) => {
-      setOpenedAccordion(title);
+      setOpenedAccordion((openedAccordion) =>
+        openedAccordion === title ? null : title
+      );
     },
     onCheckboxChange: (
       e: Types.Components.Accordion.Event,

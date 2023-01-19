@@ -14,18 +14,32 @@ const variants = {
   },
 };
 
+const arrowVariants = {
+  top: {
+    transform: "rotate(180deg)",
+  },
+  down: {
+    transform: "rotate(0deg)",
+  },
+};
+
 const Accordion = (props: Types.Accordion.Props) => {
   return (
-    <div
-      onClick={(e) => {
-        props.onClick(e, props.title);
-      }}
-    >
-      <div className="d-flex justify-content-between align-items-center pt-3 f-bd1">
+    <div className="cursor-pointer">
+      <div
+        className="d-flex justify-content-between align-items-center pt-3 f-bd1"
+        onClick={(e) => {
+          props.onClick(e, props.title);
+        }}
+      >
         {props.title}
-        <div className="cursor-pointer">
+        <motion.div
+          variants={arrowVariants}
+          animate={props.collapse ? "top" : "down"}
+          className="cursor-pointer"
+        >
           <Arrow />
-        </div>
+        </motion.div>
       </div>
       <Divider className="mt-3" color={"#cccccc"} />
       <div className="">
