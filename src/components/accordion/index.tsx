@@ -29,7 +29,7 @@ const Accordion = (props: Types.Accordion.Props) => {
       <div
         className="d-flex justify-content-between align-items-center pt-3 f-bd1"
         onClick={(e) => {
-          props.onClick(e, props.title);
+          props.onClick && props.onClick(e, props.title);
         }}
       >
         {props.title}
@@ -52,7 +52,7 @@ const Accordion = (props: Types.Accordion.Props) => {
             <li className="pt-3">
               <Checkbox
                 onChange={(e) => {
-                  props.onCheckboxChange(e, option);
+                  props.onCheckboxChange && props.onCheckboxChange(e, option);
                 }}
                 checked={option.checked}
               />

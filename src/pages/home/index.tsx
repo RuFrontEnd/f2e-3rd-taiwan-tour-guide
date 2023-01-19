@@ -119,9 +119,11 @@ const Home = () => {
     [selectedCities, setSelectedCities] = useState({
       [cityVariables.areas.N[0].EN]: false,
       [cityVariables.areas.N[1].EN]: false,
-    });
+    }),
+    [selectedClassifications, setSelectedClassifications] = useState();
 
   const accordion = {
+    title: "縣市",
     opened: openedAccordion,
     areas: [
       {
@@ -299,6 +301,28 @@ const Home = () => {
     },
   };
 
+  const classification = {
+    title: "分類",
+    options: [
+      {
+        text: "文化",
+        checked: false,
+      },
+      {
+        text: "生態",
+        checked: false,
+      },
+      {
+        text: "自然風景",
+        checked: false,
+      },
+      {
+        text: "國家風景區",
+        checked: false,
+      },
+    ],
+  };
+
   const product = useGetProducts(getProductParam);
 
   const observerOptions = {
@@ -328,6 +352,8 @@ const Home = () => {
     }
   }, observerOptions);
 
+  const onClickFinishButton = () => {}; // TODO: 下次進度使用
+
   useEffect(() => {
     const target = document.getElementById(`loadMoreTarget${targetIndex}`);
 
@@ -349,8 +375,9 @@ const Home = () => {
         <SearchInput
           value={keyword}
           placeholder={"想去哪？"}
-          type={"filter"}
           accordion={accordion}
+          classification={classification}
+          onCompleteSelectCondition={onClickFinishButton}
         />
       </div>
       <div className="container">

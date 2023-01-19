@@ -6,15 +6,15 @@ import { useState, useEffect, MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { ReactComponent as Magnifier } from "assets/icon/magnifier.svg";
 import { ReactComponent as Sieve } from "assets/icon/sieve.svg";
+import { ReactComponent as V } from "assets/icon/v.svg";
 
 const hotKeywords = [
-    "台南文化",
-    "嘉義觀光工廠",
-    "台東自然風景",
-    "屏東國家風景區",
-    "新竹遊憩",
-  ],
-  classifications = ["文化", "生態", "自然風景", "國家風景區"];
+  "台南文化",
+  "嘉義觀光工廠",
+  "台東自然風景",
+  "屏東國家風景區",
+  "新竹遊憩",
+];
 
 const variants = {
   closed: {
@@ -38,8 +38,6 @@ const filterDropdownVariants = {
 const SearchInput = (props: Types.Components.SearchInput.Props) => {
   const [searchDropdownVisible, setSearchDropdownVisible] = useState(false),
     [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
-
-  const filterType = props.type === "filter";
 
   const openSearchDropdown = () => {
     setSearchDropdownVisible(true);
@@ -98,9 +96,9 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
       />
 
       <motion.input
-        className={`border-1 border-color-black-core py-3 ps-10_5 pe-4_5 ${
-          filterType && "pe-10_5"
-        }`}
+        className={`border-1 border-color-black-core py-3 ps-10_5 pe-4_5 
+       pe-10_5
+        `}
         placeholder={props?.placeholder}
         value={props.value}
         variants={variants}
@@ -112,7 +110,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
 
       <motion.div
         className="position-absolute top-15 z-index-10 w-100p border-top-0 border-1 border-bottom-left-radius-5 border-bottom-right-radius-5 bg-white px-4 py-3 pt-0"
-        role={"search-input-dropdown"}
+        role={"search-input-hotkey-dropdown"}
         variants={hotKeyWordsDropdownVariants}
         animate={searchDropdownVisible ? "open" : "closed"}
         transition={{ duration: 0.15 }}
@@ -131,54 +129,66 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
         </ul>
       </motion.div>
 
-      {filterType && (
-        <>
-          <div
-            className="cursor-pointer position-absolute top-50p end-4_5 translate-middle-y border-start-1 border-color-black-500 ps-2"
-            onClick={onClickSieve}
-          >
-            <Sieve width={18} height={18} className={""} />
-          </div>
+      <i
+        className="cursor-pointer position-absolute top-50p end-4_5 translate-middle-y border-start-1 border-color-black-500 ps-2"
+        onClick={onClickSieve}
+      >
+        <Sieve width={18} height={18} className={""} />
+      </i>
 
-          <motion.div
-            className="position-absolute top-15 z-index-10 w-100p border-1 border-bottom-left-radius-5 border-bottom-right-radius-5 bg-white px-4 py-3 pt-0"
-            role={"search-input-dropdown"}
-            variants={filterDropdownVariants}
-            animate={filterDropdownVisible ? "open" : "closed"}
-            transition={{ duration: 0.15 }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
+      <motion.div
+        className="position-absolute top-15 z-index-10 w-100p border-1 border-radius-5 bg-white px-4 py-3 pt-0"
+        role={"search-input-filter-dropdown"}
+        variants={filterDropdownVariants}
+        animate={filterDropdownVisible ? "open" : "closed"}
+        transition={{ duration: 0.15 }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <div className="d-flex justify-content-between mt-3 mb-2">
+          <div className="f-t">篩選</div>
+          <button
+            className="d-flex align-items-center f-bd1 cursor-pointer"
+            onClick={props.onCompleteSelectCondition}
           >
-            <caption className="f-cp1 d-block p-0 pt-3">縣市</caption>
-            <ul>
-              {props.accordion.areas.map(
-                (area: Types.Components.SearchInput.Area) => (
-                  <li>
-                    <Accordion
-                      title={area.title}
-                      options={area.options}
-                      collapse={area.title === props.accordion.opened}
-                      onClick={props.accordion.onClick}
-                      onCheckboxChange={props.accordion.onCheckboxChange}
-                    />
-                  </li>
-                )
-              )}
-            </ul>
-            <caption className="f-cp1 d-block p-0 pt-3">分類</caption>
-            <ul>
-              {classifications.map((classification) => (
-                <li className="pt-3">
-                  <Checkbox />
-                  &nbsp;
-                  <span className="f-bd-2 mb-0">{classification}</span>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </>
-      )}
+            <i className="d-flex align-items-center me-1">
+              <V />
+            </i>
+            完成
+          </button>
+        </div>
+        <caption className="f-cp1 d-block p-0 pt-3">
+          {props.accordion?.title}
+        </caption>
+        <ul>
+          {props.accordion?.areas.map(
+            (area: Types.Components.SearchInput.Area) => (
+              <li>
+                <Accordion
+                  title={area.title}
+                  options={area.options}
+                  collapse={area.title === props.accordion?.opened}
+                  onClick={props.accordion?.onClick}
+                  onCheckboxChange={props.accordion?.onCheckboxChange}
+                />
+              </li>
+            )
+          )}
+        </ul>
+        <caption className="f-cp1 d-block p-0 pt-3">
+          {props.classification.title}
+        </caption>
+        <ul>
+          {props.classification.options.map((option) => (
+            <li className="pt-3">
+              <Checkbox checked={option.checked} />
+              &nbsp;
+              <span className="f-bd-2 mb-0">{option.text}</span>
+            </li>
+          ))}
+        </ul>
+      </motion.div>
     </div>
   );
 };

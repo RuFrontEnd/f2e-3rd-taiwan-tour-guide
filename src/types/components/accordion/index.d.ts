@@ -1,5 +1,5 @@
 import React from "react";
-import type * as StyleTypes from "../../styles"
+import type * as StyleTypes from "../../styles";
 
 type Title = string;
 type Option = { name: string; checked: boolean };
@@ -12,8 +12,8 @@ type Props = {
   title: Title;
   options: Options;
   collapse: Collapse;
-  onClick: OnClick;
-  onCheckboxChange: OnCheckboxChange;
+  onClick?: OnClick;
+  onCheckboxChange?: OnCheckboxChange;
 } & StyleTypes.ClassName;
 
 export type {

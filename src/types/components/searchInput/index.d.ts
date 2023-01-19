@@ -1,30 +1,46 @@
-import type * as StyleTypes from "../../styles"
+import React from "react";
+import type * as StyleTypes from "../../styles";
 import type * as AccordionTypes from "../accordion/";
 
 type Placeholder = string;
 type Value = string;
-type Type = "filter";
+
 type Option = {
   name: AccordionTypes.Option["name"];
   checked: AccordionTypes.Option["checked"];
 };
+
 type Area = {
   title: AccordionTypes.Title;
   options: Option[];
 };
+
+type Title = string;
 type Opened = null | string;
+type OnCompleteSelectCondition = React.MouseEventHandler;
+
 type Accordion = {
+  title: string;
   opened: Opened;
   areas: Area[];
   onClick: AccordionTypes.OnClick;
   onCheckboxChange: AccordionTypes.OnCheckboxChange;
 };
 
+type Classification = {
+  title: string;
+  options: {
+    text: string;
+    checked: boolean;
+  }[];
+};
+
 type Props = {
   placeholder?: Placeholder;
   value: Value;
-  type?: Type;
-  accordion: Accordion;
+  accordion?: Accordion;
+  classification: Classification;
+  onCompleteSelectCondition: OnCompleteSelectCondition;
 } & StyleTypes.ClassName;
 
-export { Placeholder, Value, Type, Area, Opened, Accordion, Props };
+export { Placeholder, Value, Area, Opened, Accordion, Props };
