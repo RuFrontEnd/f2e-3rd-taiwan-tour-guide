@@ -37,7 +37,8 @@ const filterDropdownVariants = {
 
 const SearchInput = (props: Types.Components.SearchInput.Props) => {
   const [searchDropdownVisible, setSearchDropdownVisible] = useState(false),
-    [filterDropdownVisible, setFilterDropdownVisible] = useState(false);
+    [filterDropdownVisible, setFilterDropdownVisible] = useState(false),
+    [listenedSearchDropdown, setListenedSearchDropdown] = useState(false);
 
   const openSearchDropdown = () => {
     setSearchDropdownVisible(true);
@@ -68,6 +69,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
 
   useEffect(() => {
     document.body.addEventListener("click", closeSearchDropdown);
+    setListenedSearchDropdown(true);
 
     if (filterDropdownVisible) {
       document.body.addEventListener("click", closeFilterDropdown);
@@ -75,12 +77,9 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
 
     return () => {
       document.body.removeEventListener("click", closeSearchDropdown);
-
-      if (filterDropdownVisible) {
-        document.body.addEventListener("click", closeFilterDropdown);
-      }
+      document.body.addEventListener("click", closeFilterDropdown);
     };
-  }, []);
+  }, [listenedSearchDropdown, filterDropdownVisible]);
 
   return (
     <div

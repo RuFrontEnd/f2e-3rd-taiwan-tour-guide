@@ -5,6 +5,11 @@ input:focus {
     outline: none;
 }
 
+button {
+    background: transparent;
+    border: none;
+}
+
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
 @import "~bootstrap/scss/functions";
 
