@@ -24,7 +24,7 @@ const n0ch = variables.cities.areas.N[0].CH,
   n6en = variables.cities.areas.N[6].EN,
   n7ch = variables.cities.areas.N[7].CH,
   n7en = variables.cities.areas.N[7].EN,
-  m0ch = variables.cities.areas.N[0].CH,
+  m0ch = variables.cities.areas.M[0].CH,
   m0en = variables.cities.areas.M[0].EN,
   m1ch = variables.cities.areas.M[1].CH,
   m1en = variables.cities.areas.M[1].EN,
@@ -197,11 +197,11 @@ const Home = () => {
           },
           {
             name: n1ch,
-            checked: n1en,
+            checked: selectedCities[n1en],
           },
           {
             name: n2ch,
-            checked: n2en,
+            checked: selectedCities[n2en],
           },
           {
             name: n3ch,
