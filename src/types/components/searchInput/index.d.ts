@@ -30,9 +30,10 @@ type Accordion = {
 type Classification = {
   title: string;
   options: {
-    text: string;
+    name: string;
     checked: boolean;
   }[];
+  onCheckboxChange: AccordionTypes.OnCheckboxChange;
 };
 
 type Props = {

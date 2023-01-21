@@ -1,5 +1,5 @@
-type SelectedCities = {
-  [city: string]: boolean;
+type SelectedOptions = {
+  [option: string]: boolean;
 };
 
-export type { SelectedCities };
+export type { SelectedOptions };

@@ -182,9 +182,14 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
         <ul>
           {props.classification.options.map((option) => (
             <li className="pt-3">
-              <Checkbox checked={option.checked} />
+              <Checkbox
+                checked={option.checked}
+                onChange={(e) => {
+                  props.classification?.onCheckboxChange(e, option);
+                }}
+              />
               &nbsp;
-              <span className="f-bd-2 mb-0">{option.text}</span>
+              <span className="f-bd-2 mb-0">{option.name}</span>
             </li>
           ))}
         </ul>

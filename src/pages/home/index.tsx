@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _, { cloneDeep } from "lodash";
 import lighthouse from "assets/fake/lighthouse.png";
 import useGetProducts from "hooks/useGetProducts";
 import Types from "types/";
@@ -70,6 +70,11 @@ const n0ch = variables.cities.areas.N[0].CH,
   o3en = variables.cities.areas.O[3].EN,
   o4ch = variables.cities.areas.O[4].CH,
   o4en = variables.cities.areas.O[4].EN;
+
+const culture = "文化",
+  ecology = "生態",
+  naturalScenery = "自然風景",
+  nationalScenicArea = "國家風景區";
 
 const translateCHCityNameToEN = (chinese: string) => {
   switch (chinese) {
@@ -171,6 +176,25 @@ const translateCHCityNameToEN = (chinese: string) => {
   }
 };
 
+const getClassificationKey = (name: string) => {
+  switch (name) {
+    case culture:
+      return "culture";
+
+    case ecology:
+      return "ecology";
+
+    case naturalScenery:
+      return "naturalScenery";
+
+    case nationalScenicArea:
+      return "nationalScenicArea";
+
+    default:
+      return null;
+  }
+};
+
 const Home = () => {
   const [getProductParam, setGetProductParam] = useState({
       skip: 0,
@@ -180,9 +204,11 @@ const Home = () => {
     [keyword, setKeyword] = useState(""),
     [openedAccordion, setOpenedAccordion] = useState<null | string>(null),
     [selectedCities, setSelectedCities] = useState<
-      Types.Pages.Home.SelectedCities
+      Types.Pages.Home.SelectedOptions
     >({}),
-    [selectedClassifications, setSelectedClassifications] = useState();
+    [selectedClassifications, setSelectedClassifications] = useState<
+      Types.Pages.Home.SelectedOptions
+    >({});
 
   const accordion = {
     title: "縣市",
@@ -363,30 +389,43 @@ const Home = () => {
     },
   };
 
-  useEffect(() => {
-    console.log("selectedCities", selectedCities);
-  }, [selectedCities]);
-
   const classification = {
     title: "分類",
     options: [
       {
-        text: "文化",
-        checked: false,
+        name: culture,
+        checked: selectedClassifications?.culture,
       },
       {
-        text: "生態",
-        checked: false,
+        name: ecology,
+        checked: selectedClassifications?.ecology,
       },
       {
-        text: "自然風景",
-        checked: false,
+        name: naturalScenery,
+        checked: selectedClassifications?.naturalScenery,
       },
       {
-        text: "國家風景區",
-        checked: false,
+        name: nationalScenicArea,
+        checked: selectedClassifications?.nationalScenicArea,
       },
     ],
+    onCheckboxChange: (
+      e: Types.Components.Accordion.Event,
+      option: Types.Components.Accordion.Option
+    ) => {
+      setSelectedClassifications((selectedClassifications) => {
+        const key = getClassificationKey(option.name);
+        const copySelectedClassifications = cloneDeep(selectedClassifications);
+
+        if (!key) return copySelectedClassifications;
+
+        copySelectedClassifications[key] = copySelectedClassifications[key]
+          ? false
+          : true;
+
+        return copySelectedClassifications;
+      });
+    },
   };
 
   const product = useGetProducts(getProductParam);

@@ -1,5 +1,6 @@
 import React from "react";
 import type * as StyleTypes from "../../styles";
+import type * as CheckboxTypes from "../checkbox";
 
 type Title = string;
 type Option = { name: string; checked: boolean };
