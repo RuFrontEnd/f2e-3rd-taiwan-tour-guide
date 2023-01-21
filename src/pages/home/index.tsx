@@ -210,6 +210,14 @@ const Home = () => {
       Types.Pages.Home.SelectedOptions
     >({});
 
+  const hotkeyWords = [
+    "台南文化",
+    "嘉義觀光工廠",
+    "台東自然風景",
+    "屏東國家風景區",
+    "新竹遊憩",
+  ];
+
   const accordion = {
     title: "縣市",
     opened: openedAccordion,
@@ -478,6 +486,7 @@ const Home = () => {
         <SearchInput
           value={keyword}
           placeholder={"想去哪？"}
+          hotKeywords={hotkeyWords}
           accordion={accordion}
           classification={classification}
         />

@@ -121,7 +121,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
         <Divider />
         <caption className="f-cp1 d-block p-0 pt-3">熱門關鍵字</caption>
         <ul>
-          {hotKeywords.map((hotKeyword, hotKeywordIndex) => (
+          {props.hotKeywords.map((hotKeyword, hotKeywordIndex) => (
             <>
               <li className="pt-3 f-bd1">{hotKeyword}</li>
               {hotKeywordIndex !== hotKeywords.length - 1 && (

@@ -18,6 +18,8 @@ type Area = {
 type Title = string;
 type Opened = null | string;
 
+type HotKeywords = string[];
+
 type Accordion = {
   title: string;
   opened: Opened;
@@ -38,6 +40,7 @@ type Classification = {
 type Props = {
   placeholder?: Placeholder;
   value: Value;
+  hotKeywords: HotKeywords;
   accordion?: Accordion;
   classification: Classification;
 } & StyleTypes.ClassName;
