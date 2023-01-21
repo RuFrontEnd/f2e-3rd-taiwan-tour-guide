@@ -1,107 +1,170 @@
 import _ from "lodash";
-import Card from "components/card";
 import lighthouse from "assets/fake/lighthouse.png";
 import useGetProducts from "hooks/useGetProducts";
 import Types from "types/";
 import Header from "./header";
+import Card from "components/card";
 import SearchInput from "components/searchInput";
 import { useEffect, useState } from "react";
-import * as cityVariables from "variables/cities";
+import * as variables from "variables";
+
+const n0ch = variables.cities.areas.N[0].CH,
+  n0en = variables.cities.areas.N[0].EN,
+  n1ch = variables.cities.areas.N[1].CH,
+  n1en = variables.cities.areas.N[1].EN,
+  n2ch = variables.cities.areas.N[2].CH,
+  n2en = variables.cities.areas.N[2].EN,
+  n3ch = variables.cities.areas.N[3].CH,
+  n3en = variables.cities.areas.N[3].EN,
+  n4ch = variables.cities.areas.N[4].CH,
+  n4en = variables.cities.areas.N[4].EN,
+  n5ch = variables.cities.areas.N[5].CH,
+  n5en = variables.cities.areas.N[5].EN,
+  n6ch = variables.cities.areas.N[6].CH,
+  n6en = variables.cities.areas.N[6].EN,
+  n7ch = variables.cities.areas.N[7].CH,
+  n7en = variables.cities.areas.N[7].EN,
+  m0ch = variables.cities.areas.N[0].CH,
+  m0en = variables.cities.areas.M[0].EN,
+  m1ch = variables.cities.areas.M[1].CH,
+  m1en = variables.cities.areas.M[1].EN,
+  m2ch = variables.cities.areas.M[2].CH,
+  m2en = variables.cities.areas.M[2].EN,
+  m3ch = variables.cities.areas.M[3].CH,
+  m3en = variables.cities.areas.M[3].EN,
+  m4ch = variables.cities.areas.M[4].CH,
+  m4en = variables.cities.areas.M[4].EN,
+  m5ch = variables.cities.areas.M[5].CH,
+  m5en = variables.cities.areas.M[5].EN,
+  m6ch = variables.cities.areas.M[6].CH,
+  m6en = variables.cities.areas.M[6].EN,
+  m7ch = variables.cities.areas.M[7].CH,
+  m7en = variables.cities.areas.M[7].EN,
+  m8ch = variables.cities.areas.M[8].CH,
+  m8en = variables.cities.areas.M[8].EN,
+  m9ch = variables.cities.areas.M[9].CH,
+  m9en = variables.cities.areas.M[9].EN,
+  s0ch = variables.cities.areas.S[0].CH,
+  s0en = variables.cities.areas.S[0].EN,
+  s1ch = variables.cities.areas.S[1].CH,
+  s1en = variables.cities.areas.S[1].EN,
+  s2ch = variables.cities.areas.S[2].CH,
+  s2en = variables.cities.areas.S[2].EN,
+  s3ch = variables.cities.areas.S[3].CH,
+  s3en = variables.cities.areas.S[3].EN,
+  w0ch = variables.cities.areas.W[0].CH,
+  w0en = variables.cities.areas.W[0].EN,
+  w1ch = variables.cities.areas.W[1].CH,
+  w1en = variables.cities.areas.W[1].EN,
+  w2ch = variables.cities.areas.W[2].CH,
+  w2en = variables.cities.areas.W[2].EN,
+  w3ch = variables.cities.areas.W[3].CH,
+  w3en = variables.cities.areas.W[3].EN,
+  o0ch = variables.cities.areas.O[0].CH,
+  o0en = variables.cities.areas.O[0].EN,
+  o1ch = variables.cities.areas.O[1].CH,
+  o1en = variables.cities.areas.O[1].EN,
+  o2ch = variables.cities.areas.O[2].CH,
+  o2en = variables.cities.areas.O[2].EN,
+  o3ch = variables.cities.areas.O[3].CH,
+  o3en = variables.cities.areas.O[3].EN,
+  o4ch = variables.cities.areas.O[4].CH,
+  o4en = variables.cities.areas.O[4].EN;
 
 const translateCHCityNameToEN = (chinese: string) => {
   switch (chinese) {
-    case cityVariables.areas.N[0].CH:
-      return cityVariables.areas.N[0].EN;
+    case n0ch:
+      return n0en;
 
-    case cityVariables.areas.N[1].CH:
-      return cityVariables.areas.N[1].EN;
+    case n1ch:
+      return n1en;
 
-    case cityVariables.areas.N[2].CH:
-      return cityVariables.areas.N[2].EN;
+    case n2ch:
+      return n2en;
 
-    case cityVariables.areas.N[3].CH:
-      return cityVariables.areas.N[3].EN;
+    case n3ch:
+      return n3en;
 
-    case cityVariables.areas.N[4].CH:
-      return cityVariables.areas.N[4].EN;
+    case n4ch:
+      return n4en;
 
-    case cityVariables.areas.N[5].CH:
-      return cityVariables.areas.N[5].EN;
+    case n5ch:
+      return n5en;
 
-    case cityVariables.areas.N[6].CH:
-      return cityVariables.areas.N[6].EN;
+    case n6ch:
+      return n6en;
 
-    case cityVariables.areas.N[7].CH:
-      return cityVariables.areas.N[7].EN;
+    case n7ch:
+      return n7en;
 
-    case cityVariables.areas.M[0].CH:
-      return cityVariables.areas.N[0].EN;
+    case m0ch:
+      return m0en;
 
-    case cityVariables.areas.M[1].CH:
-      return cityVariables.areas.M[1].EN;
+    case m1ch:
+      return m1en;
 
-    case cityVariables.areas.M[2].CH:
-      return cityVariables.areas.M[2].EN;
+    case m2ch:
+      return m2en;
 
-    case cityVariables.areas.M[3].CH:
-      return cityVariables.areas.M[3].EN;
+    case m3ch:
+      return m3en;
 
-    case cityVariables.areas.M[4].CH:
-      return cityVariables.areas.M[4].EN;
+    case m4ch:
+      return m4en;
 
-    case cityVariables.areas.M[5].CH:
-      return cityVariables.areas.M[5].EN;
+    case m5ch:
+      return m5en;
 
-    case cityVariables.areas.M[6].CH:
-      return cityVariables.areas.M[6].EN;
+    case m6ch:
+      return m6en;
 
-    case cityVariables.areas.M[7].CH:
-      return cityVariables.areas.M[7].EN;
+    case m7ch:
+      return m7en;
 
-    case cityVariables.areas.M[8].CH:
-      return cityVariables.areas.M[8].EN;
+    case m8ch:
+      return m8en;
 
-    case cityVariables.areas.M[9].CH:
-      return cityVariables.areas.M[9].EN;
+    case m9ch:
+      return m9en;
 
-    case cityVariables.areas.S[0].CH:
-      return cityVariables.areas.S[0].EN;
+    case s0ch:
+      return s0en;
 
-    case cityVariables.areas.S[1].CH:
-      return cityVariables.areas.S[1].EN;
+    case s1ch:
+      return s1en;
 
-    case cityVariables.areas.S[2].CH:
-      return cityVariables.areas.S[2].EN;
+    case s2ch:
+      return s2en;
 
-    case cityVariables.areas.S[3].CH:
-      return cityVariables.areas.S[3].EN;
+    case s3ch:
+      return s3en;
 
-    case cityVariables.areas.W[0].CH:
-      return cityVariables.areas.W[0].EN;
+    case w0ch:
+      return w0en;
 
-    case cityVariables.areas.W[1].CH:
-      return cityVariables.areas.W[1].EN;
+    case w1ch:
+      return w1en;
 
-    case cityVariables.areas.W[2].CH:
-      return cityVariables.areas.W[2].EN;
+    case w2ch:
+      return w2en;
 
-    case cityVariables.areas.W[3].CH:
-      return cityVariables.areas.W[3].EN;
+    case w3ch:
+      return w3en;
 
-    case cityVariables.areas.O[0].CH:
-      return cityVariables.areas.O[0].EN;
+    case o0ch:
+      return o0en;
 
-    case cityVariables.areas.O[1].CH:
-      return cityVariables.areas.O[1].EN;
+    case o1ch:
+      return o1en;
 
-    case cityVariables.areas.O[2].CH:
-      return cityVariables.areas.O[2].EN;
+    case o2ch:
+      return o2en;
 
-    case cityVariables.areas.O[3].CH:
-      return cityVariables.areas.O[3].EN;
+    case o3ch:
+      return o3en;
 
-    case cityVariables.areas.O[4].CH:
-      return cityVariables.areas.O[4].EN;
+    case o4ch:
+      return o4en;
 
     default:
       return null;
@@ -116,10 +179,9 @@ const Home = () => {
     [targetIndex, setTargetIndex] = useState(6),
     [keyword, setKeyword] = useState(""),
     [openedAccordion, setOpenedAccordion] = useState<null | string>(null),
-    [selectedCities, setSelectedCities] = useState({
-      [cityVariables.areas.N[0].EN]: false,
-      [cityVariables.areas.N[1].EN]: false,
-    }),
+    [selectedCities, setSelectedCities] = useState<
+      Types.Pages.Home.SelectedCities
+    >({}),
     [selectedClassifications, setSelectedClassifications] = useState();
 
   const accordion = {
@@ -130,36 +192,36 @@ const Home = () => {
         title: "北部",
         options: [
           {
-            name: cityVariables.areas.N[0].CH,
-            checked: selectedCities[cityVariables.areas.N[0].EN],
+            name: n0ch,
+            checked: selectedCities[n0en],
           },
           {
-            name: cityVariables.areas.N[1].CH,
-            checked: selectedCities[cityVariables.areas.N[1].EN],
+            name: n1ch,
+            checked: n1en,
           },
           {
-            name: cityVariables.areas.N[2].CH,
-            checked: selectedCities[cityVariables.areas.N[2].EN],
+            name: n2ch,
+            checked: n2en,
           },
           {
-            name: cityVariables.areas.N[3].CH,
-            checked: selectedCities[cityVariables.areas.N[3].EN],
+            name: n3ch,
+            checked: selectedCities[n3en],
           },
           {
-            name: cityVariables.areas.N[4].CH,
-            checked: selectedCities[cityVariables.areas.N[4].EN],
+            name: n4ch,
+            checked: selectedCities[n4en],
           },
           {
-            name: cityVariables.areas.N[5].CH,
-            checked: selectedCities[cityVariables.areas.N[5].EN],
+            name: n5ch,
+            checked: selectedCities[n5en],
           },
           {
-            name: cityVariables.areas.N[6].CH,
-            checked: selectedCities[cityVariables.areas.N[6].EN],
+            name: n6ch,
+            checked: selectedCities[n6en],
           },
           {
-            name: cityVariables.areas.N[7].CH,
-            checked: selectedCities[cityVariables.areas.N[7].EN],
+            name: n7ch,
+            checked: selectedCities[n7en],
           },
         ],
       },
@@ -167,44 +229,44 @@ const Home = () => {
         title: "中部",
         options: [
           {
-            name: cityVariables.areas.M[0].CH,
-            checked: selectedCities[cityVariables.areas.M[0].EN],
+            name: m0ch,
+            checked: selectedCities[m0en],
           },
           {
-            name: cityVariables.areas.M[1].CH,
-            checked: selectedCities[cityVariables.areas.M[1].EN],
+            name: m1ch,
+            checked: selectedCities[m1en],
           },
           {
-            name: cityVariables.areas.M[2].CH,
-            checked: selectedCities[cityVariables.areas.M[2].EN],
+            name: m2ch,
+            checked: selectedCities[m2en],
           },
           {
-            name: cityVariables.areas.M[3].CH,
-            checked: selectedCities[cityVariables.areas.M[3].EN],
+            name: m3ch,
+            checked: selectedCities[m3en],
           },
           {
-            name: cityVariables.areas.M[4].CH,
-            checked: selectedCities[cityVariables.areas.M[4].EN],
+            name: m4ch,
+            checked: selectedCities[m4en],
           },
           {
-            name: cityVariables.areas.M[5].CH,
-            checked: selectedCities[cityVariables.areas.M[5].EN],
+            name: m5ch,
+            checked: selectedCities[m5en],
           },
           {
-            name: cityVariables.areas.M[6].CH,
-            checked: selectedCities[cityVariables.areas.M[6].EN],
+            name: m6ch,
+            checked: selectedCities[m6en],
           },
           {
-            name: cityVariables.areas.M[7].CH,
-            checked: selectedCities[cityVariables.areas.M[7].EN],
+            name: m7ch,
+            checked: selectedCities[m7en],
           },
           {
-            name: cityVariables.areas.M[8].CH,
-            checked: selectedCities[cityVariables.areas.M[8].EN],
+            name: m8ch,
+            checked: selectedCities[m8en],
           },
           {
-            name: cityVariables.areas.M[9].CH,
-            checked: selectedCities[cityVariables.areas.M[9].EN],
+            name: m9ch,
+            checked: selectedCities[m9en],
           },
         ],
       },
@@ -212,20 +274,20 @@ const Home = () => {
         title: "南部",
         options: [
           {
-            name: cityVariables.areas.S[0].CH,
-            checked: selectedCities[cityVariables.areas.S[0].EN],
+            name: s0ch,
+            checked: selectedCities[s0en],
           },
           {
-            name: cityVariables.areas.S[1].CH,
-            checked: selectedCities[cityVariables.areas.S[1].EN],
+            name: s1ch,
+            checked: selectedCities[s1en],
           },
           {
-            name: cityVariables.areas.S[2].CH,
-            checked: selectedCities[cityVariables.areas.S[2].EN],
+            name: s2ch,
+            checked: selectedCities[s2en],
           },
           {
-            name: cityVariables.areas.S[3].CH,
-            checked: selectedCities[cityVariables.areas.S[3].EN],
+            name: s3ch,
+            checked: selectedCities[s3en],
           },
         ],
       },
@@ -233,20 +295,20 @@ const Home = () => {
         title: "東部",
         options: [
           {
-            name: cityVariables.areas.W[0].CH,
-            checked: selectedCities[cityVariables.areas.W[0].EN],
+            name: w0ch,
+            checked: selectedCities[w0en],
           },
           {
-            name: cityVariables.areas.W[1].CH,
-            checked: selectedCities[cityVariables.areas.W[1].EN],
+            name: w1ch,
+            checked: selectedCities[w1en],
           },
           {
-            name: cityVariables.areas.W[2].CH,
-            checked: selectedCities[cityVariables.areas.W[2].EN],
+            name: w2ch,
+            checked: selectedCities[w2en],
           },
           {
-            name: cityVariables.areas.W[3].CH,
-            checked: selectedCities[cityVariables.areas.W[3].EN],
+            name: w3ch,
+            checked: selectedCities[w3en],
           },
         ],
       },
@@ -254,24 +316,24 @@ const Home = () => {
         title: "離島",
         options: [
           {
-            name: cityVariables.areas.O[0].CH,
-            checked: selectedCities[cityVariables.areas.O[0].EN],
+            name: o0ch,
+            checked: selectedCities[o0en],
           },
           {
-            name: cityVariables.areas.O[1].CH,
-            checked: selectedCities[cityVariables.areas.O[1].EN],
+            name: o1ch,
+            checked: selectedCities[o1en],
           },
           {
-            name: cityVariables.areas.O[2].CH,
-            checked: selectedCities[cityVariables.areas.O[2].EN],
+            name: o2ch,
+            checked: selectedCities[o2en],
           },
           {
-            name: cityVariables.areas.O[3].CH,
-            checked: selectedCities[cityVariables.areas.O[3].EN],
+            name: o3ch,
+            checked: selectedCities[o3en],
           },
           {
-            name: cityVariables.areas.O[4].CH,
-            checked: selectedCities[cityVariables.areas.O[4].EN],
+            name: o4ch,
+            checked: selectedCities[o4en],
           },
         ],
       },
@@ -300,6 +362,10 @@ const Home = () => {
       setSelectedCities(newSelectedCities);
     },
   };
+
+  useEffect(() => {
+    console.log("selectedCities", selectedCities);
+  }, [selectedCities]);
 
   const classification = {
     title: "分類",

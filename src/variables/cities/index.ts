@@ -32,8 +32,8 @@ const areas = {
   W: [
     { EN: citiesConstant.HUN, CH: citiesConstant.HUN_CH },
     { EN: citiesConstant.HUNC, CH: citiesConstant.HUNC_CH },
-    { EN: citiesConstant.CYI, CH: citiesConstant.CYI_CH },
-    { EN: citiesConstant.CYIC, CH: citiesConstant.CYIC_CH },
+    { EN: citiesConstant.TTT, CH: citiesConstant.TTT_CH },
+    { EN: citiesConstant.TTTC, CH: citiesConstant.TTTC_CH },
   ],
   O: [
     { EN: citiesConstant.PEH, CH: citiesConstant.PEH_CH },
