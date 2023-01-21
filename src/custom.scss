@@ -220,6 +220,7 @@ $spacers: (
     0: 0,
     1: $spacer * 0.25,
     2: $spacer * 0.5,
+    2_5: $spacer * 0.625,
     3: $spacer * 0.75,
     3_5: $spacer * 0.875,
     4: $spacer * 1,
@@ -241,6 +242,10 @@ $spacers: (
     26: $spacer * 6.5,
     30: $spacer * 7.5,
     50: $spacer * 10,
+    90: $spacer * 17.5,
+    100: $spacer * 20,
+    108: $spacer * 22,
+    140: $spacer * 30,
 );
 
 $percentage: (
@@ -485,12 +490,13 @@ $utilities: map-merge(
             property: max-height,
             class: mh,
             responsive: true,
-            values: (
-                100: 100%,
-                540px: 540px,
-                350px: 350px,
-                280px: 280px,
-            ),
+            values:
+                map-merge(
+                    map-merge($spacers, $percentage),
+                    (
+                        auto: auto,
+                    )
+                ),
         ),
         "viewport-height": (
             property: height,
@@ -502,9 +508,13 @@ $utilities: map-merge(
         "min-viewport-height": (
             property: min-height,
             class: min-vh,
-            values: (
-                100: 100vh,
-            ),
+            values:
+                map-merge(
+                    map-merge($spacers, $percentage),
+                    (
+                        auto: auto,
+                    )
+                ),
         ),
     )
 );
