@@ -25,9 +25,9 @@ const arrowVariants = {
 
 const Accordion = (props: Types.Accordion.Props) => {
   return (
-    <div className="cursor-pointer">
+    <div>
       <div
-        className="d-flex justify-content-between align-items-center pt-3 f-bd1"
+        className="cursor-pointer d-flex justify-content-between align-items-center py-3 f-bd1"
         onClick={(e) => {
           props.onClick && props.onClick(e, props.title);
         }}
@@ -41,7 +41,7 @@ const Accordion = (props: Types.Accordion.Props) => {
           <Arrow />
         </motion.div>
       </div>
-      <Divider className="mt-3" color={"#cccccc"} />
+      <Divider color={"#cccccc"} />
       <div className="">
         <motion.ul
           variants={variants}
