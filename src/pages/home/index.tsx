@@ -457,8 +457,6 @@ const Home = () => {
     }
   }, observerOptions);
 
-  const onClickFinishButton = () => {}; // TODO: 下次進度使用
-
   useEffect(() => {
     const target = document.getElementById(`loadMoreTarget${targetIndex}`);
 
@@ -482,7 +480,6 @@ const Home = () => {
           placeholder={"想去哪？"}
           accordion={accordion}
           classification={classification}
-          onCompleteSelectCondition={onClickFinishButton}
         />
       </div>
       <div className="container">

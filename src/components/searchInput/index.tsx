@@ -67,6 +67,10 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
     closeSearchDropdown();
   };
 
+  const onClickFinishButton = () => {
+    closeFilterDropdown();
+  };
+
   useEffect(() => {
     document.body.addEventListener("click", closeSearchDropdown);
     setListenedSearchDropdown(true);
@@ -149,7 +153,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
           <div className="f-t">篩選</div>
           <button
             className="d-flex align-items-center f-bd1 cursor-pointer"
-            onClick={props.onCompleteSelectCondition}
+            onClick={onClickFinishButton}
           >
             <i className="d-flex align-items-center me-1">
               <V />

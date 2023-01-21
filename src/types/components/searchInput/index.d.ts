@@ -17,7 +17,6 @@ type Area = {
 
 type Title = string;
 type Opened = null | string;
-type OnCompleteSelectCondition = React.MouseEventHandler;
 
 type Accordion = {
   title: string;
@@ -41,7 +40,6 @@ type Props = {
   value: Value;
   accordion?: Accordion;
   classification: Classification;
-  onCompleteSelectCondition: OnCompleteSelectCondition;
 } & StyleTypes.ClassName;
 
 export { Placeholder, Value, Area, Opened, Accordion, Props };
