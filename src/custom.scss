@@ -239,6 +239,7 @@ $spacers: (
     14: $spacer * 3.5,
     15: $spacer * 3.75,
     16: $spacer * 4,
+    20: $spacer * 5,
     22: $spacer * 5.5,
     26: $spacer * 6.5,
     30: $spacer * 7.5,
@@ -246,7 +247,8 @@ $spacers: (
     90: $spacer * 17.5,
     100: $spacer * 20,
     108: $spacer * 22,
-    140: $spacer * 30,
+    150: $spacer * 30,
+    160: $spacer * 32.5,
 );
 
 $percentage: (
@@ -447,6 +449,7 @@ $utilities: map-merge(
         "width": (
             property: width,
             class: w,
+            responsive: true,
             values:
                 map-merge(
                     map-merge($spacers, $percentage),

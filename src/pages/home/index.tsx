@@ -484,8 +484,9 @@ const Home = () => {
   return (
     <>
       <Header />
-      <div className="container py-4 px-12">
+      <div className="container-fluid bg-light position-relative d-flex justify-content-center">
         <SearchInput
+          className="z-index-10 w-100p w-sm-160"
           value={keyword}
           placeholder={"想去哪？"}
           hotKeywords={hotkeyWords}
@@ -493,6 +494,7 @@ const Home = () => {
           classification={classification}
           onCloseFilterDropdown={onCloseFilterDropdown}
         />
+        <div className="bg-white w-100p h-50p position-absolute bottom-0 left-0 " />
       </div>
       <div className="container">
         <div className="row gx-4">

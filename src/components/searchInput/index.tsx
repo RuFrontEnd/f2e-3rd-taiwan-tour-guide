@@ -102,7 +102,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
       />
 
       <motion.input
-        className={`border-1 border-color-black-core py-3 ps-10_5 pe-4_5 
+        className={`w-100p border-1 border-color-black-core py-3 ps-10_5 pe-4_5 
        pe-10_5
         `}
         placeholder={props?.placeholder}
