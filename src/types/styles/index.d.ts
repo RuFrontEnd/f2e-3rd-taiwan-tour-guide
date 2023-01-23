@@ -2,4 +2,4 @@ type ClassName = {
   className?: string;
 };
 
-export { ClassName };
+export type { ClassName };

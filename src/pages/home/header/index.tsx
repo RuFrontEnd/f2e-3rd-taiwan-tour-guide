@@ -10,7 +10,7 @@ const Header = () => {
               <div className="me-md-16 me-lg-26 mt-6 mb-2">
                 <img
                   src={travelingByTrain}
-                  className="mh-280px mh-sm-350px mh-lg-540px object-fit-contain"
+                  className="mh-90 mh-sm-108 mh-lg-150 object-fit-contain"
                 ></img>
               </div>
               <div className="d-flex flex-sm-column mb-6 mb-sm-0">
