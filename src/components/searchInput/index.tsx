@@ -33,7 +33,9 @@ const hotKeyWordsDropdownVariants = {
 // TODO: 研究如何在動畫結束後關閉此 div
 const filterVariants = {
   open: {
-    display: "block",
+    // opacity: 1,
+    // pointerEvent: "auto",
+    // display: "block",
     // transition: {
     //   staggerChildren: 0.17,
     //   delayChildren: 1,
@@ -41,19 +43,31 @@ const filterVariants = {
     // },
   },
   closed: {
-    display: "none",
-    // transition: {
-    //   staggerChildren: 0.05,
-    //   delayChildren: 1,
-    //   staggerDirection: -1,
-    //   when: "afterChildren",
-    // },
+    // opacity: 0,
+    // display: "none",
+    // pointerEvent: "none",
+    transition: {
+      // staggerChildren: 0.05,
+      delayChildren: 100,
+      // staggerDirection: -1,
+      when: "afterChildren",
+    },
   },
 };
 
 const filterDropdownVariants = {
-  open: { opacity: 1, y: "-60px" },
-  closed: { opacity: 0, y: "0px" },
+  open: {
+    opacity: 1,
+    y: "-60px",
+    display: "block",
+  },
+  closed: {
+    opacity: 0,
+    y: "0px",
+    transitionEnd: {
+      display: "none",
+    },
+  },
 };
 
 const SearchInput = (props: Types.Components.SearchInput.Props) => {
