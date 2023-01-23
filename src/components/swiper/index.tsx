@@ -11,7 +11,7 @@ const Swiper = (props: Types.Components.Swiper.Props) => {
   return (
     <div className="swiper">
       <ul className="swiper-wrapper">
-        {props.scenes.map((scene: { img: string; text: string }) => (
+        {props.scenes.map((scene:Types.Components.Swiper.Scene) => (
           <li className="swiper-slide">
             <div className="aspect-ratio-1x1 m-1" role="swiper-item">
               <div
