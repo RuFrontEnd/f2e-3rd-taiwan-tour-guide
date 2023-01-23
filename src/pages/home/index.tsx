@@ -203,12 +203,10 @@ const Home = () => {
     [targetIndex, setTargetIndex] = useState(6),
     [keyword, setKeyword] = useState(""),
     [openedAccordion, setOpenedAccordion] = useState<null | string>(null),
-    [selectedCities, setSelectedCities] = useState<
-      Types.Pages.Home.SelectedOptions
-    >({}),
-    [selectedClassifications, setSelectedClassifications] = useState<
-      Types.Pages.Home.SelectedOptions
-    >({});
+    [selectedCities, setSelectedCities] =
+      useState<Types.Pages.Home.SelectedOptions>({}),
+    [selectedClassifications, setSelectedClassifications] =
+      useState<Types.Pages.Home.SelectedOptions>({});
 
   const hotkeyWords = [
     "台南文化",
@@ -465,6 +463,10 @@ const Home = () => {
     }
   }, observerOptions);
 
+  const onCloseFilterDropdown = () => {
+    setOpenedAccordion(null);
+  };
+
   useEffect(() => {
     const target = document.getElementById(`loadMoreTarget${targetIndex}`);
 
@@ -489,6 +491,7 @@ const Home = () => {
           hotKeywords={hotkeyWords}
           accordion={accordion}
           classification={classification}
+          onCloseFilterDropdown={onCloseFilterDropdown}
         />
       </div>
       <div className="container">

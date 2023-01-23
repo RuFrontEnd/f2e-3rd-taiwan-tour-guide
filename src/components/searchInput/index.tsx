@@ -30,31 +30,6 @@ const hotKeyWordsDropdownVariants = {
   closed: { opacity: 0, y: "0px" },
 };
 
-// TODO: 研究如何在動畫結束後關閉此 div
-const filterVariants = {
-  open: {
-    // opacity: 1,
-    // pointerEvent: "auto",
-    // display: "block",
-    // transition: {
-    //   staggerChildren: 0.17,
-    //   delayChildren: 1,
-    //   when: "beforeChildren",
-    // },
-  },
-  closed: {
-    // opacity: 0,
-    // display: "none",
-    // pointerEvent: "none",
-    transition: {
-      // staggerChildren: 0.05,
-      delayChildren: 100,
-      // staggerDirection: -1,
-      when: "afterChildren",
-    },
-  },
-};
-
 const filterDropdownVariants = {
   open: {
     opacity: 1,
@@ -89,6 +64,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
 
   const closeFilterDropdown = () => {
     setFilterDropdownVisible(false);
+    props.onCloseFilterDropdown && props.onCloseFilterDropdown();
   };
 
   const onClickContainer = (e: MouseEvent<HTMLElement>) => {
@@ -175,67 +151,62 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
       </i>
 
       <motion.div
-        variants={filterVariants}
+        className="position-absolute top-15 z-index-10 w-100p border-1 border-radius-5 bg-white px-4 py-3 pt-0"
+        role={"search-input-filter-dropdown"}
+        variants={filterDropdownVariants}
         animate={filterDropdownVisible ? "open" : "closed"}
+        transition={{ duration: 0.15 }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
       >
-        <motion.div
-          className="position-absolute top-15 z-index-10 w-100p border-1 border-radius-5 bg-white px-4 py-3 pt-0"
-          role={"search-input-filter-dropdown"}
-          variants={filterDropdownVariants}
-          animate={filterDropdownVisible ? "open" : "closed"}
-          transition={{ duration: 0.15 }}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <div className="d-flex justify-content-between mt-3 mb-2">
-            <div className="f-t">篩選</div>
-            <button
-              className="d-flex align-items-center f-bd1 cursor-pointer"
-              onClick={onClickFinishButton}
-            >
-              <i className="d-flex align-items-center me-1">
-                <V />
-              </i>
-              完成
-            </button>
-          </div>
-          <caption className="f-cp1 d-block p-0 pt-3">
-            {props.accordion?.title}
-          </caption>
-          <ul>
-            {props.accordion?.areas.map(
-              (area: Types.Components.SearchInput.Area) => (
-                <li>
-                  <Accordion
-                    title={area.title}
-                    options={area.options}
-                    collapse={area.title === props.accordion?.opened}
-                    onClick={props.accordion?.onClick}
-                    onCheckboxChange={props.accordion?.onCheckboxChange}
-                  />
-                </li>
-              )
-            )}
-          </ul>
-          <caption className="f-cp1 d-block p-0 pt-3">
-            {props.classification.title}
-          </caption>
-          <ul>
-            {props.classification.options.map((option) => (
-              <li className="pt-3">
-                <Checkbox
-                  checked={option.checked}
-                  onChange={(e) => {
-                    props.classification?.onCheckboxChange(e, option);
-                  }}
+        <div className="d-flex justify-content-between mt-3 mb-2">
+          <div className="f-t">篩選</div>
+          <button
+            className="d-flex align-items-center f-bd1 cursor-pointer"
+            onClick={onClickFinishButton}
+          >
+            <i className="d-flex align-items-center me-1">
+              <V />
+            </i>
+            完成
+          </button>
+        </div>
+        <caption className="f-cp1 d-block p-0 pt-3">
+          {props.accordion?.title}
+        </caption>
+        <ul>
+          {props.accordion?.areas.map(
+            (area: Types.Components.SearchInput.Area) => (
+              <li>
+                <Accordion
+                  title={area.title}
+                  options={area.options}
+                  collapse={area.title === props.accordion?.opened}
+                  onClick={props.accordion?.onClick}
+                  onCheckboxChange={props.accordion?.onCheckboxChange}
                 />
-                &nbsp;
-                <span className="f-bd-2 mb-0">{option.name}</span>
               </li>
-            ))}
-          </ul>
-        </motion.div>
+            )
+          )}
+        </ul>
+        <caption className="f-cp1 d-block p-0 pt-3">
+          {props.classification.title}
+        </caption>
+        <ul>
+          {props.classification.options.map((option) => (
+            <li className="pt-3">
+              <Checkbox
+                checked={option.checked}
+                onChange={(e) => {
+                  props.classification?.onCheckboxChange(e, option);
+                }}
+              />
+              &nbsp;
+              <span className="f-bd-2 mb-0">{option.name}</span>
+            </li>
+          ))}
+        </ul>
       </motion.div>
     </div>
   );

@@ -19,6 +19,7 @@ type Title = string;
 type Opened = null | string;
 
 type HotKeywords = string[];
+type OnCloseFilterDropdown = () => void;
 
 type Accordion = {
   title: string;
@@ -43,6 +44,16 @@ type Props = {
   hotKeywords: HotKeywords;
   accordion?: Accordion;
   classification: Classification;
+  onCloseFilterDropdown?: OnCloseFilterDropdown;
 } & StyleTypes.ClassName;
 
-export { Placeholder, Value, Area, Opened, Accordion, Props };
+export {
+  Placeholder,
+  Value,
+  Area,
+  Opened,
+  HotKeywords,
+  OnCloseFilterDropdown,
+  Accordion,
+  Props,
+};
