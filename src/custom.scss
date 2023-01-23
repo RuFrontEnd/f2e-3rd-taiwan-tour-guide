@@ -747,7 +747,21 @@ $utilities: map-merge(
             property: box-shadow,
             class: box-shadow,
             values: (
-                light: 0px 4px 13px rgba(0, 0, 0, 0.3),
+                light: 0px 2px 4px rgba(0, 0, 0, 0.3),
+            ),
+        ),
+    )
+);
+
+// aspect-ratio
+$utilities: map-merge(
+    $utilities,
+    (
+        "aspect-ratio": (
+            property: aspect-ratio,
+            class: aspect-ratio,
+            values: (
+                1x1: 1/1,
             ),
         ),
     )

@@ -19,8 +19,14 @@ const variants = {
 };
 
 const hotKeyWordsDropdownVariants = {
-  open: { opacity: 1, y: "-14px" },
-  closed: { opacity: 0, y: "0px" },
+  open: { opacity: 1, y: "-14px", display: "block" },
+  closed: {
+    opacity: 0,
+    y: "0px",
+    transitionEnd: {
+      display: "none",
+    },
+  },
 };
 
 const filterDropdownVariants = {

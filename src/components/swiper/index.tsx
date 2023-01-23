@@ -8,6 +8,33 @@ const Swiper = (
   // Types.Components.Swiper.Props
 ) => {
   const swiper = new SwiperConstructor(".swiper", {
+    slidesPerView: "auto",
+    // centeredSlides: true,
+    breakpoints: {
+      // when window width is >= 320px
+      0: {
+        slidesPerView: 2,
+        // spaceBetween: 8,
+      },
+      420: {
+        slidesPerView: 3,
+        // spaceBetween: 8,
+      },
+      // when window width is >= 480px
+      768: {
+        slidesPerView: 5,
+        // spaceBetween: 8,
+      },
+      992: {
+        slidesPerView: 6,
+        // spaceBetween: 8,
+      },
+      // when window width is >= 640px
+      1200: {
+        slidesPerView: 8,
+        // spaceBetween: 8,
+      },
+    },
     // Optional parameters
     // direction: "vertical",
     // loop: true,
@@ -31,17 +58,17 @@ const Swiper = (
       <ul className="swiper-wrapper">
         {props.scenes.map((scene: { img: string; text: string }) => (
           <li className="swiper-slide">
-            <div className="w-32 h-32 m-3" role="swiper-item">
+            <div className="aspect-ratio-1x1 m-1" role="swiper-item">
               <div
-                role="swiper-img"
                 style={{ backgroundImage: `url(${scene.img})` }}
-                className="w-100p h-100p overflow-hidden box-shadow-light position-relative border-radius-8 text-white bg-position-center bg-size-cover bg-repeat-none"
+                className="h-100p overflow-hidden d-flex box-shadow-light position-relative border-radius-8 text-white bg-position-center bg-size-cover bg-repeat-none"
+                role="swiper-img"
               >
                 <div
-                  className="z-index-10 position-relative w-100p h-100p p-2 d-flex"
+                  className="z-index-10 position-relative p-2 align-self-end"
                   role="swiper-text-container"
                 >
-                  <p className="m-0 align-self-end" role="swiper-text">
+                  <p className="m-0" role="swiper-text">
                     {scene.text}
                   </p>
                 </div>

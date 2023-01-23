@@ -502,6 +502,14 @@ const Home = () => {
           scenes={[
             { img: lighthouse, text: "台南文化-1" },
             { img: lighthouse, text: "台南文化-2" },
+            { img: lighthouse, text: "台南文化-3" },
+            { img: lighthouse, text: "台南文化-4" },
+            { img: lighthouse, text: "台南文化-5" },
+            { img: lighthouse, text: "台南文化-6" },
+            { img: lighthouse, text: "台南文化-7" },
+            { img: lighthouse, text: "台南文化-8" },
+            { img: lighthouse, text: "台南文化-9" },
+            { img: lighthouse, text: "台南文化-10" },
           ]}
         />
       </div>
