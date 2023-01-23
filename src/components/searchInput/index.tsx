@@ -124,6 +124,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
       <motion.div
         className="position-absolute top-15 z-index-10 w-100p border-top-0 border-1 border-bottom-left-radius-5 border-bottom-right-radius-5 bg-white px-4 py-3 pt-0"
         role={"search-input-hotkey-dropdown"}
+        initial={false}
         variants={hotKeyWordsDropdownVariants}
         animate={searchDropdownVisible ? "open" : "closed"}
         transition={{ duration: 0.15 }}
@@ -150,6 +151,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
       </i>
 
       <motion.div
+      initial={false}
         className="position-absolute top-15 z-index-10 w-100p border-1 border-radius-5 bg-white px-4 py-3 pt-0"
         role={"search-input-filter-dropdown"}
         variants={filterDropdownVariants}
