@@ -511,6 +511,27 @@ const Home = () => {
             { img: lighthouse, text: "台南文化-9" },
             { img: lighthouse, text: "台南文化-10" },
           ]}
+          breakPoints={{
+            0: {
+              slidesPerView: 2,
+            },
+            420: {
+              slidesPerView: 3,
+            },
+            576: {
+              slidesPerView: 4,
+            },
+            768: {
+              slidesPerView: 5,
+            },
+            992: {
+              slidesPerView: 6,
+            },
+
+            1200: {
+              slidesPerView: 8,
+            },
+          }}
         />
       </div>
       <div className="container">
