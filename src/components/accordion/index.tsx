@@ -1,10 +1,10 @@
-import type * as Types from "types/components/index";
 import Divider from "components/divider/";
 import Checkbox from "components/checkbox/";
 import Counter from "components/counter";
-import { useState } from "react";
 import { ReactComponent as Arrow } from "assets/icon/arrow.svg";
 import { motion } from "framer-motion";
+import type * as Types from "types/";
+import * as variables from "variables/";
 
 const variants = {
   close: {
@@ -24,7 +24,7 @@ const arrowVariants = {
   },
 };
 
-const Accordion = (props: Types.Accordion.Props) => {
+const Accordion = (props: Types.Components.Accordion.Props) => {
   const count = props.options.filter((option) => option.checked).length;
 
   return (
@@ -46,14 +46,14 @@ const Accordion = (props: Types.Accordion.Props) => {
           </motion.div>
         </div>
       </div>
-      <Divider color={"#cccccc"} />
+      <Divider color={variables.colors.black500} />
       <div className="">
         <motion.ul
           variants={variants}
           animate={props.collapse ? "open" : "close"}
           className={`overflow-hidden`}
         >
-          {props.options.map((option: Types.Accordion.Option) => (
+          {props.options.map((option: Types.Components.Accordion.Option) => (
             <li className="pt-3">
               <Checkbox
                 onChange={(e) => {

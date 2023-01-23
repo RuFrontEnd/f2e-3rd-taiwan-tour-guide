@@ -1,6 +1,6 @@
-import type * as Types from "types/components/index";
+import type * as Types from "types/";
 
-const Counter = (props: Types.Counter.Props) => {
+const Counter = (props: Types.Components.Counter.Props) => {
   return (
     <div
       className={`d-flex justify-content-center align-items-center rounded-circle f-cp1 text-white bg-default w-6 h-6 m-0 ${props.className}`}

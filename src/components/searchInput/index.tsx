@@ -1,4 +1,3 @@
-import type * as Types from "types/";
 import Divider from "components/divider/";
 import Checkbox from "components/checkbox/";
 import Accordion from "components/accordion/";
@@ -7,6 +6,8 @@ import { motion } from "framer-motion";
 import { ReactComponent as Magnifier } from "assets/icon/magnifier.svg";
 import { ReactComponent as Sieve } from "assets/icon/sieve.svg";
 import { ReactComponent as V } from "assets/icon/v.svg";
+import * as variables from "variables/";
+import type * as Types from "types/";
 
 const variants = {
   closed: {
@@ -128,7 +129,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
             <>
               <li className="pt-3 f-bd1">{hotKeyword}</li>
               {hotKeywordIndex !== hotKeywords.length - 1 && (
-                <Divider className="mt-3" color={"#cccccc"} />
+                <Divider className="mt-3" color={variables.colors.black500} />
               )}
             </>
           ))}
