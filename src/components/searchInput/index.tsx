@@ -8,14 +8,6 @@ import { ReactComponent as Magnifier } from "assets/icon/magnifier.svg";
 import { ReactComponent as Sieve } from "assets/icon/sieve.svg";
 import { ReactComponent as V } from "assets/icon/v.svg";
 
-const hotKeywords = [
-  "台南文化",
-  "嘉義觀光工廠",
-  "台東自然風景",
-  "屏東國家風景區",
-  "新竹遊憩",
-];
-
 const variants = {
   closed: {
     borderRadius: "25px 25px",
@@ -132,7 +124,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
         <Divider />
         <caption className="f-cp1 d-block p-0 pt-3">熱門關鍵字</caption>
         <ul>
-          {props.hotKeywords.map((hotKeyword, hotKeywordIndex) => (
+          {props.hotKeywords.map((hotKeyword, hotKeywordIndex, hotKeywords) => (
             <>
               <li className="pt-3 f-bd1">{hotKeyword}</li>
               {hotKeywordIndex !== hotKeywords.length - 1 && (
