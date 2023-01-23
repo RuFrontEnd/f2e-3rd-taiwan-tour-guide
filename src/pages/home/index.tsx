@@ -5,6 +5,7 @@ import Types from "types/";
 import Header from "./header";
 import Card from "components/card";
 import SearchInput from "components/searchInput";
+import Swiper from "components/swiper";
 import { useEffect, useState } from "react";
 import * as variables from "variables";
 
@@ -495,6 +496,14 @@ const Home = () => {
           onCloseFilterDropdown={onCloseFilterDropdown}
         />
         <div className="bg-white w-100p h-50p position-absolute bottom-0 left-0 " />
+      </div>
+      <div className="container py-20">
+        <Swiper
+          scenes={[
+            { img: lighthouse, text: "台南文化-1" },
+            { img: lighthouse, text: "台南文化-2" },
+          ]}
+        />
       </div>
       <div className="container">
         <div className="row gx-4">
