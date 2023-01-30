@@ -243,6 +243,8 @@ $spacers: (
     22: $spacer * 5.5,
     26: $spacer * 6.5,
     30: $spacer * 7.5,
+    32: $spacer * 8,
+    34: $spacer * 8.5,
     50: $spacer * 10,
     90: $spacer * 17.5,
     100: $spacer * 20,
@@ -554,6 +556,7 @@ $border-radius: (
     3: 3px,
     4: 4px,
     5: 5px,
+    8: 8px,
 );
 
 $border-width: (
@@ -682,7 +685,7 @@ $utilities: map-merge(
     (
         "z-index": (
             property: z-index,
-            className: z-index,
+            class: z-index,
             values: $zIndex,
         ),
     )
@@ -695,6 +698,71 @@ $utilities: map-merge(
         "cursor": (
             property: cursor,
             values: pointer,
+        ),
+    )
+);
+
+// background
+$utilities: map-merge(
+    $utilities,
+    (
+        "background-position": (
+            property: background-position,
+            class: bg-position,
+            values: (
+                center: center,
+            ),
+        ),
+        "background-size": (
+            property: background-size,
+            class: bg-size,
+            values: (
+                contain: contain,
+                cover: cover,
+            ),
+        ),
+        "background-repeat": (
+            property: background-repeat,
+            class: bg-repeat,
+            values: (
+                repeat: repeat,
+                none: no-repeat,
+            ),
+        ),
+        "background": (
+            property: background,
+            class: bg,
+            values: (
+                bottom-gradient: linear-gradient(360deg, map-get($project-colors, "black-core"), transparent),
+            ),
+        ),
+    )
+);
+
+// box-shadow
+$utilities: map-merge(
+    $utilities,
+    (
+        "box-shadow": (
+            property: box-shadow,
+            class: box-shadow,
+            values: (
+                light: 0px 2px 4px rgba(0, 0, 0, 0.3),
+            ),
+        ),
+    )
+);
+
+// aspect-ratio
+$utilities: map-merge(
+    $utilities,
+    (
+        "aspect-ratio": (
+            property: aspect-ratio,
+            class: aspect-ratio,
+            values: (
+                1x1: 1/1,
+            ),
         ),
     )
 );

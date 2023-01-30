@@ -5,6 +5,7 @@ import Types from "types/";
 import Header from "./header";
 import Card from "components/card";
 import SearchInput from "components/searchInput";
+import Swiper from "components/swiper";
 import { useEffect, useState } from "react";
 import * as variables from "variables";
 
@@ -495,6 +496,43 @@ const Home = () => {
           onCloseFilterDropdown={onCloseFilterDropdown}
         />
         <div className="bg-white w-100p h-50p position-absolute bottom-0 left-0 " />
+      </div>
+      <div className="container py-20">
+        <Swiper
+          scenes={[
+            { img: lighthouse, text: "台南文化-1" },
+            { img: lighthouse, text: "台南文化-2" },
+            { img: lighthouse, text: "台南文化-3" },
+            { img: lighthouse, text: "台南文化-4" },
+            { img: lighthouse, text: "台南文化-5" },
+            { img: lighthouse, text: "台南文化-6" },
+            { img: lighthouse, text: "台南文化-7" },
+            { img: lighthouse, text: "台南文化-8" },
+            { img: lighthouse, text: "台南文化-9" },
+            { img: lighthouse, text: "台南文化-10" },
+          ]}
+          breakPoints={{
+            0: {
+              slidesPerView: 2,
+            },
+            420: {
+              slidesPerView: 3,
+            },
+            576: {
+              slidesPerView: 4,
+            },
+            768: {
+              slidesPerView: 5,
+            },
+            992: {
+              slidesPerView: 6,
+            },
+
+            1200: {
+              slidesPerView: 8,
+            },
+          }}
+        />
       </div>
       <div className="container">
         <div className="row gx-4">
