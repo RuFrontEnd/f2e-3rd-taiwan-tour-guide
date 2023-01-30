@@ -495,7 +495,7 @@ const Home = () => {
           classification={classification}
           onCloseFilterDropdown={onCloseFilterDropdown}
         />
-        <div className="bg-white w-100p h-50p position-absolute bottom-0 left-0 " />
+        <div className="bg-white w-100p h-50p position-absolute bottom-0" />
       </div>
       <div className="container py-20">
         <Swiper
@@ -534,18 +534,19 @@ const Home = () => {
           }}
         />
       </div>
-      <div className="container">
+      <div className="container-fluid container-lg">
         <div className="row gx-4">
           {product.photos.map((photo, photoIndex) => (
             <div className="col-md-4 col-sm-6">
               <div className="position-relative">
                 <Card
                   className="mb-4"
-                  src={lighthouse}
+                  src={photo.images[0]}
                   title={"東莒島燈塔(東犬燈塔)"}
                   text={
                     "碧海藍天下走過百年歲月的潔白燈塔 東莒島燈塔，又名「東犬燈塔」，位在東莒島的東北方，清朝因鴉片戰..."
                   }
+                  labels={["生態類", "國家風景區"]}
                 />
                 {photoIndex === targetIndex && (
                   <small
