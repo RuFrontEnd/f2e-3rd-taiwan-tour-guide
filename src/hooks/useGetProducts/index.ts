@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import * as variables from "variables/";
-import type * as Types from "./types";
+import type * as Types from "types/";
 
 // for mocking API
-const useGetProducts = (props?: Types.Props) => {
+const useGetProducts = (props?: Types.Hooks.UseGetProducts.Props) => {
   const [loading, setLoading] = useState(true),
-    [photos, setPhotos] = useState([]);
+    [photos, setPhotos] = useState<Types.Hooks.UseGetProducts.Photos>([]);
 
   useEffect(() => {
     if (!loading) return;

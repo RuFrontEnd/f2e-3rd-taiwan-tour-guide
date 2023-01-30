@@ -1,12 +1,27 @@
 import Types from "types/";
+import Label from "components/label";
 import { ReactComponent as Location } from "assets/icon/location.svg";
 import { ReactComponent as Telephone } from "assets/icon/telephone.svg";
 import { ReactComponent as Clock } from "assets/icon/clock.svg";
 
 const Card = (props: Types.Components.Card.Props) => {
   return (
-    <div className={`card ${props.className}`}>
-      <img src="..." className="card-img-top" alt="..." />
+    <div
+      className={`card ${props.className} box-shadow-blur border-radius-5 overflow-hidden`}
+    >
+      <div className="position-relative">
+        <img
+          src={props.src}
+          className="card-img-top w-100p h-52 object-fit-cover"
+          alt="..."
+        />
+        <div className="position-absolute top-0 end-0">
+          {props.labels?.map((label) => (
+            <Label className="me-2 my-3" text={label} />
+          ))}
+        </div>
+      </div>
+
       <div className="card-body px-2 py-3">
         <h6 className="card-title fw-bold mb-2 f-6">{props?.title}</h6>
         <div className="fw-normal mb-2">
