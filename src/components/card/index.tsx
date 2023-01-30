@@ -6,7 +6,9 @@ import { ReactComponent as Clock } from "assets/icon/clock.svg";
 
 const Card = (props: Types.Components.Card.Props) => {
   return (
-    <div className={`card ${props.className}`}>
+    <div
+      className={`card ${props.className} box-shadow-blur border-radius-5 overflow-hidden`}
+    >
       <div className="position-relative">
         <img
           src={props.src}

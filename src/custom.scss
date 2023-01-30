@@ -750,6 +750,7 @@ $utilities: map-merge(
             class: box-shadow,
             values: (
                 light: 0px 2px 4px rgba(0, 0, 0, 0.3),
+                blur: 0px 4px 13px rgba(0, 0, 0, 0.15),
             ),
         ),
     )
