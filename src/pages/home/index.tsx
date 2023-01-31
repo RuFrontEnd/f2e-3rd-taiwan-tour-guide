@@ -6,6 +6,7 @@ import Header from "./header";
 import Card from "components/card";
 import SearchInput from "components/searchInput";
 import Swiper from "components/swiper";
+import Tag from "components/tag";
 import { useEffect, useState } from "react";
 import * as variables from "variables";
 
@@ -497,6 +498,7 @@ const Home = () => {
         />
         <div className="bg-white w-100p h-50p position-absolute bottom-0" />
       </div>
+      <Tag text={"台北"} onClick={() => {}} />
       <div className="container py-20">
         <Swiper
           scenes={[

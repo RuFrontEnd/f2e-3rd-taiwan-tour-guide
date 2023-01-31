@@ -6,6 +6,7 @@ import type * as Divider from "./divider";
 import type * as Label from "./label";
 import type * as SearchInput from "./searchInput";
 import type * as Swiper from "./swiper";
+import type * as Tag from "./tag";
 
 export type {
   Accordion,
@@ -16,4 +17,5 @@ export type {
   SearchInput,
   Label,
   Swiper,
+  Tag,
 };
