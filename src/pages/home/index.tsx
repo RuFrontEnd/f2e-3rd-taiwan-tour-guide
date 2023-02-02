@@ -1,5 +1,16 @@
 import _, { cloneDeep } from "lodash";
-import lighthouse from "assets/fake/lighthouse.png";
+import taipei from "assets/picture/cities/taipei.jpg";
+import newTaipei from "assets/picture/cities/new-taipei.jpg";
+import taoyuan from "assets/picture/cities/taoyuan.jpg";
+import taichung from "assets/picture/cities/taichung.jpg";
+import tainan from "assets/picture/cities/tainan.jpg";
+import kaohsiung from "assets/picture/cities/kaohsiung.jpg";
+import hualien from "assets/picture/cities/hualien.jpg";
+import taitung from "assets/picture/cities/taitung.jpg";
+import nantou from "assets/picture/cities/nantou.jpg";
+import penghu from "assets/picture/cities/penghu.jpg";
+import kinmen from "assets/picture/cities/kinmen.jpg";
+import greenIsland from "assets/picture/cities/greenIsland.jpg";
 import useGetProducts from "hooks/useGetProducts";
 import Types from "types/";
 import Header from "./header";
@@ -77,6 +88,21 @@ const culture = "文化",
   ecology = "生態",
   naturalScenery = "自然風景",
   nationalScenicArea = "國家風景區";
+
+const hotCities = [
+  { img: taipei, text: "臺北" },
+  { img: newTaipei, text: "新北" },
+  { img: taoyuan, text: "桃園" },
+  { img: taichung, text: "臺中" },
+  { img: tainan, text: "臺南" },
+  { img: kaohsiung, text: "高雄" },
+  { img: hualien, text: "花蓮" },
+  { img: taitung, text: "臺東" },
+  { img: nantou, text: "南投" },
+  { img: penghu, text: "澎湖" },
+  { img: kinmen, text: "金門" },
+  { img: greenIsland, text: "綠島" },
+];
 
 const translateCHCityNameToEN = (chinese: string) => {
   switch (chinese) {
@@ -501,18 +527,7 @@ const Home = () => {
       <Tag text={"台北"} onClick={() => {}} />
       <div className="container py-20">
         <Swiper
-          scenes={[
-            { img: lighthouse, text: "台南文化-1" },
-            { img: lighthouse, text: "台南文化-2" },
-            { img: lighthouse, text: "台南文化-3" },
-            { img: lighthouse, text: "台南文化-4" },
-            { img: lighthouse, text: "台南文化-5" },
-            { img: lighthouse, text: "台南文化-6" },
-            { img: lighthouse, text: "台南文化-7" },
-            { img: lighthouse, text: "台南文化-8" },
-            { img: lighthouse, text: "台南文化-9" },
-            { img: lighthouse, text: "台南文化-10" },
-          ]}
+          scenes={hotCities}
           breakPoints={{
             0: {
               slidesPerView: 2,
