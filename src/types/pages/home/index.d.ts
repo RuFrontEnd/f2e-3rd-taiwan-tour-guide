@@ -4,4 +4,13 @@ type SelectedOptions = {
   [option: string]: boolean;
 };
 
-export type { SelectedOptions, Header };
+type ScenicSpots = {
+  photo: string;
+  title: string;
+  address: string;
+  phone: string;
+  time: string;
+  info: string;
+}[];
+
+export type { SelectedOptions, ScenicSpots, Header };

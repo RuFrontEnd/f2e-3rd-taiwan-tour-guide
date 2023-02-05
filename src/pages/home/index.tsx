@@ -20,6 +20,7 @@ import Tag from "components/tag";
 import { useEffect, useState } from "react";
 import * as hooks from "hooks/";
 import * as variables from "variables";
+import * as utils from "utils";
 
 const n0ch = variables.cities.areas.N[0].CH,
   n0en = variables.cities.areas.N[0].EN,
@@ -103,6 +104,8 @@ const hotCities = [
   { img: kinmen, text: "金門" },
   { img: greenIsland, text: "綠島" },
 ];
+
+const dataCountPerFetching = 20;
 
 const translateCHCityNameToEN = (chinese: string) => {
   switch (chinese) {
@@ -223,19 +226,36 @@ const getClassificationKey = (name: string) => {
   }
 };
 
+const generateScenicSpotsDS: (
+  resData: Types.Utils.Apis.GetScenicSpots.Res["data"]
+) => Types.Pages.Home.ScenicSpots = (resData) => {
+  return resData.map(
+    (resDataItem: Types.Utils.Apis.GetScenicSpots.ResDataItem) => ({
+      photo: resDataItem.Picture.PictureUrl1,
+      title: resDataItem.ScenicSpotName,
+      address: resDataItem.Address,
+      phone: resDataItem.Phone,
+      time: resDataItem.OpenTime,
+      info: resDataItem.Description,
+    })
+  );
+};
+
 const Home = () => {
-  const [getProductParam, setGetProductParam] = useState({
-      skip: 0,
-      limit: 10,
+  const [getScenicSpotsParams, seScenicSpotsParams] = useState({
+      // $orderby: "HotelID",
+      $top: dataCountPerFetching,
+      $skip: 0,
     }),
-    [targetIndex, setTargetIndex] = useState(6),
+    [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10),
     [keyword, setKeyword] = useState(""),
     [openedAccordion, setOpenedAccordion] = useState<null | string>(null),
     [selectedCities, setSelectedCities] =
       useState<Types.Pages.Home.SelectedOptions>({}),
     [selectedClassifications, setSelectedClassifications] =
       useState<Types.Pages.Home.SelectedOptions>({}),
-    [loading, setLoading] = useState(false);
+    [loading, setLoading] = useState(false),
+    [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]);
 
   // const { getScenicSpot, scenicSpots } = hooks.apis.useGetScenicSpot();
 
@@ -470,32 +490,31 @@ const Home = () => {
   const observerOptions = {
     root: document,
     rootMargin: "0px",
-    threshold: 1.0,
+    threshold: 0,
   };
 
   let observer = new IntersectionObserver((observe) => {
     const inView = observe[0].isIntersecting;
 
+    console.log("inView", inView);
+
     if (inView) {
-      setGetProductParam((getProductParam) => ({
-        skip: getProductParam.skip,
-        limit: getProductParam.limit + 10,
-      }));
+      utils.apis.getScenicSpots(
+        getScenicSpotsParams,
+        (res: Types.Utils.Apis.GetScenicSpots.Res) => {
+          console.log("res", res);
+          const generatedScenicSpots = generateScenicSpotsDS(res.data);
+          setScenicSpots((scenicSpots) =>
+            scenicSpots.concat(generatedScenicSpots)
+          );
+          seScenicSpotsParams((scenicSpotsParams) => ({
+            ...scenicSpotsParams,
+            $skip: scenicSpotsParams.$skip + dataCountPerFetching,
+          }));
+        }
+      );
 
-      // getScenicSpot(
-      //   {
-      //     top:20,
-
-      //   },
-      //   () => {
-      //     setLoading(true);
-      //   },
-      //   (res) => {
-      //     console.log(res);
-      //   }
-      // );
-
-      setTargetIndex((targetIndex) => targetIndex + 10);
+      setTargetIndex((targetIndex) => targetIndex + dataCountPerFetching);
 
       const target = document.getElementById(`loadMoreTarget${targetIndex}`);
 
@@ -510,35 +529,47 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // getScenicSpot(
-    //   undefined,
-    //   () => {
-    //     setLoading(true);
-    //   },
-    //   (res) => {
-    //     console.log(res);
-    //   }
-    // );
+    utils.apis.getScenicSpots(
+      getScenicSpotsParams,
+      (res: Types.Utils.Apis.GetScenicSpots.Res) => {
+        const generatedScenicSpots = generateScenicSpotsDS(res.data);
+        setScenicSpots(generatedScenicSpots);
+        seScenicSpotsParams((scenicSpotsParams) => ({
+          ...scenicSpotsParams,
+          $skip: scenicSpotsParams.$skip + dataCountPerFetching,
+        }));
+      }
+    );
   }, []);
 
-  useEffect(
-    () => {
-      const target = document.getElementById(`loadMoreTarget${targetIndex}`);
+  useEffect(() => {
+    console.log("scenicSpots", scenicSpots);
+  }, [scenicSpots]);
 
-      if (target) {
-        observer.observe(target);
+  useEffect(() => {
+    // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
+    const loading = document.getElementById("loading");
+
+    console.log("loading", loading);
+
+    if (
+      // target
+      loading
+    ) {
+      // observer.observe(target);
+      observer.observe(loading);
+    }
+
+    return () => {
+      if (
+        // target
+        loading
+      ) {
+        // observer.unobserve(target);
+        observer.unobserve(loading);
       }
-
-      return () => {
-        if (target) {
-          observer.unobserve(target);
-        }
-      };
-    },
-    [
-      // scenicSpots
-    ]
-  );
+    };
+  }, [scenicSpots]);
 
   return (
     <>
@@ -584,27 +615,34 @@ const Home = () => {
       </div>
       <div className="container-fluid container-lg">
         <div className="row gx-4">
-          {/* {product.photos.map((photo, photoIndex) => (
+          {scenicSpots.map((scenicSpot, scenicSpotIndex) => (
             <div className="col-md-4 col-sm-6">
               <div className="position-relative">
                 <Card
                   className="mb-4"
-                  src={photo.images[0]}
-                  title={"東莒島燈塔(東犬燈塔)"}
-                  text={
-                    "碧海藍天下走過百年歲月的潔白燈塔 東莒島燈塔，又名「東犬燈塔」，位在東莒島的東北方，清朝因鴉片戰..."
-                  }
+                  src={scenicSpot.photo}
+                  title={scenicSpot.title}
+                  address={scenicSpot.address}
+                  phone={scenicSpot.phone}
+                  time={scenicSpot.time}
+                  info={scenicSpot.info}
                   labels={["生態類", "國家風景區"]}
                 />
-                {photoIndex === targetIndex && (
+                {/* {scenicSpotIndex === targetIndex && (
                   <small
+                    style={{ background: "red" }}
                     id={`loadMoreTarget${targetIndex}`}
                     className="position-absolute top-0 start-0"
-                  />
-                )}
+                  >
+                    123
+                  </small>
+                )} */}
               </div>
             </div>
-          ))} */}
+          ))}
+        </div>
+        <div id={"loading"} style={{ background: "red" }}>
+          loading...
         </div>
       </div>
     </>

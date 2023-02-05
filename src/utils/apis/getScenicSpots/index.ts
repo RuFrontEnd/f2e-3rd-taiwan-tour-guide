@@ -1,25 +1,31 @@
 import axios from "axios";
-import getAuthorizationHeader from "../initializeAxiosAuthorizationHeader";
+import * as Types from "types/";
 import * as constants from "constants/";
 import * as variables from "variables/";
 
-const getScenicSpots = async () => {
-  // const TDXAccountInfo = {
-  //   grant_type: "client_credentials",
-  //   client_id: process.env.REACT_APP_CLIENT_ID,
-  //   client_secret: process.env.REACT_APP_CLIENT_SECRET,
-  // };
+const getScenicSpots = (
+  params: Types.Utils.Apis.Get.Params,
+  handleThen: Types.Utils.Apis.Get.HandleThen,
+  handleBeforeFetch?: Types.Utils.Apis.Get.HandleBeforeFetch,
+  handleError?: Types.Utils.Apis.Get.HandleError,
+  handleFinal?: Types.Utils.Apis.Get.HandleFinal
+) => {
+  handleBeforeFetch && handleBeforeFetch();
 
-  // let res = await axios({
-  //   method: constants.apis.GET,
-  //   url: variables.urls.getAuthToken,
-  //   data: TDXAccountInfo,
-  //   headers: getAuthorizationHeader(),
-  // });
-
-  // return {
-  //   authorization: `Bearer ${res.data.access_token}`,
-  // };
+  axios({
+    method: constants.apis.GET,
+    url: variables.urls.getScenicSpots,
+    params: params,
+  })
+    .then((res: Types.Utils.Apis.GetScenicSpots.Res) => {
+      handleThen && handleThen(res);
+    })
+    .catch((error) => {
+      handleError && handleError(error);
+    })
+    .finally(() => {
+      handleFinal && handleFinal();
+    });
 };
 
 export default getScenicSpots;

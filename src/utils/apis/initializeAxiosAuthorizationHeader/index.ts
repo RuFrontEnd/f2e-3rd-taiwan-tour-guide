@@ -16,7 +16,9 @@ const initializeAxiosAuthorizationHeader = async () => {
     headers: { "content-type": "application/x-www-form-urlencoded" },
   });
 
-  axios.defaults.headers.authorization = `Bearer ${res.data.access_token}`;
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${res.data.access_token}`;
 };
 
 export default initializeAxiosAuthorizationHeader;
