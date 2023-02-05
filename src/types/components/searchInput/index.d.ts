@@ -38,6 +38,8 @@ type Classification = {
   onCheckboxChange: AccordionTypes.OnCheckboxChange;
 };
 
+type OnEnter = () => void;
+
 type Props = {
   placeholder?: Placeholder;
   value: Value;
@@ -45,6 +47,7 @@ type Props = {
   accordion?: Accordion;
   classification: Classification;
   onCloseFilterDropdown?: OnCloseFilterDropdown;
+  onEnter?: OnEnter;
 } & StyleTypes.ClassName;
 
 export {

@@ -242,9 +242,10 @@ const generateScenicSpotsDS: (
   );
 };
 
-const Home = () => {
+const List = () => {
   const navigate = useNavigate();
   const [getScenicSpotsParams, seScenicSpotsParams] = useState({
+      // $orderby: "HotelID",
       $top: dataCountPerFetching,
       $skip: 0,
     }),
@@ -540,14 +541,8 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log("scenicSpots", scenicSpots);
-  }, [scenicSpots]);
-
-  useEffect(() => {
     // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
     const loading = document.getElementById("loading");
-
-    console.log("loading", loading);
 
     if (
       // target
@@ -570,7 +565,6 @@ const Home = () => {
 
   return (
     <>
-      <Header />
       <div className="container-fluid bg-light position-relative d-flex justify-content-center">
         <SearchInput
           className="z-index-10 w-100p w-sm-160"
@@ -580,13 +574,10 @@ const Home = () => {
           accordion={accordion}
           classification={classification}
           onCloseFilterDropdown={onCloseFilterDropdown}
-          onEnter={() => {
-            navigate("/list");
-          }}
+          onEnter={() => {}}
         />
         <div className="bg-white w-100p h-50p position-absolute bottom-0" />
       </div>
-      <Tag text={"台北"} onClick={() => {}} />
       <div className="container py-20">
         <Swiper
           scenes={hotCities}
@@ -649,4 +640,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default List;

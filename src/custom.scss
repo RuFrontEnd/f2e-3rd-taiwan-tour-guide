@@ -486,6 +486,7 @@ $utilities: map-merge(
         "height": (
             property: height,
             class: h,
+            responsive: true,
             values:
                 map-merge(
                     map-merge($spacers, $percentage),

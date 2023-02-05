@@ -119,6 +119,10 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
           searchDropdownVisible || filterDropdownVisible ? "open" : "closed"
         }
         transition={{ duration: 0.15 }}
+        onKeyPress={(e) => {
+          if (e.charCode !== 13) return;
+          props.onEnter && props.onEnter();
+        }}
       />
 
       <motion.div
@@ -151,7 +155,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
       </i>
 
       <motion.div
-      initial={false}
+        initial={false}
         className="position-absolute top-15 z-index-10 w-100p border-1 border-radius-5 bg-white px-4 py-3 pt-0"
         role={"search-input-filter-dropdown"}
         variants={filterDropdownVariants}
