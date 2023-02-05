@@ -1,3 +1,3 @@
-import getAuthorizationHeader from "./getAuthorizationHeader";
+import initializeAxiosAuthorizationHeader from "./initializeAxiosAuthorizationHeader";
 
-export { getAuthorizationHeader };
+export { initializeAxiosAuthorizationHeader };

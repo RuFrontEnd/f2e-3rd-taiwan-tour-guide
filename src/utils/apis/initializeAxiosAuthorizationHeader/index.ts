@@ -1,7 +1,8 @@
 import axios from "axios";
+import * as constants from "constants/";
 import * as variables from "variables/";
 
-const getAuthorizationHeader = async () => {
+const initializeAxiosAuthorizationHeader = async () => {
   const TDXAccountInfo = {
     grant_type: "client_credentials",
     client_id: process.env.REACT_APP_CLIENT_ID,
@@ -9,15 +10,13 @@ const getAuthorizationHeader = async () => {
   };
 
   let res = await axios({
-    method: "POST",
+    method: constants.apis.POST,
     url: variables.urls.getAuthToken,
     data: TDXAccountInfo,
     headers: { "content-type": "application/x-www-form-urlencoded" },
   });
 
-  return {
-    authorization: `Bearer ${res.data.access_token}`,
-  };
+  axios.defaults.headers.authorization = `Bearer ${res.data.access_token}`;
 };
 
-export default getAuthorizationHeader;
+export default initializeAxiosAuthorizationHeader;

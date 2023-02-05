@@ -8,6 +8,7 @@ import Guide from "pages/guide/";
 import Home from "pages/home/";
 
 axios.defaults.baseURL = variables.urls.TDXServer;
+utils.apis.initializeAxiosAuthorizationHeader();
 
 const browserRouter = [
   {
