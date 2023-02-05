@@ -11,7 +11,6 @@ import nantou from "assets/picture/cities/nantou.jpg";
 import penghu from "assets/picture/cities/penghu.jpg";
 import kinmen from "assets/picture/cities/kinmen.jpg";
 import greenIsland from "assets/picture/cities/greenIsland.jpg";
-import useGetProducts from "hooks/useGetProducts";
 import Types from "types/";
 import Header from "./header";
 import Card from "components/card";
@@ -19,6 +18,7 @@ import SearchInput from "components/searchInput";
 import Swiper from "components/swiper";
 import Tag from "components/tag";
 import { useEffect, useState } from "react";
+import * as hooks from "hooks/";
 import * as variables from "variables";
 
 const n0ch = variables.cities.areas.N[0].CH,
@@ -234,7 +234,10 @@ const Home = () => {
     [selectedCities, setSelectedCities] =
       useState<Types.Pages.Home.SelectedOptions>({}),
     [selectedClassifications, setSelectedClassifications] =
-      useState<Types.Pages.Home.SelectedOptions>({});
+      useState<Types.Pages.Home.SelectedOptions>({}),
+    [loading, setLoading] = useState(false);
+
+  // const { getScenicSpot, scenicSpots } = hooks.apis.useGetScenicSpot();
 
   const hotkeyWords = [
     "台南文化",
@@ -462,7 +465,7 @@ const Home = () => {
     },
   };
 
-  const product = useGetProducts(getProductParam);
+  // const product = useGetProducts(getProductParam);
 
   const observerOptions = {
     root: document,
@@ -479,7 +482,18 @@ const Home = () => {
         limit: getProductParam.limit + 10,
       }));
 
-      product.setLoading(true);
+      // getScenicSpot(
+      //   {
+      //     top:20,
+
+      //   },
+      //   () => {
+      //     setLoading(true);
+      //   },
+      //   (res) => {
+      //     console.log(res);
+      //   }
+      // );
 
       setTargetIndex((targetIndex) => targetIndex + 10);
 
@@ -496,18 +510,35 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const target = document.getElementById(`loadMoreTarget${targetIndex}`);
+    // getScenicSpot(
+    //   undefined,
+    //   () => {
+    //     setLoading(true);
+    //   },
+    //   (res) => {
+    //     console.log(res);
+    //   }
+    // );
+  }, []);
 
-    if (target) {
-      observer.observe(target);
-    }
+  useEffect(
+    () => {
+      const target = document.getElementById(`loadMoreTarget${targetIndex}`);
 
-    return () => {
       if (target) {
-        observer.unobserve(target);
+        observer.observe(target);
       }
-    };
-  }, [product.photos]);
+
+      return () => {
+        if (target) {
+          observer.unobserve(target);
+        }
+      };
+    },
+    [
+      // scenicSpots
+    ]
+  );
 
   return (
     <>
@@ -553,7 +584,7 @@ const Home = () => {
       </div>
       <div className="container-fluid container-lg">
         <div className="row gx-4">
-          {product.photos.map((photo, photoIndex) => (
+          {/* {product.photos.map((photo, photoIndex) => (
             <div className="col-md-4 col-sm-6">
               <div className="position-relative">
                 <Card
@@ -573,7 +604,7 @@ const Home = () => {
                 )}
               </div>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </>

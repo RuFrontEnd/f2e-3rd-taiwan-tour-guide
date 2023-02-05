@@ -1,8 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import * as utils from "utils";
 import * as constants from "constants/";
+import * as variables from "variables/";
 import "./App.scss";
+import axios from "axios";
 import Guide from "pages/guide/";
 import Home from "pages/home/";
+
+axios.defaults.baseURL = variables.urls.TDXServer;
 
 const browserRouter = [
   {
