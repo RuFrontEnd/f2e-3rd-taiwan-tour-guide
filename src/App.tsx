@@ -19,12 +19,19 @@ const browserRouter = [
       <AnimatePresence mode="wait">
         <motion.div
           key="modal"
-          initial={{ opacity: 0, x: -200, y: 0 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
+          // initial={{
+          //   // opacity: 0,
+          //   x: -200,
+          // }}
+          // animate={{
+          //   // opacity: 1,
+          //    x: 0
+          //  }}
           exit={{
-            opacity: 0,
-            x: 200,
+            // opacity: 0,
+            x: "100vw",
           }}
+          transition={{ duration: 0.5 }}
         >
           <Home />
         </motion.div>
@@ -37,12 +44,19 @@ const browserRouter = [
       <AnimatePresence mode="wait">
         <motion.div
           key="list"
-          initial={{ opacity: 0, x: -200, y: 0 }}
-          animate={{ opacity: 1, x: 0, y: 0 }}
-          exit={{
-            opacity: 0,
-            x: 200,
+          initial={{
+            //  opacity: 0,
+            x: "-100vw",
           }}
+          animate={{
+            //  opacity: 1,
+            x: 0,
+          }}
+          transition={{ duration: 0.5 }}
+          // exit={{
+          //   opacity: 0,
+          //   x: 200,
+          // }}
         >
           <List />
         </motion.div>
