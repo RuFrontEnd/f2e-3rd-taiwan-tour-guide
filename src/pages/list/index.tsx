@@ -565,6 +565,7 @@ const List = () => {
 
   return (
     <>
+      <div className="bg-light w-100p h-5" />
       <div className="container-fluid bg-light position-relative d-flex justify-content-center">
         <SearchInput
           className="z-index-10 w-100p w-sm-160"
@@ -578,31 +579,19 @@ const List = () => {
         />
         <div className="bg-white w-100p h-50p position-absolute bottom-0" />
       </div>
-      <div className="container py-20">
-        <Swiper
-          scenes={hotCities}
-          breakPoints={{
-            0: {
-              slidesPerView: 2,
-            },
-            420: {
-              slidesPerView: 3,
-            },
-            576: {
-              slidesPerView: 4,
-            },
-            768: {
-              slidesPerView: 5,
-            },
-            992: {
-              slidesPerView: 6,
-            },
-
-            1200: {
-              slidesPerView: 8,
-            },
-          }}
-        />
+      <div className="container-fluid d-flex w-100p w-sm-178">
+        <div className="d-flex flex-wrap my-4">
+          <Tag text={"台北"} onClick={() => {}} className="m-1" />
+          <Tag text={"台北"} onClick={() => {}} className="m-1" />
+          <Tag text={"台北"} onClick={() => {}} className="m-1" />
+          <Tag text={"台北"} onClick={() => {}} className="m-1" />
+          <Tag text={"台北"} onClick={() => {}} className="m-1" />
+          <Tag text={"台北"} onClick={() => {}} className="m-1" />
+          <Tag text={"台北"} onClick={() => {}} className="m-1" />
+          <Tag text={"台北"} onClick={() => {}} className="m-1" />
+          <Tag text={"台北"} onClick={() => {}} className="m-1" />
+          <Tag text={"台北"} onClick={() => {}} className="m-1" />
+        </div>
       </div>
       <div className="container-fluid container-lg">
         <div className="row gx-4">
