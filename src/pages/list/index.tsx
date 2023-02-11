@@ -269,12 +269,12 @@ const List = () => {
         .forEach((classification) => {
           classifications[classification] = true;
         });
-        
+
       return classifications;
     })();
 
   const [getScenicSpotsParams, setScenicSpotsParams] = useState({
-      $filter: `contains(ScenicSpotName, '台北') or contains(ScenicSpotName, '新北')`,
+      $filter: `contains(ScenicSpotName, '${initKeyword}')`,
       $top: dataCountPerFetching,
       $skip: 0,
     }),
@@ -286,7 +286,10 @@ const List = () => {
     [selectedClassifications, setSelectedClassifications] =
       useState<Types.Pages.Home.SelectedOptions>(initClassifications),
     [loading, setLoading] = useState(false),
-    [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]);
+    [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]),
+    [finished, setFinished] = useState(false);
+
+  console.log("AA");
 
   const hotkeyWords = [
     "台南文化",
@@ -530,6 +533,9 @@ const List = () => {
         getScenicSpotsParams,
         (res: Types.Utils.Apis.GetScenicSpots.Res) => {
           console.log("res", res);
+          if (res.data.length === 0) {
+            setFinished(true);
+          }
           const generatedScenicSpots = generateScenicSpotsDS(res.data);
           setScenicSpots((scenicSpots) =>
             scenicSpots.concat(generatedScenicSpots)
@@ -556,42 +562,27 @@ const List = () => {
   };
 
   useEffect(() => {
-    // setKeyword(initKeyword ? initKeyword : "");
-    // utils.apis.getScenicSpots(
-    //   getScenicSpotsParams,
-    //   (res: Types.Utils.Apis.GetScenicSpots.Res) => {
-    //     const generatedScenicSpots = generateScenicSpotsDS(res.data);
-    //     setScenicSpots(generatedScenicSpots);
-    //     setScenicSpotsParams((scenicSpotsParams) => ({
-    //       ...scenicSpotsParams,
-    //       $skip: scenicSpotsParams.$skip + dataCountPerFetching,
-    //     }));
-    //   }
-    // );
-  }, []);
+    // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
+    const loading = document.getElementById("loading");
 
-  // useEffect(() => {
-  //   // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
-  //   const loading = document.getElementById("loading");
+    if (
+      // target
+      loading
+    ) {
+      // observer.observe(target);
+      observer.observe(loading);
+    }
 
-  //   if (
-  //     // target
-  //     loading
-  //   ) {
-  //     // observer.observe(target);
-  //     observer.observe(loading);
-  //   }
-
-  //   return () => {
-  //     if (
-  //       // target
-  //       loading
-  //     ) {
-  //       // observer.unobserve(target);
-  //       observer.unobserve(loading);
-  //     }
-  //   };
-  // }, [scenicSpots]);
+    return () => {
+      if (
+        // target
+        loading
+      ) {
+        // observer.unobserve(target);
+        observer.unobserve(loading);
+      }
+    };
+  }, [scenicSpots]);
 
   return (
     <>
@@ -651,9 +642,13 @@ const List = () => {
             </div>
           ))}
         </div>
-        <div id={"loading"} style={{ background: "red" }}>
-          loading...
-        </div>{" "}
+        {finished ? (
+          <div style={{ background: "red" }}>已經沒有資料摟</div>
+        ) : (
+          <div id={"loading"} style={{ background: "red" }}>
+            loading...
+          </div>
+        )}
       </div>
     </>
   );
