@@ -257,7 +257,6 @@ const Home = () => {
       useState<Types.Pages.Home.SelectedOptions>({}),
     [loading, setLoading] = useState(false),
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]);
-
   const hotkeyWords = [
     "台南文化",
     "嘉義觀光工廠",
@@ -527,6 +526,26 @@ const Home = () => {
     setKeyword(e.target.value);
   };
 
+  const onEnterSearchInput = () => {
+    const searchParams = new URLSearchParams(),
+      searchCities = Object.keys(selectedCities),
+      searchClassifications = Object.keys(selectedClassifications);
+
+    if (keyword) {
+      searchParams.append("keyword", keyword);
+    }
+
+    if (searchCities.length !== 0) {
+      searchParams.append("city", searchCities.join(","));
+    }
+
+    if (searchClassifications.length !== 0) {
+        searchParams.append("classifications", searchClassifications.join(","));
+    }
+
+    navigate(`/list?${searchParams}`);
+  };
+
   useEffect(() => {
     utils.apis.getScenicSpots(
       getScenicSpotsParams,
@@ -577,9 +596,7 @@ const Home = () => {
           classification={classification}
           onCloseFilterDropdown={onCloseFilterDropdown}
           onChange={onChangeSearchInput}
-          onEnter={() => {
-            navigate(`/list?keyword=${keyword}`);
-          }}
+          onEnter={onEnterSearchInput}
         />
         <div className="bg-white w-100p h-50p position-absolute bottom-0" />
       </div>

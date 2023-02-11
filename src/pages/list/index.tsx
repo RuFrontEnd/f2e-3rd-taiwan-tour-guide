@@ -1,5 +1,5 @@
 import _, { cloneDeep } from "lodash";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import taipei from "assets/picture/cities/taipei.jpg";
 import newTaipei from "assets/picture/cities/new-taipei.jpg";
@@ -244,8 +244,12 @@ const generateScenicSpotsDS: (
 
 const List = () => {
   const navigate = useNavigate();
-  const [getScenicSpotsParams, seScenicSpotsParams] = useState({
-      // $orderby: "HotelID",
+  const location = useLocation();
+
+  console.log("location", location);
+
+  const [getScenicSpotsParams, setScenicSpotsParams] = useState({
+      $filter: `contains(ScenicSpotName, '台北') or contains(ScenicSpotName, '新北')`,
       $top: dataCountPerFetching,
       $skip: 0,
     }),
@@ -505,7 +509,7 @@ const List = () => {
           setScenicSpots((scenicSpots) =>
             scenicSpots.concat(generatedScenicSpots)
           );
-          seScenicSpotsParams((scenicSpotsParams) => ({
+          setScenicSpotsParams((scenicSpotsParams) => ({
             ...scenicSpotsParams,
             $skip: scenicSpotsParams.$skip + dataCountPerFetching,
           }));
@@ -532,7 +536,7 @@ const List = () => {
       (res: Types.Utils.Apis.GetScenicSpots.Res) => {
         const generatedScenicSpots = generateScenicSpotsDS(res.data);
         setScenicSpots(generatedScenicSpots);
-        seScenicSpotsParams((scenicSpotsParams) => ({
+        setScenicSpotsParams((scenicSpotsParams) => ({
           ...scenicSpotsParams,
           $skip: scenicSpotsParams.$skip + dataCountPerFetching,
         }));
