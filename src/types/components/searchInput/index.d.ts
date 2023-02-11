@@ -38,7 +38,8 @@ type Classification = {
   onCheckboxChange: AccordionTypes.OnCheckboxChange;
 };
 
-type OnEnter = () => void;
+type onChange = React.ChangeEventHandler<HTMLInputElement> | undefined;
+type OnEnter = () => void | undefined;
 
 type Props = {
   placeholder?: Placeholder;
@@ -47,6 +48,7 @@ type Props = {
   accordion?: Accordion;
   classification: Classification;
   onCloseFilterDropdown?: OnCloseFilterDropdown;
+  onChange?: onChange;
   onEnter?: OnEnter;
 } & StyleTypes.ClassName;
 

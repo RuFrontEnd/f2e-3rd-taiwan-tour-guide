@@ -123,6 +123,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
           if (e.charCode !== 13) return;
           props.onEnter && props.onEnter();
         }}
+        onChange={props.onChange && props.onChange}
       />
 
       <motion.div

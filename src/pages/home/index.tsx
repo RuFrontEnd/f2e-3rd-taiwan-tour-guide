@@ -493,8 +493,6 @@ const Home = () => {
   let observer = new IntersectionObserver((observe) => {
     const inView = observe[0].isIntersecting;
 
-    console.log("inView", inView);
-
     if (inView) {
       utils.apis.getScenicSpots(
         getScenicSpotsParams,
@@ -525,6 +523,10 @@ const Home = () => {
     setOpenedAccordion(null);
   };
 
+  const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  };
+
   useEffect(() => {
     utils.apis.getScenicSpots(
       getScenicSpotsParams,
@@ -540,14 +542,8 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log("scenicSpots", scenicSpots);
-  }, [scenicSpots]);
-
-  useEffect(() => {
     // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
     const loading = document.getElementById("loading");
-
-    console.log("loading", loading);
 
     if (
       // target
@@ -580,8 +576,9 @@ const Home = () => {
           accordion={accordion}
           classification={classification}
           onCloseFilterDropdown={onCloseFilterDropdown}
+          onChange={onChangeSearchInput}
           onEnter={() => {
-            navigate("/list");
+            navigate(`/list?keyword=${keyword}`);
           }}
         />
         <div className="bg-white w-100p h-50p position-absolute bottom-0" />

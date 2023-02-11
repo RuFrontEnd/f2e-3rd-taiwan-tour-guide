@@ -16,51 +16,51 @@ const browserRouter = [
   {
     path: "/",
     element: (
-      <AnimatePresence mode="wait">
-        <motion.div
-          key="modal"
-          // initial={{
-          //   // opacity: 0,
-          //   x: -200,
-          // }}
-          // animate={{
-          //   // opacity: 1,
-          //    x: 0
-          //  }}
-          exit={{
-            // opacity: 0,
-            x: "100vw",
-          }}
-          transition={{ duration: 0.5 }}
-        >
-          <Home />
-        </motion.div>
-      </AnimatePresence>
+      // <AnimatePresence mode="wait">
+      <motion.div
+      // key="modal"
+      // initial={{
+      //   // opacity: 0,
+      //   x: -200,
+      // }}
+      // animate={{
+      //   // opacity: 1,
+      //    x: 0
+      //  }}
+      // exit={{
+      //   // opacity: 0,
+      //   x: "100vw",
+      // }}
+      // transition={{ duration: 0.5 }}
+      >
+        <Home />
+      </motion.div>
+      // </AnimatePresence>
     ),
   },
   {
     path: "/list",
     element: (
-      <AnimatePresence mode="wait">
-        <motion.div
-          key="list"
-          initial={{
-            //  opacity: 0,
-            x: "-100vw",
-          }}
-          animate={{
-            //  opacity: 1,
-            x: 0,
-          }}
-          transition={{ duration: 0.5 }}
-          // exit={{
-          //   opacity: 0,
-          //   x: 200,
-          // }}
-        >
-          <List />
-        </motion.div>
-      </AnimatePresence>
+      // <AnimatePresence mode="wait">
+      <motion.div
+      // key="list"
+      // initial={{
+      //   //  opacity: 0,
+      //   x: "-100vw",
+      // }}
+      // animate={{
+      //   //  opacity: 1,
+      //   x: 0,
+      // }}
+      // transition={{ duration: 0.5 }}
+      // exit={{
+      //   opacity: 0,
+      //   x: 200,
+      // }}
+      >
+        <List />
+      </motion.div>
+      // </AnimatePresence>
     ),
   },
 ];
