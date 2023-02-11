@@ -496,7 +496,6 @@ const Home = () => {
       utils.apis.getScenicSpots(
         getScenicSpotsParams,
         (res: Types.Utils.Apis.GetScenicSpots.Res) => {
-          console.log("res", res);
           const generatedScenicSpots = generateScenicSpotsDS(res.data);
           setScenicSpots((scenicSpots) =>
             scenicSpots.concat(generatedScenicSpots)
@@ -531,17 +530,17 @@ const Home = () => {
       searchCities = Object.keys(selectedCities),
       searchClassifications = Object.keys(selectedClassifications);
 
-    if (keyword) {
-      searchParams.append("keyword", keyword);
-    }
+    keyword
+      ? searchParams.append("keyword", keyword)
+      : searchParams.append("keyword", "none");
 
-    if (searchCities.length !== 0) {
-      searchParams.append("city", searchCities.join(","));
-    }
+    searchCities.length !== 0
+      ? searchParams.append("city", searchCities.join(","))
+      : searchParams.append("city", "none");
 
-    if (searchClassifications.length !== 0) {
-        searchParams.append("classifications", searchClassifications.join(","));
-    }
+    searchClassifications.length !== 0
+      ? searchParams.append("classification", searchClassifications.join(","))
+      : searchParams.append("classification", "none");
 
     navigate(`/list?${searchParams}`);
   };

@@ -243,10 +243,35 @@ const generateScenicSpotsDS: (
 };
 
 const List = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate = useNavigate(),
+    location = useLocation();
 
-  console.log("location", location);
+  const initParams = new URLSearchParams(location.search),
+    initKeyword = initParams.get("keyword"),
+    initCities: Types.Pages.List.SelectedOptions = (() => {
+      const cities: Types.Pages.List.SelectedOptions = {};
+
+      initParams
+        .get("city")
+        ?.split(",")
+        .forEach((city) => {
+          cities[city] = true;
+        });
+
+      return cities;
+    })(),
+    initClassifications: Types.Pages.List.SelectedOptions = (() => {
+      const classifications: Types.Pages.List.SelectedOptions = {};
+
+      initParams
+        .get("classification")
+        ?.split(",")
+        .forEach((classification) => {
+          classifications[classification] = true;
+        });
+        
+      return classifications;
+    })();
 
   const [getScenicSpotsParams, setScenicSpotsParams] = useState({
       $filter: `contains(ScenicSpotName, '台北') or contains(ScenicSpotName, '新北')`,
@@ -254,12 +279,12 @@ const List = () => {
       $skip: 0,
     }),
     [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10),
-    [keyword, setKeyword] = useState(""),
+    [keyword, setKeyword] = useState(initKeyword ? initKeyword : ""),
     [openedAccordion, setOpenedAccordion] = useState<null | string>(null),
     [selectedCities, setSelectedCities] =
-      useState<Types.Pages.Home.SelectedOptions>({}),
+      useState<Types.Pages.Home.SelectedOptions>(initCities),
     [selectedClassifications, setSelectedClassifications] =
-      useState<Types.Pages.Home.SelectedOptions>({}),
+      useState<Types.Pages.Home.SelectedOptions>(initClassifications),
     [loading, setLoading] = useState(false),
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]);
 
@@ -531,41 +556,42 @@ const List = () => {
   };
 
   useEffect(() => {
-    utils.apis.getScenicSpots(
-      getScenicSpotsParams,
-      (res: Types.Utils.Apis.GetScenicSpots.Res) => {
-        const generatedScenicSpots = generateScenicSpotsDS(res.data);
-        setScenicSpots(generatedScenicSpots);
-        setScenicSpotsParams((scenicSpotsParams) => ({
-          ...scenicSpotsParams,
-          $skip: scenicSpotsParams.$skip + dataCountPerFetching,
-        }));
-      }
-    );
+    // setKeyword(initKeyword ? initKeyword : "");
+    // utils.apis.getScenicSpots(
+    //   getScenicSpotsParams,
+    //   (res: Types.Utils.Apis.GetScenicSpots.Res) => {
+    //     const generatedScenicSpots = generateScenicSpotsDS(res.data);
+    //     setScenicSpots(generatedScenicSpots);
+    //     setScenicSpotsParams((scenicSpotsParams) => ({
+    //       ...scenicSpotsParams,
+    //       $skip: scenicSpotsParams.$skip + dataCountPerFetching,
+    //     }));
+    //   }
+    // );
   }, []);
 
-  useEffect(() => {
-    // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
-    const loading = document.getElementById("loading");
+  // useEffect(() => {
+  //   // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
+  //   const loading = document.getElementById("loading");
 
-    if (
-      // target
-      loading
-    ) {
-      // observer.observe(target);
-      observer.observe(loading);
-    }
+  //   if (
+  //     // target
+  //     loading
+  //   ) {
+  //     // observer.observe(target);
+  //     observer.observe(loading);
+  //   }
 
-    return () => {
-      if (
-        // target
-        loading
-      ) {
-        // observer.unobserve(target);
-        observer.unobserve(loading);
-      }
-    };
-  }, [scenicSpots]);
+  //   return () => {
+  //     if (
+  //       // target
+  //       loading
+  //     ) {
+  //       // observer.unobserve(target);
+  //       observer.unobserve(loading);
+  //     }
+  //   };
+  // }, [scenicSpots]);
 
   return (
     <>
