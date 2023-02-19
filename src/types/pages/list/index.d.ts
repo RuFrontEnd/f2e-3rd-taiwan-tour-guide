@@ -13,4 +13,10 @@ type ScenicSpots = {
   info: string;
 }[];
 
-export type { SelectedOptions, ScenicSpots, Header };
+type ScenicSpotsParams ={
+  $filter:string,
+  $top: number,
+  $skip: number,
+}
+
+export type { SelectedOptions, ScenicSpots, Header,ScenicSpotsParams };

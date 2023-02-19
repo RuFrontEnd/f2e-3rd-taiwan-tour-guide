@@ -530,17 +530,9 @@ const Home = () => {
       searchCities = Object.keys(selectedCities),
       searchClassifications = Object.keys(selectedClassifications);
 
-    keyword
-      ? searchParams.append("keyword", keyword)
-      : searchParams.append("keyword", "none");
-
-    searchCities.length !== 0
-      ? searchParams.append("city", searchCities.join(","))
-      : searchParams.append("city", "none");
-
-    searchClassifications.length !== 0
-      ? searchParams.append("classification", searchClassifications.join(","))
-      : searchParams.append("classification", "none");
+    searchParams.append("keyword", keyword);
+    searchParams.append("city", searchCities.join(","));
+    searchParams.append("classification", searchClassifications.join(","));
 
     navigate(`/list?${searchParams}`);
   };

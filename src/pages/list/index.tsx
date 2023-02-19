@@ -108,6 +108,12 @@ const hotCities = [
 
 const dataCountPerFetching = 20;
 
+const observerOptions = {
+  root: document,
+  rootMargin: "0px",
+  threshold: 0,
+};
+
 const translateCHCityNameToEN = (chinese: string) => {
   switch (chinese) {
     case n0ch:
@@ -242,6 +248,38 @@ const generateScenicSpotsDS: (
   );
 };
 
+const getSearchString: (
+  keyword: string,
+  cities: Types.Pages.Home.SelectedOptions,
+  classifications: Types.Pages.Home.SelectedOptions
+) => string = (keyword, cities, classifications) => {
+  let searchString = "";
+
+  if (keyword !== "") {
+    searchString += `contains(ScenicSpotName, '${keyword}')`;
+  }
+
+  if (Object.keys(cities).length !== 0) {
+    Object.keys(cities).map((city) => {
+      searchString +=
+        searchString == ""
+          ? `contains(ScenicSpotName, '${city}')`
+          : ` or contains(ScenicSpotName, '${city}')`;
+    });
+  }
+
+  if (Object.keys(classifications).length !== 0) {
+    Object.keys(classifications).map((classification) => {
+      searchString +=
+        searchString == ""
+          ? `contains(ScenicSpotName, '${classification}')`
+          : ` or contains(ScenicSpotName, '${classification}')`;
+    });
+  }
+
+  return searchString;
+};
+
 const List = () => {
   const navigate = useNavigate(),
     location = useLocation();
@@ -273,11 +311,16 @@ const List = () => {
       return classifications;
     })();
 
-  const [getScenicSpotsParams, setScenicSpotsParams] = useState({
-      $filter: `contains(ScenicSpotName, '${initKeyword}')`,
-      $top: dataCountPerFetching,
-      $skip: 0,
-    }),
+  const [scenicSpotsParams, setScenicSpotsParams] =
+      useState<Types.Pages.List.ScenicSpotsParams>({
+        $filter: getSearchString(
+          initKeyword ? initKeyword : "",
+          initCities,
+          initClassifications
+        ),
+        $top: dataCountPerFetching,
+        $skip: 0,
+      }),
     [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10),
     [keyword, setKeyword] = useState(initKeyword ? initKeyword : ""),
     [openedAccordion, setOpenedAccordion] = useState<null | string>(null),
@@ -288,8 +331,6 @@ const List = () => {
     [loading, setLoading] = useState(false),
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]),
     [finished, setFinished] = useState(false);
-
-  console.log("AA");
 
   const hotkeyWords = [
     "台南文化",
@@ -517,35 +558,91 @@ const List = () => {
     },
   };
 
-  const observerOptions = {
-    root: document,
-    rootMargin: "0px",
-    threshold: 0,
+  const fetchScenicSpots = (
+    params: Types.Pages.List.ScenicSpotsParams,
+    reset?: boolean
+  ) => {
+    utils.apis.getScenicSpots(
+      params,
+      (res: Types.Utils.Apis.GetScenicSpots.Res) => {
+        if (res.data.length === 0) {
+          return setFinished(true);
+        }
+
+        const generatedScenicSpots = generateScenicSpotsDS(res.data);
+
+        if (reset) {
+          setScenicSpots(generatedScenicSpots);
+        } else {
+          setScenicSpots((scenicSpots) =>
+            scenicSpots.concat(generatedScenicSpots)
+          );
+          setFinished(false);
+        }
+        setScenicSpotsParams(params);
+      }
+    );
+  };
+
+  const recordSearchParams = () => {
+    const searchParams = new URLSearchParams(),
+      searchCities = Object.keys(selectedCities),
+      searchClassifications = Object.keys(selectedClassifications);
+
+    searchParams.append("keyword", keyword);
+    searchParams.append("city", searchCities.join(","));
+    searchParams.append("classification", searchClassifications.join(","));
+
+    navigate(`/list?${searchParams}`);
+  };
+
+  const onCloseFilterDropdown = () => {
+    setOpenedAccordion(null);
+  };
+
+  const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  };
+
+  const onEnterSearchInput = () => {
+    const loading = document.getElementById("loading");
+    if (loading) {
+      observer.unobserve(loading);
+    }
+
+    let searchString = getSearchString(
+      keyword,
+      selectedCities,
+      selectedClassifications
+    );
+
+    fetchScenicSpots(
+      {
+        $filter: searchString,
+        $top: dataCountPerFetching,
+        $skip: 0,
+      },
+      true
+    );
+
+    recordSearchParams();
   };
 
   let observer = new IntersectionObserver((observe) => {
     const inView = observe[0].isIntersecting;
 
-    console.log("inView", inView);
-
     if (inView) {
-      utils.apis.getScenicSpots(
-        getScenicSpotsParams,
-        (res: Types.Utils.Apis.GetScenicSpots.Res) => {
-          console.log("res", res);
-          if (res.data.length === 0) {
-            setFinished(true);
-          }
-          const generatedScenicSpots = generateScenicSpotsDS(res.data);
-          setScenicSpots((scenicSpots) =>
-            scenicSpots.concat(generatedScenicSpots)
-          );
-          setScenicSpotsParams((scenicSpotsParams) => ({
-            ...scenicSpotsParams,
-            $skip: scenicSpotsParams.$skip + dataCountPerFetching,
-          }));
-        }
+      let searchString = getSearchString(
+        keyword,
+        selectedCities,
+        selectedClassifications
       );
+
+      fetchScenicSpots({
+        $filter: searchString,
+        $top: dataCountPerFetching,
+        $skip: scenicSpotsParams.$skip + 20,
+      });
 
       setTargetIndex((targetIndex) => targetIndex + dataCountPerFetching);
 
@@ -556,10 +653,6 @@ const List = () => {
       }
     }
   }, observerOptions);
-
-  const onCloseFilterDropdown = () => {
-    setOpenedAccordion(null);
-  };
 
   useEffect(() => {
     // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
@@ -596,7 +689,8 @@ const List = () => {
           accordion={accordion}
           classification={classification}
           onCloseFilterDropdown={onCloseFilterDropdown}
-          onEnter={() => {}}
+          onChange={onChangeSearchInput}
+          onEnter={onEnterSearchInput}
         />
         <div className="bg-white w-100p h-50p position-absolute bottom-0" />
       </div>
