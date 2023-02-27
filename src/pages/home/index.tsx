@@ -552,21 +552,11 @@ const Home = () => {
   };
 
   const onEnterSearchInput = () => {
-    const searchParams = new URLSearchParams(),
-      searchCities = Object.keys(selectedCities),
-      searchClassifications = Object.keys(selectedClassifications);
-
-    if (keyword) {
-      searchParams.append("keyword", keyword);
-    }
-
-    if (searchCities.length !== 0) {
-      searchParams.append("city", searchCities.join(","));
-    }
-
-    if (searchClassifications.length !== 0) {
-      searchParams.append("classification", searchClassifications.join(","));
-    }
+    const searchParams = utils.searchParams.getSearchParams(
+      keyword,
+      selectedCities,
+      selectedClassifications
+    );
 
     navigate(`/list?${searchParams}`);
   };
