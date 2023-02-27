@@ -11,6 +11,7 @@ type ScenicSpots = {
   phone: string;
   time: string;
   info: string;
+  classes: string[];
 }[];
 
 export type { SelectedOptions, ScenicSpots, Header };

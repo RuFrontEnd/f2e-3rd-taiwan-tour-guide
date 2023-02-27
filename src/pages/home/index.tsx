@@ -231,14 +231,39 @@ const generateScenicSpotsDS: (
   resData: Types.Utils.Apis.GetScenicSpots.Res["data"]
 ) => Types.Pages.Home.ScenicSpots = (resData) => {
   return resData.map(
-    (resDataItem: Types.Utils.Apis.GetScenicSpots.ResDataItem) => ({
-      photo: resDataItem.Picture.PictureUrl1,
-      title: resDataItem.ScenicSpotName,
-      address: resDataItem.Address,
-      phone: resDataItem.Phone,
-      time: resDataItem.OpenTime,
-      info: resDataItem.Description,
-    })
+    (resDataItem: Types.Utils.Apis.GetScenicSpots.ResDataItem) => {
+      const _classes = (() => {
+        const classes = [];
+
+        const class1 = resDataItem?.class1,
+          class2 = resDataItem?.class2,
+          class3 = resDataItem?.class3;
+
+        if (class1) {
+          classes.push(class1);
+        }
+
+        if (class2) {
+          classes.push(class2);
+        }
+
+        if (class3) {
+          classes.push(class3);
+        }
+
+        return classes;
+      })();
+
+      return {
+        photo: resDataItem.Picture.PictureUrl1,
+        title: resDataItem.ScenicSpotName,
+        address: resDataItem.Address,
+        phone: resDataItem.Phone,
+        time: resDataItem.OpenTime,
+        info: resDataItem.Description,
+        classes: _classes,
+      };
+    }
   );
 };
 
@@ -497,6 +522,7 @@ const Home = () => {
         getScenicSpotsParams,
         (res: Types.Utils.Apis.GetScenicSpots.Res) => {
           const generatedScenicSpots = generateScenicSpotsDS(res.data);
+
           setScenicSpots((scenicSpots) =>
             scenicSpots.concat(generatedScenicSpots)
           );
@@ -550,6 +576,9 @@ const Home = () => {
       getScenicSpotsParams,
       (res: Types.Utils.Apis.GetScenicSpots.Res) => {
         const generatedScenicSpots = generateScenicSpotsDS(res.data);
+
+        console.log("generatedScenicSpots", generatedScenicSpots);
+
         setScenicSpots(generatedScenicSpots);
         seScenicSpotsParams((scenicSpotsParams) => ({
           ...scenicSpotsParams,
@@ -580,6 +609,10 @@ const Home = () => {
         observer.unobserve(loading);
       }
     };
+  }, [scenicSpots]);
+
+  useEffect(() => {
+    console.log("scenicSpots", scenicSpots);
   }, [scenicSpots]);
 
   return (

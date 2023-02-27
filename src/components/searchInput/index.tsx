@@ -126,7 +126,8 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
         onChange={props.onChange && props.onChange}
       />
 
-      <motion.div
+      {/* TODO: 熱門關鍵字, 優先度較低先關閉 */}
+      {/* <motion.div
         className="position-absolute top-15 z-index-10 w-100p border-top-0 border-1 border-bottom-left-radius-5 border-bottom-right-radius-5 bg-white px-4 py-3 pt-0"
         role={"search-input-hotkey-dropdown"}
         initial={false}
@@ -146,7 +147,7 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
             </>
           ))}
         </ul>
-      </motion.div>
+      </motion.div> */}
 
       <i
         className="cursor-pointer position-absolute top-50p end-4_5 translate-middle-y border-start-1 border-color-black-500 ps-2"
