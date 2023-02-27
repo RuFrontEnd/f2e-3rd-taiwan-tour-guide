@@ -739,10 +739,6 @@ const List = () => {
     },
   };
 
-  useEffect(() => {
-    console.log("finished", finished);
-  }, [finished]);
-
   const fetchScenicSpots = (params: Types.Pages.List.ScenicSpotsParams) => {
     utils.apis.getScenicSpots(
       params,

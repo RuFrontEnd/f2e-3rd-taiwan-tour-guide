@@ -567,8 +567,6 @@ const Home = () => {
       (res: Types.Utils.Apis.GetScenicSpots.Res) => {
         const generatedScenicSpots = generateScenicSpotsDS(res.data);
 
-        console.log("generatedScenicSpots", generatedScenicSpots);
-
         setScenicSpots(generatedScenicSpots);
         seScenicSpotsParams((scenicSpotsParams) => ({
           ...scenicSpotsParams,
@@ -599,10 +597,6 @@ const Home = () => {
         observer.unobserve(loading);
       }
     };
-  }, [scenicSpots]);
-
-  useEffect(() => {
-    console.log("scenicSpots", scenicSpots);
   }, [scenicSpots]);
 
   return (
