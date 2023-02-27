@@ -7,7 +7,11 @@ const Swiper = (props: Types.Components.Swiper.Props) => {
     <Swipe grabCursor breakpoints={props.breakPoints}>
       {props.scenes.map((scene: Types.Components.Swiper.Scene) => (
         <SwiperSlide>
-          <div className="aspect-ratio-1x1 m-1" role="swiper-item">
+          <div
+            className="aspect-ratio-1x1 m-1"
+            role="swiper-item"
+            onClick={scene.onClick}
+          >
             <div
               style={{ backgroundImage: `url(${scene.img})` }}
               className="h-100p overflow-hidden d-flex box-shadow-light position-relative border-radius-8 text-white bg-position-center bg-size-cover bg-repeat-none"

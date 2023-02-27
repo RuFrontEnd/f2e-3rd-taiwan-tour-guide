@@ -248,36 +248,185 @@ const generateScenicSpotsDS: (
   );
 };
 
+const translateENCityNameToCH = (english: string) => {
+  switch (english) {
+    case n0en:
+      return n0ch;
+
+    case n1en:
+      return n1ch;
+
+    case n2en:
+      return n2ch;
+
+    case n3en:
+      return n3ch;
+
+    case n4en:
+      return n4ch;
+
+    case n5en:
+      return n5ch;
+
+    case n6en:
+      return n6ch;
+
+    case n7en:
+      return n7ch;
+
+    case m0en:
+      return m0ch;
+
+    case m1en:
+      return m1ch;
+
+    case m2en:
+      return m2ch;
+
+    case m3en:
+      return m3ch;
+
+    case m4en:
+      return m4ch;
+
+    case m5en:
+      return m5ch;
+
+    case m6en:
+      return m6ch;
+
+    case m7en:
+      return m7ch;
+
+    case m8en:
+      return m8ch;
+
+    case m9en:
+      return m9ch;
+
+    case s0en:
+      return s0ch;
+
+    case s1en:
+      return s1ch;
+
+    case s2en:
+      return s2ch;
+
+    case s3en:
+      return s3ch;
+
+    case w0en:
+      return w0ch;
+
+    case w1en:
+      return w1ch;
+
+    case w2en:
+      return w2ch;
+
+    case w3en:
+      return w3ch;
+
+    case o0en:
+      return o0ch;
+
+    case o1en:
+      return o1ch;
+
+    case o2en:
+      return o2ch;
+
+    case o3en:
+      return o3ch;
+
+    case o4en:
+      return o4ch;
+
+    default:
+      return null;
+  }
+};
+
+const getClassificationValue = (name: string) => {
+  switch (name) {
+    case "culture":
+      return "文化類";
+
+    case "ecology":
+      return "生態類";
+
+    case "naturalScenery":
+      return "自然風景類";
+
+    case "nationalScenicArea":
+      return "國家風景區類";
+
+    default:
+      return null;
+  }
+};
+
 const getSearchString: (
   keyword: string,
   cities: Types.Pages.Home.SelectedOptions,
   classifications: Types.Pages.Home.SelectedOptions
-) => string = (keyword, cities, classifications) => {
-  let searchString = "";
+) => string | undefined = (keyword, cities, classifications) => {
+  let keywordString = "",
+    cityStrings = "",
+    classificationString = "";
 
   if (keyword !== "") {
-    searchString += `contains(ScenicSpotName, '${keyword}')`;
+    keywordString += `contains(ScenicSpotName, '${keyword}')`;
   }
 
-  if (Object.keys(cities).length !== 0) {
-    Object.keys(cities).map((city) => {
-      searchString +=
-        searchString == ""
-          ? `contains(ScenicSpotName, '${city}')`
-          : ` or contains(ScenicSpotName, '${city}')`;
+  if (Object.entries(cities).length !== 0) {
+    Object.entries(cities).map((pair, pairI) => {
+      const cityName = pair[0],
+        activate = pair[1];
+
+      if (!activate) return;
+
+      cityStrings +=
+        pairI === 0
+          ? `contains(City, '${translateENCityNameToCH(cityName)}')`
+          : ` or contains(City, '${translateENCityNameToCH(cityName)}')`;
     });
   }
 
-  if (Object.keys(classifications).length !== 0) {
-    Object.keys(classifications).map((classification) => {
-      searchString +=
-        searchString == ""
-          ? `contains(ScenicSpotName, '${classification}')`
-          : ` or contains(ScenicSpotName, '${classification}')`;
+  if (Object.entries(classifications).length !== 0) {
+    Object.entries(classifications).map((pair, pairI) => {
+      const classificationName = pair[0],
+        activate = pair[1];
+
+      if (!activate) return;
+
+      classificationString +=
+        pairI === 0
+          ? `contains(Class1, '${getClassificationValue(classificationName)}')`
+          : ` or contains(Class1, '${getClassificationValue(
+              classificationName
+            )}')`;
     });
   }
 
-  return searchString;
+  if (keywordString && !cityStrings && !classificationString) {
+    return keywordString;
+  } else if (!keywordString && cityStrings && !classificationString) {
+    return cityStrings;
+  } else if (!keywordString && !cityStrings && classificationString) {
+    return classificationString;
+  } else if (keywordString && cityStrings && !classificationString) {
+    return `(${keywordString}) and (${cityStrings})`;
+  } else if (!keywordString && cityStrings && classificationString) {
+    return `(${cityStrings}) and (${classificationString})`;
+  } else if (keywordString && !cityStrings && classificationString) {
+    return `(${keywordString}) and (${classificationString})`;
+  } else if (keywordString && cityStrings && classificationString) {
+    return `(${keywordString}) and (${cityStrings}) and (${classificationString})`;
+  }
+
+  return undefined;
 };
 
 const List = () => {
@@ -312,22 +461,15 @@ const List = () => {
     })();
 
   const [scenicSpotsParams, setScenicSpotsParams] =
-      useState<Types.Pages.List.ScenicSpotsParams>({
-        $filter: getSearchString(
-          initKeyword ? initKeyword : "",
-          initCities,
-          initClassifications
-        ),
-        $top: dataCountPerFetching,
-        $skip: 0,
-      }),
+      useState<Types.Pages.List.ScenicSpotsParams>({}),
+    [initSettingParams, setInitSettingParams] = useState(false),
     [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10),
     [keyword, setKeyword] = useState(initKeyword ? initKeyword : ""),
     [openedAccordion, setOpenedAccordion] = useState<null | string>(null),
     [selectedCities, setSelectedCities] =
       useState<Types.Pages.Home.SelectedOptions>(initCities),
     [selectedClassifications, setSelectedClassifications] =
-      useState<Types.Pages.Home.SelectedOptions>(initClassifications),
+      useState<Types.Pages.Home.SelectedOptions>({}),
     [loading, setLoading] = useState(false),
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]),
     [finished, setFinished] = useState(false);
@@ -579,7 +721,13 @@ const List = () => {
           );
           setFinished(false);
         }
-        setScenicSpotsParams(params);
+        setScenicSpotsParams((scenicSpotsParams) => ({
+          ...scenicSpotsParams,
+          $skip:
+            scenicSpotsParams.$skip !== undefined
+              ? scenicSpotsParams.$skip + dataCountPerFetching
+              : scenicSpotsParams.$skip,
+        }));
       }
     );
   };
@@ -605,6 +753,18 @@ const List = () => {
   };
 
   const onEnterSearchInput = () => {
+    // setScenicSpots([]);
+
+    // const searchParams = new URLSearchParams(),
+    //   searchCities = Object.keys(selectedCities),
+    //   searchClassifications = Object.keys(selectedClassifications);
+
+    // searchParams.append("keyword", keyword);
+    // searchParams.append("city", searchCities.join(","));
+    // searchParams.append("classification", searchClassifications.join(","));
+
+    // navigate(`/list?${searchParams}`);
+
     const loading = document.getElementById("loading");
     if (loading) {
       observer.unobserve(loading);
@@ -641,7 +801,7 @@ const List = () => {
       fetchScenicSpots({
         $filter: searchString,
         $top: dataCountPerFetching,
-        $skip: scenicSpotsParams.$skip + 20,
+        $skip: scenicSpotsParams.$skip,
       });
 
       setTargetIndex((targetIndex) => targetIndex + dataCountPerFetching);
@@ -655,6 +815,28 @@ const List = () => {
   }, observerOptions);
 
   useEffect(() => {
+    console.log("scenicSpotsParams", scenicSpotsParams);
+  }, [scenicSpotsParams]);
+
+  useEffect(() => {
+    setScenicSpotsParams({
+      $filter: getSearchString(
+        initKeyword ? initKeyword : "",
+        initCities,
+        initClassifications
+      ),
+      $top: dataCountPerFetching,
+      $skip: 0,
+      $format: "JSON",
+    });
+
+    setSelectedClassifications(initClassifications);
+
+    setInitSettingParams(true);
+  }, []);
+
+  useEffect(() => {
+    if (JSON.stringify(scenicSpotsParams) === "{}") return; // 還沒有初始化搜尋參數時不要監聽 infinite scroll
     // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
     const loading = document.getElementById("loading");
 
@@ -675,7 +857,7 @@ const List = () => {
         observer.unobserve(loading);
       }
     };
-  }, [scenicSpots]);
+  }, [scenicSpots, initSettingParams]);
 
   return (
     <>

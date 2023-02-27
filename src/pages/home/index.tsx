@@ -92,7 +92,7 @@ const culture = "文化",
   nationalScenicArea = "國家風景區";
 
 const hotCities = [
-  { img: taipei, text: "臺北" },
+  { img: taipei, text: "臺北", onClick: () => {} },
   { img: newTaipei, text: "新北" },
   { img: taoyuan, text: "桃園" },
   { img: taichung, text: "臺中" },
@@ -530,9 +530,17 @@ const Home = () => {
       searchCities = Object.keys(selectedCities),
       searchClassifications = Object.keys(selectedClassifications);
 
-    searchParams.append("keyword", keyword);
-    searchParams.append("city", searchCities.join(","));
-    searchParams.append("classification", searchClassifications.join(","));
+    if (keyword) {
+      searchParams.append("keyword", keyword);
+    }
+
+    if (searchCities.length !== 0) {
+      searchParams.append("city", searchCities.join(","));
+    }
+
+    if (searchClassifications.length !== 0) {
+      searchParams.append("classification", searchClassifications.join(","));
+    }
 
     navigate(`/list?${searchParams}`);
   };
@@ -591,7 +599,6 @@ const Home = () => {
         />
         <div className="bg-white w-100p h-50p position-absolute bottom-0" />
       </div>
-      <Tag text={"台北"} onClick={() => {}} />
       <div className="container py-20">
         <Swiper
           scenes={hotCities}
