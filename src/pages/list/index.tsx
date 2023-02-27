@@ -406,28 +406,42 @@ const getSearchString: (
   }
 
   if (Object.entries(cities).length !== 0) {
-    Object.entries(cities).map((pair, pairI) => {
-      const cityName = pair[0],
-        activate = pair[1];
+    const activateCities = (() => {
+      const availableCities: string[] = [];
 
-      if (!activate) return;
+      Object.entries(cities).forEach((pairs) => {
+        if (pairs[1]) {
+          availableCities.push(pairs[0]);
+        }
+      });
 
+      return availableCities;
+    })(); // 篩選選項為 true 者城市
+
+    activateCities.map((cityName, cityNameI) => {
       cityStrings +=
-        pairI === 0
+        cityNameI === 0
           ? `contains(City, '${translateENCityNameToCH(cityName)}')`
           : ` or contains(City, '${translateENCityNameToCH(cityName)}')`;
     });
   }
 
   if (Object.entries(classifications).length !== 0) {
-    Object.entries(classifications).map((pair, pairI) => {
-      const classificationName = pair[0],
-        activate = pair[1];
+    const activateClassifications = (() => {
+      const availableClassifications: string[] = [];
 
-      if (!activate) return;
+      Object.entries(classifications).forEach((pairs) => {
+        if (pairs[1]) {
+          availableClassifications.push(pairs[0]);
+        }
+      });
 
+      return availableClassifications;
+    })(); // 篩選選項為 true 者分類
+
+    activateClassifications.map((classificationName, classificationNameI) => {
       classificationString +=
-        pairI === 0
+        classificationNameI === 0
           ? `contains(Class1, '${getClassificationValue(classificationName)}')`
           : ` or contains(Class1, '${getClassificationValue(
               classificationName
@@ -488,7 +502,7 @@ const List = () => {
   const [scenicSpotsParams, setScenicSpotsParams] =
       useState<Types.Pages.List.ScenicSpotsParams>({}),
     [initSettingParams, setInitSettingParams] = useState(false),
-    [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10),
+    // [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10),
     [keyword, setKeyword] = useState(initKeyword ? initKeyword : ""),
     [openedAccordion, setOpenedAccordion] = useState<null | string>(null),
     [selectedCities, setSelectedCities] =
@@ -725,27 +739,24 @@ const List = () => {
     },
   };
 
-  const fetchScenicSpots = (
-    params: Types.Pages.List.ScenicSpotsParams,
-    reset?: boolean
-  ) => {
+  useEffect(() => {
+    console.log("finished", finished);
+  }, [finished]);
+
+  const fetchScenicSpots = (params: Types.Pages.List.ScenicSpotsParams) => {
     utils.apis.getScenicSpots(
       params,
       (res: Types.Utils.Apis.GetScenicSpots.Res) => {
         if (res.data.length === 0) {
-          return setFinished(true);
+          setFinished(true);
         }
 
         const generatedScenicSpots = generateScenicSpotsDS(res.data);
 
-        if (reset) {
-          setScenicSpots(generatedScenicSpots);
-        } else {
-          setScenicSpots((scenicSpots) =>
-            scenicSpots.concat(generatedScenicSpots)
-          );
-          setFinished(false);
-        }
+        setScenicSpots((scenicSpots) =>
+          scenicSpots.concat(generatedScenicSpots)
+        );
+
         setScenicSpotsParams((scenicSpotsParams) => ({
           ...scenicSpotsParams,
           $skip:
@@ -753,18 +764,53 @@ const List = () => {
               ? scenicSpotsParams.$skip + dataCountPerFetching
               : scenicSpotsParams.$skip,
         }));
+      },
+      undefined,
+      undefined,
+      () => {
+        const loading = document.getElementById("loading");
+
+        if (loading) {
+          observer.unobserve(loading);
+        }
       }
     );
   };
 
   const recordSearchParams = () => {
     const searchParams = new URLSearchParams(),
-      searchCities = Object.keys(selectedCities),
-      searchClassifications = Object.keys(selectedClassifications);
+      searchCities = (() => {
+        const cities: string[] = [];
 
-    searchParams.append("keyword", keyword);
-    searchParams.append("city", searchCities.join(","));
-    searchParams.append("classification", searchClassifications.join(","));
+        Object.entries(selectedCities).forEach((pairs) => {
+          if (!pairs[1]) return;
+          cities.push(pairs[0]);
+        });
+
+        return cities;
+      })(),
+      searchClassifications = (() => {
+        const classifications: string[] = [];
+
+        Object.entries(selectedClassifications).forEach((pairs) => {
+          if (!pairs[1]) return;
+          classifications.push(pairs[0]);
+        });
+
+        return classifications;
+      })();
+
+    if (keyword) {
+      searchParams.append("keyword", keyword);
+    }
+
+    if (searchCities.length !== 0) {
+      searchParams.append("city", searchCities.join(","));
+    }
+
+    if (searchClassifications.length !== 0) {
+      searchParams.append("classification", searchClassifications.join(","));
+    }
 
     navigate(`/list?${searchParams}`);
   };
@@ -778,18 +824,6 @@ const List = () => {
   };
 
   const onEnterSearchInput = () => {
-    // setScenicSpots([]);
-
-    // const searchParams = new URLSearchParams(),
-    //   searchCities = Object.keys(selectedCities),
-    //   searchClassifications = Object.keys(selectedClassifications);
-
-    // searchParams.append("keyword", keyword);
-    // searchParams.append("city", searchCities.join(","));
-    // searchParams.append("classification", searchClassifications.join(","));
-
-    // navigate(`/list?${searchParams}`);
-
     const loading = document.getElementById("loading");
     if (loading) {
       observer.unobserve(loading);
@@ -801,14 +835,18 @@ const List = () => {
       selectedClassifications
     );
 
-    fetchScenicSpots(
-      {
-        $filter: searchString,
-        $top: dataCountPerFetching,
-        $skip: 0,
-      },
-      true
-    );
+    setFinished(false);
+    setScenicSpots([]);
+    setScenicSpotsParams({
+      $filter: getSearchString(
+        initKeyword ? initKeyword : "",
+        initCities,
+        initClassifications
+      ),
+      $top: dataCountPerFetching,
+      $skip: 0,
+      $format: "JSON",
+    });
 
     recordSearchParams();
   };
@@ -829,19 +867,18 @@ const List = () => {
         $skip: scenicSpotsParams.$skip,
       });
 
-      setTargetIndex((targetIndex) => targetIndex + dataCountPerFetching);
+      // setTargetIndex((targetIndex) => targetIndex + dataCountPerFetching);
 
-      const target = document.getElementById(`loadMoreTarget${targetIndex}`);
+      // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
 
-      if (target) {
-        observer.unobserve(target);
+      // if (target) {
+      //   observer.unobserve(target);
+      // }
+      {
+        /* TODO: 後續研究滾動中途 fetch 資料 */
       }
     }
   }, observerOptions);
-
-  useEffect(() => {
-    console.log("scenicSpotsParams", scenicSpotsParams);
-  }, [scenicSpotsParams]);
 
   useEffect(() => {
     setScenicSpotsParams({
@@ -930,7 +967,7 @@ const List = () => {
                   info={scenicSpot.info}
                   labels={["生態類", "國家風景區"]}
                 />
-                {scenicSpotIndex === targetIndex && (
+                {/* {scenicSpotIndex === targetIndex && (
                   <small
                     style={{ background: "red" }}
                     id={`loadMoreTarget${targetIndex}`}
@@ -938,7 +975,8 @@ const List = () => {
                   >
                     123
                   </small>
-                )}
+                )} */}
+                {/* TODO: 後續研究滾動中途 fetch 資料 */}
               </div>
             </div>
           ))}
