@@ -7,9 +7,9 @@ type ResDataItem = {
     PictureUrl1: string;
   };
   ScenicSpotName: string;
-  class1: undefined | string;
-  class2: undefined | string;
-  class3: undefined | string;
+  Class1: undefined | string;
+  Class2: undefined | string;
+  Class3: undefined | string;
 };
 
 type Res = {

@@ -233,46 +233,6 @@ const getClassificationKey = (name: string) => {
   }
 };
 
-const generateScenicSpotsDS: (
-  resData: Types.Utils.Apis.GetScenicSpots.Res["data"]
-) => Types.Pages.Home.ScenicSpots = (resData) => {
-  return resData.map(
-    (resDataItem: Types.Utils.Apis.GetScenicSpots.ResDataItem) => {
-      const _classes = (() => {
-        const classes = [];
-
-        const class1 = resDataItem?.class1,
-          class2 = resDataItem?.class2,
-          class3 = resDataItem?.class3;
-
-        if (class1) {
-          classes.push(class1);
-        }
-
-        if (class2) {
-          classes.push(class2);
-        }
-
-        if (class3) {
-          classes.push(class3);
-        }
-
-        return classes;
-      })();
-
-      return {
-        photo: resDataItem.Picture.PictureUrl1,
-        title: resDataItem.ScenicSpotName,
-        address: resDataItem.Address,
-        phone: resDataItem.Phone,
-        time: resDataItem.OpenTime,
-        info: resDataItem.Description,
-        classes: _classes,
-      };
-    }
-  );
-};
-
 const translateENCityNameToCH = (english: string) => {
   switch (english) {
     case n0en:
@@ -392,6 +352,40 @@ const getClassificationValue = (name: string) => {
   }
 };
 
+const getActivateCities = (cities: Types.Pages.Home.SelectedOptions) => {
+  const activateCities = (() => {
+    const availableCities: string[] = [];
+
+    Object.entries(cities).forEach((pairs) => {
+      if (pairs[1]) {
+        availableCities.push(pairs[0]);
+      }
+    });
+
+    return availableCities;
+  })(); // 篩選選項為 true 者城市
+
+  return activateCities;
+};
+
+const getActivateClassifications = (
+  classifications: Types.Pages.Home.SelectedOptions
+) => {
+  const activateClassifications = (() => {
+    const availableClassifications: string[] = [];
+
+    Object.entries(classifications).forEach((pairs) => {
+      if (pairs[1]) {
+        availableClassifications.push(pairs[0]);
+      }
+    });
+
+    return availableClassifications;
+  })(); // 篩選選項為 true 者分類
+
+  return activateClassifications;
+};
+
 const getSearchString: (
   keyword: string,
   cities: Types.Pages.Home.SelectedOptions,
@@ -406,17 +400,7 @@ const getSearchString: (
   }
 
   if (Object.entries(cities).length !== 0) {
-    const activateCities = (() => {
-      const availableCities: string[] = [];
-
-      Object.entries(cities).forEach((pairs) => {
-        if (pairs[1]) {
-          availableCities.push(pairs[0]);
-        }
-      });
-
-      return availableCities;
-    })(); // 篩選選項為 true 者城市
+    const activateCities = getActivateCities(cities);
 
     activateCities.map((cityName, cityNameI) => {
       cityStrings +=
@@ -427,17 +411,7 @@ const getSearchString: (
   }
 
   if (Object.entries(classifications).length !== 0) {
-    const activateClassifications = (() => {
-      const availableClassifications: string[] = [];
-
-      Object.entries(classifications).forEach((pairs) => {
-        if (pairs[1]) {
-          availableClassifications.push(pairs[0]);
-        }
-      });
-
-      return availableClassifications;
-    })(); // 篩選選項為 true 者分類
+    const activateClassifications = getActivateClassifications(classifications);
 
     activateClassifications.map((classificationName, classificationNameI) => {
       classificationString +=
@@ -511,7 +485,11 @@ const List = () => {
       useState<Types.Pages.Home.SelectedOptions>({}),
     [loading, setLoading] = useState(false),
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]),
-    [finished, setFinished] = useState(false);
+    [finished, setFinished] = useState(false),
+    [activateCities, setActivateCities] = useState<string[]>([]),
+    [activateClassifications, setActivateClassifications] = useState<string[]>(
+      []
+    );
 
   const hotkeyWords = [
     "台南文化",
@@ -747,7 +725,7 @@ const List = () => {
           setFinished(true);
         }
 
-        const generatedScenicSpots = generateScenicSpotsDS(res.data);
+        const generatedScenicSpots = utils.ds.generateScenicSpotsDS(res.data);
 
         setScenicSpots((scenicSpots) =>
           scenicSpots.concat(generatedScenicSpots)
@@ -809,6 +787,46 @@ const List = () => {
       $skip: 0,
       $format: "JSON",
     });
+
+    const _activateCities = (() => {
+      const cities: string[] = [];
+
+      const activateCities = getActivateCities(selectedCities);
+
+      activateCities.forEach((activateCity) => {
+        const translateName = translateENCityNameToCH(activateCity);
+
+        if (!translateName) return;
+
+        cities.push(translateName);
+      });
+
+      return cities;
+    })();
+
+    setActivateCities(_activateCities);
+
+    const _activateClassifications = (() => {
+      const classifications: string[] = [];
+
+      const activateClassifications = getActivateClassifications(
+        selectedClassifications
+      );
+
+      activateClassifications.forEach((activateClassification) => {
+        const classificationValue = getClassificationValue(
+          activateClassification
+        );
+
+        if (!classificationValue) return;
+
+        classifications.push(classificationValue);
+      });
+
+      return classifications;
+    })();
+
+    setActivateClassifications(_activateClassifications);
 
     recordSearchParams();
   };
@@ -902,16 +920,16 @@ const List = () => {
       </div>
       <div className="container-fluid d-flex w-100p w-sm-178">
         <div className="d-flex flex-wrap my-4">
-          <Tag text={"台北"} onClick={() => {}} className="m-1" />
-          <Tag text={"台北"} onClick={() => {}} className="m-1" />
-          <Tag text={"台北"} onClick={() => {}} className="m-1" />
-          <Tag text={"台北"} onClick={() => {}} className="m-1" />
-          <Tag text={"台北"} onClick={() => {}} className="m-1" />
-          <Tag text={"台北"} onClick={() => {}} className="m-1" />
-          <Tag text={"台北"} onClick={() => {}} className="m-1" />
-          <Tag text={"台北"} onClick={() => {}} className="m-1" />
-          <Tag text={"台北"} onClick={() => {}} className="m-1" />
-          <Tag text={"台北"} onClick={() => {}} className="m-1" />
+          {activateCities.map((activateCity) => (
+            <Tag text={activateCity} onClick={() => {}} className="m-1" />
+          ))}
+          {activateClassifications.map((activateClassification) => (
+            <Tag
+              text={activateClassification}
+              onClick={() => {}}
+              className="m-1"
+            />
+          ))}
         </div>
       </div>
       <div className="container-fluid container-lg">
