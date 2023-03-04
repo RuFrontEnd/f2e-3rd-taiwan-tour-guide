@@ -761,33 +761,7 @@ const List = () => {
     navigate(`/list?${searchParams}`);
   };
 
-  const onCloseFilterDropdown = () => {
-    setOpenedAccordion(null);
-  };
-
-  const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.target.value);
-  };
-
-  const onEnterSearchInput = () => {
-    const loading = document.getElementById("loading");
-    if (loading) {
-      observer.unobserve(loading);
-    }
-
-    setFinished(false);
-    setScenicSpots([]);
-    setScenicSpotsParams({
-      $filter: getSearchString(
-        initKeyword ? initKeyword : "",
-        initCities,
-        initClassifications
-      ),
-      $top: dataCountPerFetching,
-      $skip: 0,
-      $format: "JSON",
-    });
-
+  const createTags = () => {
     const _activateCities = (() => {
       const cities: string[] = [];
 
@@ -827,7 +801,36 @@ const List = () => {
     })();
 
     setActivateClassifications(_activateClassifications);
+  };
 
+  const onCloseFilterDropdown = () => {
+    setOpenedAccordion(null);
+  };
+
+  const onChangeSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  };
+
+  const onEnterSearchInput = () => {
+    const loading = document.getElementById("loading");
+    if (loading) {
+      observer.unobserve(loading);
+    }
+
+    setFinished(false);
+    setScenicSpots([]);
+    setScenicSpotsParams({
+      $filter: getSearchString(
+        initKeyword ? initKeyword : "",
+        initCities,
+        initClassifications
+      ),
+      $top: dataCountPerFetching,
+      $skip: 0,
+      $format: "JSON",
+    });
+
+    createTags();
     recordSearchParams();
   };
 
@@ -871,9 +874,8 @@ const List = () => {
       $skip: 0,
       $format: "JSON",
     });
-
+    createTags();
     setSelectedClassifications(initClassifications);
-
     setInitSettingParams(true);
   }, []);
 

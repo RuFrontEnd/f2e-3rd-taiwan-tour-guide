@@ -7,7 +7,7 @@ const Tag = (props: Types.Components.Tag.Props) => {
       onClick={props.onClick}
       className={`${
         props.className ? props.className : ""
-      } text-a11y border-color-a11y border-1 border-radius-5 px-2 py-1 d-flex align-items-center`}
+      } cursor-auto text-a11y border-color-a11y border-1 border-radius-5 px-2 py-1 d-flex align-items-center`}
     >
       {props.text}
       {/* <X className="ms-1" /> */}

@@ -709,7 +709,10 @@ $utilities: map-merge(
     (
         "cursor": (
             property: cursor,
-            values: pointer,
+            values: (
+                auto: auto,
+                pointer: pointer,
+            ),
         ),
     )
 );
