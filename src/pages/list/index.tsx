@@ -476,7 +476,7 @@ const List = () => {
   const [scenicSpotsParams, setScenicSpotsParams] =
       useState<Types.Pages.List.ScenicSpotsParams>({}),
     [initSettingParams, setInitSettingParams] = useState(false),
-    // [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10),
+    // [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10), // TODO: 之後研究滾動中途 fetch 資料
     [keyword, setKeyword] = useState(initKeyword ? initKeyword : ""),
     [openedAccordion, setOpenedAccordion] = useState<null | string>(null),
     [selectedCities, setSelectedCities] =
@@ -887,6 +887,7 @@ const List = () => {
     // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
     const loading = document.getElementById("loading");
 
+    // TODO: 之後研究滾動中途 fetch 資料
     if (
       // target
       loading

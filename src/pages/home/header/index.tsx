@@ -1,7 +1,7 @@
 import travelingByTrain from "assets/picture/traveling-by-train.png";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
-const Header = (props: any) => {
+const Header = () => {
   return (
     <header className="bg-light">
       <div className="container-fluid container-lg">

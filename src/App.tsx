@@ -12,6 +12,7 @@ import List from "pages/list";
 axios.defaults.baseURL = variables.urls.TDXServer;
 utils.apis.initializeAxiosAuthorizationHeader();
 
+// TODO: 之後可擴充換頁互動
 const browserRouter = [
   {
     path: "/",

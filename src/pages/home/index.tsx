@@ -92,7 +92,7 @@ const culture = "文化",
   nationalScenicArea = "國家風景區";
 
 const hotCities = [
-  { img: taipei, text: "臺北", onClick: () => {} },
+  { img: taipei, text: "臺北", onClick: () => {} }, // TODO: 點擊輪播卡片執行 function
   { img: newTaipei, text: "新北" },
   { img: taoyuan, text: "桃園" },
   { img: taichung, text: "臺中" },
@@ -537,6 +537,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    // TODO: 之後研究滾動中途 fetch 資料
     // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
     const loading = document.getElementById("loading");
 
@@ -557,10 +558,6 @@ const Home = () => {
         observer.unobserve(loading);
       }
     };
-  }, [scenicSpots]);
-
-  useEffect(() => {
-    console.log("scenicSpots", scenicSpots);
   }, [scenicSpots]);
 
   return (
@@ -621,7 +618,8 @@ const Home = () => {
                   info={scenicSpot.info}
                   labels={scenicSpot.classes}
                 />
-                {scenicSpotIndex === targetIndex && (
+                {/* TODO: 之後研究滾動中途 fetch 資料 */}
+                {/* {scenicSpotIndex === targetIndex && (
                   <small
                     style={{ background: "red" }}
                     id={`loadMoreTarget${targetIndex}`}
@@ -629,7 +627,7 @@ const Home = () => {
                   >
                     123
                   </small>
-                )}
+                )} */}
               </div>
             </div>
           ))}
