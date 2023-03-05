@@ -761,7 +761,10 @@ const List = () => {
     navigate(`/list?${searchParams}`);
   };
 
-  const createTags = () => {
+  const createTags = (
+    selectedCities: Types.Pages.Home.SelectedOptions,
+    selectedClassifications: Types.Pages.Home.SelectedOptions
+  ) => {
     const _activateCities = (() => {
       const cities: string[] = [];
 
@@ -830,7 +833,7 @@ const List = () => {
       $format: "JSON",
     });
 
-    createTags();
+    createTags(selectedCities, selectedClassifications);
     recordSearchParams();
   };
 
@@ -874,7 +877,7 @@ const List = () => {
       $skip: 0,
       $format: "JSON",
     });
-    createTags();
+    createTags(initCities, initClassifications);
     setSelectedClassifications(initClassifications);
     setInitSettingParams(true);
   }, []);
