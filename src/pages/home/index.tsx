@@ -1,5 +1,6 @@
 import _, { cloneDeep } from "lodash";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import taipei from "assets/picture/cities/taipei.jpg";
 import newTaipei from "assets/picture/cities/new-taipei.jpg";
@@ -19,7 +20,6 @@ import Card from "components/card";
 import SearchInput from "components/searchInput";
 import Swiper from "components/swiper";
 import Tag from "components/tag";
-import { useEffect, useState } from "react";
 import * as variables from "variables";
 import * as utils from "utils";
 
@@ -90,21 +90,6 @@ const culture = "文化",
   ecology = "生態",
   naturalScenery = "自然風景",
   nationalScenicArea = "國家風景區";
-
-const hotCities = [
-  { img: taipei, text: "臺北", onClick: () => {} }, // TODO: 點擊輪播卡片執行 function
-  { img: newTaipei, text: "新北" },
-  { img: taoyuan, text: "桃園" },
-  { img: taichung, text: "臺中" },
-  { img: tainan, text: "臺南" },
-  { img: kaohsiung, text: "高雄" },
-  { img: hualien, text: "花蓮" },
-  { img: taitung, text: "臺東" },
-  { img: nantou, text: "南投" },
-  { img: penghu, text: "澎湖" },
-  { img: kinmen, text: "金門" },
-  { img: greenIsland, text: "綠島" },
-];
 
 const dataCountPerFetching = 20;
 
@@ -240,14 +225,106 @@ const Home = () => {
       useState<Types.Pages.Home.SelectedOptions>({}),
     [selectedClassifications, setSelectedClassifications] =
       useState<Types.Pages.Home.SelectedOptions>({}),
-    [loading, setLoading] = useState(false),
+    [loading, setLoading] = useState(false),  // TODO: 研究使用時機
+    [finished, setFinished] = useState(false),
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]);
+
   const hotkeyWords = [
     "台南文化",
     "嘉義觀光工廠",
     "台東自然風景",
     "屏東國家風景區",
     "新竹遊憩",
+  ];
+
+  const onClickSwiperCard = (city: string) => {
+    const searchParams = utils.searchParams.getSearchParams(
+      "",
+      { [city]: true },
+      {}
+    );
+
+    navigate(`/list?${searchParams}`);
+  };
+
+  const hotCities = [
+    {
+      img: taipei,
+      text: "臺北",
+      onClick: () => {
+        onClickSwiperCard(n2en);
+      },
+    }, // TODO: 點擊輪播卡片執行 function
+    {
+      img: newTaipei,
+      text: "新北",
+      onClick: () => {
+        onClickSwiperCard(n1en);
+      },
+    },
+    {
+      img: taoyuan,
+      text: "桃園",
+      onClick: () => {
+        onClickSwiperCard(n3en);
+      },
+    },
+    {
+      img: taichung,
+      text: "臺中",
+      onClick: () => {
+        onClickSwiperCard(m2en);
+      },
+    },
+    {
+      img: tainan,
+      text: "臺南",
+      onClick: () => {
+        onClickSwiperCard(s0en);
+      },
+    },
+    {
+      img: kaohsiung,
+      text: "高雄",
+      onClick: () => {
+        onClickSwiperCard(s1en);
+      },
+    },
+    {
+      img: hualien,
+      text: "花蓮",
+      onClick: () => {
+        onClickSwiperCard(w0en);
+      },
+    },
+    {
+      img: taitung,
+      text: "臺東",
+      onClick: () => {
+        onClickSwiperCard(w2en);
+      },
+    },
+    {
+      img: nantou,
+      text: "南投",
+      onClick: () => {
+        onClickSwiperCard(m6en);
+      },
+    },
+    {
+      img: penghu,
+      text: "澎湖",
+      onClick: () => {
+        onClickSwiperCard(o0en);
+      },
+    },
+    {
+      img: kinmen,
+      text: "金門",
+      onClick: () => {
+        onClickSwiperCard(o3en);
+      },
+    },
   ];
 
   const accordion = {
@@ -481,6 +558,9 @@ const Home = () => {
       utils.apis.getScenicSpots(
         getScenicSpotsParams,
         (res: Types.Utils.Apis.GetScenicSpots.Res) => {
+          if (res.data.length === 0) {
+            setFinished(true);
+          }
           const generatedScenicSpots = utils.ds.generateScenicSpotsDS(res.data);
 
           setScenicSpots((scenicSpots) =>
@@ -493,13 +573,14 @@ const Home = () => {
         }
       );
 
-      setTargetIndex((targetIndex) => targetIndex + dataCountPerFetching);
+      /* TODO: 後續研究滾動中途 fetch 資料 */
+      // setTargetIndex((targetIndex) => targetIndex + dataCountPerFetching);
 
-      const target = document.getElementById(`loadMoreTarget${targetIndex}`);
+      // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
 
-      if (target) {
-        observer.unobserve(target);
-      }
+      // if (target) {
+      //   observer.unobserve(target);
+      // }
     }
   }, observerOptions);
 
@@ -520,21 +601,6 @@ const Home = () => {
 
     navigate(`/list?${searchParams}`);
   };
-
-  useEffect(() => {
-    utils.apis.getScenicSpots(
-      getScenicSpotsParams,
-      (res: Types.Utils.Apis.GetScenicSpots.Res) => {
-        const generatedScenicSpots = utils.ds.generateScenicSpotsDS(res.data);
-
-        setScenicSpots(generatedScenicSpots);
-        seScenicSpotsParams((scenicSpotsParams) => ({
-          ...scenicSpotsParams,
-          $skip: scenicSpotsParams.$skip + dataCountPerFetching,
-        }));
-      }
-    );
-  }, []);
 
   useEffect(() => {
     // TODO: 之後研究滾動中途 fetch 資料
@@ -632,9 +698,13 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <div id={"loading"} style={{ background: "red" }}>
-          loading...
-        </div>{" "}
+        {finished ? (
+          <div style={{ background: "red" }}>已經沒有資料摟</div>
+        ) : (
+          <div id={"loading"} style={{ background: "red" }}>
+            loading...
+          </div>
+        )}
       </div>
     </>
   );
