@@ -1,5 +1,5 @@
 import _, { cloneDeep } from "lodash";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import taipei from "assets/picture/cities/taipei.jpg";
 import newTaipei from "assets/picture/cities/new-taipei.jpg";
@@ -92,7 +92,7 @@ const culture = "文化",
   nationalScenicArea = "國家風景區";
 
 const hotCities = [
-  { img: taipei, text: "臺北", onClick: () => {} }, // TODO: 點擊輪播卡片執行 function
+  { img: taipei, text: "臺北" },
   { img: newTaipei, text: "新北" },
   { img: taoyuan, text: "桃園" },
   { img: taichung, text: "臺中" },
@@ -107,6 +107,12 @@ const hotCities = [
 ];
 
 const dataCountPerFetching = 20;
+
+const observerOptions = {
+  root: document,
+  rootMargin: "0px",
+  threshold: 0,
+};
 
 const translateCHCityNameToEN = (chinese: string) => {
   switch (chinese) {
@@ -227,21 +233,264 @@ const getClassificationKey = (name: string) => {
   }
 };
 
-const Home = () => {
-  const navigate = useNavigate();
-  const [getScenicSpotsParams, seScenicSpotsParams] = useState({
-      $top: dataCountPerFetching,
-      $skip: 0,
-    }),
-    [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10),
-    [keyword, setKeyword] = useState(""),
+const translateENCityNameToCH = (english: string) => {
+  switch (english) {
+    case n0en:
+      return n0ch;
+
+    case n1en:
+      return n1ch;
+
+    case n2en:
+      return n2ch;
+
+    case n3en:
+      return n3ch;
+
+    case n4en:
+      return n4ch;
+
+    case n5en:
+      return n5ch;
+
+    case n6en:
+      return n6ch;
+
+    case n7en:
+      return n7ch;
+
+    case m0en:
+      return m0ch;
+
+    case m1en:
+      return m1ch;
+
+    case m2en:
+      return m2ch;
+
+    case m3en:
+      return m3ch;
+
+    case m4en:
+      return m4ch;
+
+    case m5en:
+      return m5ch;
+
+    case m6en:
+      return m6ch;
+
+    case m7en:
+      return m7ch;
+
+    case m8en:
+      return m8ch;
+
+    case m9en:
+      return m9ch;
+
+    case s0en:
+      return s0ch;
+
+    case s1en:
+      return s1ch;
+
+    case s2en:
+      return s2ch;
+
+    case s3en:
+      return s3ch;
+
+    case w0en:
+      return w0ch;
+
+    case w1en:
+      return w1ch;
+
+    case w2en:
+      return w2ch;
+
+    case w3en:
+      return w3ch;
+
+    case o0en:
+      return o0ch;
+
+    case o1en:
+      return o1ch;
+
+    case o2en:
+      return o2ch;
+
+    case o3en:
+      return o3ch;
+
+    case o4en:
+      return o4ch;
+
+    default:
+      return null;
+  }
+};
+
+const getClassificationValue = (name: string) => {
+  switch (name) {
+    case "culture":
+      return "文化類";
+
+    case "ecology":
+      return "生態類";
+
+    case "naturalScenery":
+      return "自然風景類";
+
+    case "nationalScenicArea":
+      return "國家風景區類";
+
+    default:
+      return null;
+  }
+};
+
+const getActivateCities = (cities: Types.Pages.Home.SelectedOptions) => {
+  const activateCities = (() => {
+    const availableCities: string[] = [];
+
+    Object.entries(cities).forEach((pairs) => {
+      if (pairs[1]) {
+        availableCities.push(pairs[0]);
+      }
+    });
+
+    return availableCities;
+  })(); // 篩選選項為 true 者城市
+
+  return activateCities;
+};
+
+const getActivateClassifications = (
+  classifications: Types.Pages.Home.SelectedOptions
+) => {
+  const activateClassifications = (() => {
+    const availableClassifications: string[] = [];
+
+    Object.entries(classifications).forEach((pairs) => {
+      if (pairs[1]) {
+        availableClassifications.push(pairs[0]);
+      }
+    });
+
+    return availableClassifications;
+  })(); // 篩選選項為 true 者分類
+
+  return activateClassifications;
+};
+
+const getSearchString: (
+  keyword: string,
+  cities: Types.Pages.Home.SelectedOptions,
+  classifications: Types.Pages.Home.SelectedOptions
+) => string | undefined = (keyword, cities, classifications) => {
+  let keywordString = "",
+    cityStrings = "",
+    classificationString = "";
+
+  if (keyword !== "") {
+    keywordString += `contains(ScenicSpotName, '${keyword}')`;
+  }
+
+  if (Object.entries(cities).length !== 0) {
+    const activateCities = getActivateCities(cities);
+
+    activateCities.map((cityName, cityNameI) => {
+      cityStrings +=
+        cityNameI === 0
+          ? `contains(City, '${translateENCityNameToCH(cityName)}')`
+          : ` or contains(City, '${translateENCityNameToCH(cityName)}')`;
+    });
+  }
+
+  if (Object.entries(classifications).length !== 0) {
+    const activateClassifications = getActivateClassifications(classifications);
+
+    activateClassifications.map((classificationName, classificationNameI) => {
+      classificationString +=
+        classificationNameI === 0
+          ? `contains(Class1, '${getClassificationValue(classificationName)}')`
+          : ` or contains(Class1, '${getClassificationValue(
+              classificationName
+            )}')`;
+    });
+  }
+
+  if (keywordString && !cityStrings && !classificationString) {
+    return keywordString;
+  } else if (!keywordString && cityStrings && !classificationString) {
+    return cityStrings;
+  } else if (!keywordString && !cityStrings && classificationString) {
+    return classificationString;
+  } else if (keywordString && cityStrings && !classificationString) {
+    return `(${keywordString}) and (${cityStrings})`;
+  } else if (!keywordString && cityStrings && classificationString) {
+    return `(${cityStrings}) and (${classificationString})`;
+  } else if (keywordString && !cityStrings && classificationString) {
+    return `(${keywordString}) and (${classificationString})`;
+  } else if (keywordString && cityStrings && classificationString) {
+    return `(${keywordString}) and (${cityStrings}) and (${classificationString})`;
+  }
+
+  return undefined;
+};
+
+const List = () => {
+  const navigate = useNavigate(),
+    location = useLocation();
+
+  const initParams = new URLSearchParams(location.search),
+    initKeyword = initParams.get("keyword"),
+    initCities: Types.Pages.List.SelectedOptions = (() => {
+      const cities: Types.Pages.List.SelectedOptions = {};
+
+      initParams
+        .get("city")
+        ?.split(",")
+        .forEach((city) => {
+          cities[city] = true;
+        });
+
+      return cities;
+    })(),
+    initClassifications: Types.Pages.List.SelectedOptions = (() => {
+      const classifications: Types.Pages.List.SelectedOptions = {};
+
+      initParams
+        .get("classification")
+        ?.split(",")
+        .forEach((classification) => {
+          classifications[classification] = true;
+        });
+
+      return classifications;
+    })();
+
+  const [scenicSpotsParams, setScenicSpotsParams] =
+      useState<Types.Pages.List.ScenicSpotsParams>({}),
+    [initSettingParams, setInitSettingParams] = useState(false),
+    // [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10), // TODO: 之後研究滾動中途 fetch 資料
+    [keyword, setKeyword] = useState(initKeyword ? initKeyword : ""),
     [openedAccordion, setOpenedAccordion] = useState<null | string>(null),
     [selectedCities, setSelectedCities] =
-      useState<Types.Pages.Home.SelectedOptions>({}),
+      useState<Types.Pages.Home.SelectedOptions>(initCities),
     [selectedClassifications, setSelectedClassifications] =
       useState<Types.Pages.Home.SelectedOptions>({}),
     [loading, setLoading] = useState(false),
-    [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]);
+    [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]),
+    [finished, setFinished] = useState(false),
+    [activateCities, setActivateCities] = useState<string[]>([]),
+    [activateClassifications, setActivateClassifications] = useState<string[]>(
+      []
+    );
+
   const hotkeyWords = [
     "台南文化",
     "嘉義觀光工廠",
@@ -468,40 +717,94 @@ const Home = () => {
     },
   };
 
-  const observerOptions = {
-    root: document,
-    rootMargin: "0px",
-    threshold: 0,
+  const fetchScenicSpots = (params: Types.Pages.List.ScenicSpotsParams) => {
+    utils.apis.getScenicSpots(
+      params,
+      (res: Types.Utils.Apis.GetScenicSpots.Res) => {
+        if (res.data.length === 0) {
+          setFinished(true);
+        }
+
+        const generatedScenicSpots = utils.ds.generateScenicSpotsDS(res.data);
+
+        setScenicSpots((scenicSpots) =>
+          scenicSpots.concat(generatedScenicSpots)
+        );
+
+        setScenicSpotsParams((scenicSpotsParams) => ({
+          ...scenicSpotsParams,
+          $skip:
+            scenicSpotsParams.$skip !== undefined
+              ? scenicSpotsParams.$skip + dataCountPerFetching
+              : scenicSpotsParams.$skip,
+        }));
+      },
+      undefined,
+      undefined,
+      () => {
+        const loading = document.getElementById("loading");
+
+        if (loading) {
+          observer.unobserve(loading);
+        }
+      }
+    );
   };
 
-  let observer = new IntersectionObserver((observe) => {
-    const inView = observe[0].isIntersecting;
+  const recordSearchParams = () => {
+    const searchParams = utils.searchParams.getSearchParams(
+      keyword,
+      selectedCities,
+      selectedClassifications
+    );
 
-    if (inView) {
-      utils.apis.getScenicSpots(
-        getScenicSpotsParams,
-        (res: Types.Utils.Apis.GetScenicSpots.Res) => {
-          const generatedScenicSpots = utils.ds.generateScenicSpotsDS(res.data);
+    navigate(`/list?${searchParams}`);
+  };
 
-          setScenicSpots((scenicSpots) =>
-            scenicSpots.concat(generatedScenicSpots)
-          );
-          seScenicSpotsParams((scenicSpotsParams) => ({
-            ...scenicSpotsParams,
-            $skip: scenicSpotsParams.$skip + dataCountPerFetching,
-          }));
-        }
+  const createTags = (
+    selectedCities: Types.Pages.Home.SelectedOptions,
+    selectedClassifications: Types.Pages.Home.SelectedOptions
+  ) => {
+    const _activateCities = (() => {
+      const cities: string[] = [];
+
+      const activateCities = getActivateCities(selectedCities);
+
+      activateCities.forEach((activateCity) => {
+        const translateName = translateENCityNameToCH(activateCity);
+
+        if (!translateName) return;
+
+        cities.push(translateName);
+      });
+
+      return cities;
+    })();
+
+    setActivateCities(_activateCities);
+
+    const _activateClassifications = (() => {
+      const classifications: string[] = [];
+
+      const activateClassifications = getActivateClassifications(
+        selectedClassifications
       );
 
-      setTargetIndex((targetIndex) => targetIndex + dataCountPerFetching);
+      activateClassifications.forEach((activateClassification) => {
+        const classificationValue = getClassificationValue(
+          activateClassification
+        );
 
-      const target = document.getElementById(`loadMoreTarget${targetIndex}`);
+        if (!classificationValue) return;
 
-      if (target) {
-        observer.unobserve(target);
-      }
-    }
-  }, observerOptions);
+        classifications.push(classificationValue);
+      });
+
+      return classifications;
+    })();
+
+    setActivateClassifications(_activateClassifications);
+  };
 
   const onCloseFilterDropdown = () => {
     setOpenedAccordion(null);
@@ -512,35 +815,79 @@ const Home = () => {
   };
 
   const onEnterSearchInput = () => {
-    const searchParams = utils.searchParams.getSearchParams(
-      keyword,
-      selectedCities,
-      selectedClassifications
-    );
+    const loading = document.getElementById("loading");
+    if (loading) {
+      observer.unobserve(loading);
+    }
 
-    navigate(`/list?${searchParams}`);
+    setFinished(false);
+    setScenicSpots([]);
+    setScenicSpotsParams({
+      $filter: getSearchString(
+        initKeyword ? initKeyword : "",
+        initCities,
+        initClassifications
+      ),
+      $top: dataCountPerFetching,
+      $skip: 0,
+      $format: "JSON",
+    });
+
+    createTags(selectedCities, selectedClassifications);
+    recordSearchParams();
   };
 
-  useEffect(() => {
-    utils.apis.getScenicSpots(
-      getScenicSpotsParams,
-      (res: Types.Utils.Apis.GetScenicSpots.Res) => {
-        const generatedScenicSpots = utils.ds.generateScenicSpotsDS(res.data);
+  let observer = new IntersectionObserver((observe) => {
+    const inView = observe[0].isIntersecting;
 
-        setScenicSpots(generatedScenicSpots);
-        seScenicSpotsParams((scenicSpotsParams) => ({
-          ...scenicSpotsParams,
-          $skip: scenicSpotsParams.$skip + dataCountPerFetching,
-        }));
+    if (inView) {
+      let searchString = getSearchString(
+        keyword,
+        selectedCities,
+        selectedClassifications
+      );
+
+      fetchScenicSpots({
+        $filter: searchString,
+        $top: dataCountPerFetching,
+        $skip: scenicSpotsParams.$skip,
+      });
+
+      // setTargetIndex((targetIndex) => targetIndex + dataCountPerFetching);
+
+      // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
+
+      // if (target) {
+      //   observer.unobserve(target);
+      // }
+      {
+        /* TODO: 後續研究滾動中途 fetch 資料 */
       }
-    );
+    }
+  }, observerOptions);
+
+  useEffect(() => {
+    setScenicSpotsParams({
+      $filter: getSearchString(
+        initKeyword ? initKeyword : "",
+        initCities,
+        initClassifications
+      ),
+      $top: dataCountPerFetching,
+      $skip: 0,
+      $format: "JSON",
+    });
+    createTags(initCities, initClassifications);
+    setSelectedClassifications(initClassifications);
+    setInitSettingParams(true);
   }, []);
 
   useEffect(() => {
-    // TODO: 之後研究滾動中途 fetch 資料
+    if (JSON.stringify(scenicSpotsParams) === "{}") return; // 還沒有初始化搜尋參數時不要監聽 infinite scroll
     // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
     const loading = document.getElementById("loading");
 
+    // TODO: 之後研究滾動中途 fetch 資料
     if (
       // target
       loading
@@ -558,11 +905,11 @@ const Home = () => {
         observer.unobserve(loading);
       }
     };
-  }, [scenicSpots]);
+  }, [scenicSpots, initSettingParams]);
 
   return (
     <>
-      <Header />
+      <div className="bg-light w-100p h-5" />
       <div className="container-fluid bg-light position-relative d-flex justify-content-center">
         <SearchInput
           className="z-index-10 w-100p w-sm-160"
@@ -577,31 +924,19 @@ const Home = () => {
         />
         <div className="bg-white w-100p h-50p position-absolute bottom-0" />
       </div>
-      <div className="container py-20">
-        <Swiper
-          scenes={hotCities}
-          breakPoints={{
-            0: {
-              slidesPerView: 2,
-            },
-            420: {
-              slidesPerView: 3,
-            },
-            576: {
-              slidesPerView: 4,
-            },
-            768: {
-              slidesPerView: 5,
-            },
-            992: {
-              slidesPerView: 6,
-            },
-
-            1200: {
-              slidesPerView: 8,
-            },
-          }}
-        />
+      <div className="container-fluid d-flex w-100p w-sm-178">
+        <div className="d-flex flex-wrap my-4">
+          {activateCities.map((activateCity) => (
+            <Tag text={activateCity} onClick={() => {}} className="m-1" />
+          ))}
+          {activateClassifications.map((activateClassification) => (
+            <Tag
+              text={activateClassification}
+              onClick={() => {}}
+              className="m-1"
+            />
+          ))}
+        </div>
       </div>
       <div className="container-fluid container-lg">
         <div className="row gx-4">
@@ -616,9 +951,8 @@ const Home = () => {
                   phone={scenicSpot.phone}
                   time={scenicSpot.time}
                   info={scenicSpot.info}
-                  labels={scenicSpot.classes}
+                  labels={["生態類", "國家風景區"]}
                 />
-                {/* TODO: 之後研究滾動中途 fetch 資料 */}
                 {/* {scenicSpotIndex === targetIndex && (
                   <small
                     style={{ background: "red" }}
@@ -628,16 +962,21 @@ const Home = () => {
                     123
                   </small>
                 )} */}
+                {/* TODO: 後續研究滾動中途 fetch 資料 */}
               </div>
             </div>
           ))}
         </div>
-        <div id={"loading"} style={{ background: "red" }}>
-          loading...
-        </div>{" "}
+        {finished ? (
+          <div style={{ background: "red" }}>已經沒有資料摟</div>
+        ) : (
+          <div id={"loading"} style={{ background: "red" }}>
+            loading...
+          </div>
+        )}
       </div>
     </>
   );
 };
 
-export default Home;
+export default List;

@@ -29,7 +29,7 @@ const Card = (props: Types.Components.Card.Props) => {
             <div className="col">
               <div className="d-flex align-items-center f-cp2 text-black-700">
                 <Location className="me-2" />
-                連江縣莒光鄉福正村56號之1
+                {props.address}
               </div>
             </div>
           </div>
@@ -38,17 +38,17 @@ const Card = (props: Types.Components.Card.Props) => {
               <div className="d-flex">
                 <div className="d-flex align-items-center f-cp2 text-black-700 me-4">
                   <Telephone className="me-2" />
-                  08-9672026
+                  {props.phone}
                 </div>
                 <div className="d-flex align-items-center f-cp2 text-black-700">
                   <Clock className="me-2" />
-                  全天
+                  {props.time}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <p className="card-text f-bd2">{props?.text}</p>
+        <p className="card-text f-bd2">{props?.info}</p>
       </div>
     </div>
   );
