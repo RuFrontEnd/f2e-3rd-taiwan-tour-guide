@@ -225,7 +225,8 @@ const Home = () => {
       useState<Types.Pages.Home.SelectedOptions>({}),
     [selectedClassifications, setSelectedClassifications] =
       useState<Types.Pages.Home.SelectedOptions>({}),
-    [loading, setLoading] = useState(false),
+    [loading, setLoading] = useState(false),  // TODO: 研究使用時機
+    [finished, setFinished] = useState(false),
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]);
 
   const hotkeyWords = [
@@ -557,6 +558,9 @@ const Home = () => {
       utils.apis.getScenicSpots(
         getScenicSpotsParams,
         (res: Types.Utils.Apis.GetScenicSpots.Res) => {
+          if (res.data.length === 0) {
+            setFinished(true);
+          }
           const generatedScenicSpots = utils.ds.generateScenicSpotsDS(res.data);
 
           setScenicSpots((scenicSpots) =>
@@ -569,13 +573,14 @@ const Home = () => {
         }
       );
 
-      setTargetIndex((targetIndex) => targetIndex + dataCountPerFetching);
+      /* TODO: 後續研究滾動中途 fetch 資料 */
+      // setTargetIndex((targetIndex) => targetIndex + dataCountPerFetching);
 
-      const target = document.getElementById(`loadMoreTarget${targetIndex}`);
+      // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
 
-      if (target) {
-        observer.unobserve(target);
-      }
+      // if (target) {
+      //   observer.unobserve(target);
+      // }
     }
   }, observerOptions);
 
@@ -596,21 +601,6 @@ const Home = () => {
 
     navigate(`/list?${searchParams}`);
   };
-
-  useEffect(() => {
-    utils.apis.getScenicSpots(
-      getScenicSpotsParams,
-      (res: Types.Utils.Apis.GetScenicSpots.Res) => {
-        const generatedScenicSpots = utils.ds.generateScenicSpotsDS(res.data);
-
-        setScenicSpots(generatedScenicSpots);
-        seScenicSpotsParams((scenicSpotsParams) => ({
-          ...scenicSpotsParams,
-          $skip: scenicSpotsParams.$skip + dataCountPerFetching,
-        }));
-      }
-    );
-  }, []);
 
   useEffect(() => {
     // TODO: 之後研究滾動中途 fetch 資料
@@ -708,9 +698,13 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <div id={"loading"} style={{ background: "red" }}>
-          loading...
-        </div>{" "}
+        {finished ? (
+          <div style={{ background: "red" }}>已經沒有資料摟</div>
+        ) : (
+          <div id={"loading"} style={{ background: "red" }}>
+            loading...
+          </div>
+        )}
       </div>
     </>
   );

@@ -483,7 +483,7 @@ const List = () => {
       useState<Types.Pages.Home.SelectedOptions>(initCities),
     [selectedClassifications, setSelectedClassifications] =
       useState<Types.Pages.Home.SelectedOptions>({}),
-    [loading, setLoading] = useState(false),
+    [loading, setLoading] = useState(false), // TODO: 研究使用時機
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]),
     [finished, setFinished] = useState(false),
     [activateCities, setActivateCities] = useState<string[]>([]),
@@ -853,6 +853,7 @@ const List = () => {
         $skip: scenicSpotsParams.$skip,
       });
 
+      /* TODO: 後續研究滾動中途 fetch 資料 */
       // setTargetIndex((targetIndex) => targetIndex + dataCountPerFetching);
 
       // const target = document.getElementById(`loadMoreTarget${targetIndex}`);
@@ -860,9 +861,6 @@ const List = () => {
       // if (target) {
       //   observer.unobserve(target);
       // }
-      {
-        /* TODO: 後續研究滾動中途 fetch 資料 */
-      }
     }
   }, observerOptions);
 
