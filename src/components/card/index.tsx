@@ -60,7 +60,6 @@ const Card = (props: Types.Components.Card.Props) => {
                     title={props.phone}
                     className="mb-0 ms-1 white-space-no-wrap"
                     style={{
-                      // whiteSpace: "nowrap",
                       WebkitLineClamp: 1,
                       WebkitBoxOrient: "vertical",
                     }}
