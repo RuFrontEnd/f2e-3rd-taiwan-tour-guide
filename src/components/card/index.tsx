@@ -23,32 +23,77 @@ const Card = (props: Types.Components.Card.Props) => {
       </div>
 
       <div className="card-body px-2 py-3">
-        <h6 className="card-title fw-bold mb-2 f-6">{props?.title}</h6>
+        <h6
+          title={props?.title}
+          className="card-title fw-bold mb-2 f-6 d-webkit-box text-overflow-ellipsis line-clamp-2 webkit-box-orient-vertical"
+          style={{
+            WebkitLineClamp: 1,
+            WebkitBoxOrient: "vertical",
+          }}
+        >
+          {props?.title}
+        </h6>
         <div className="fw-normal mb-2">
           <div className="row mb-1">
             <div className="col">
-              <div className="d-flex align-items-center f-cp2 text-black-700">
-                <Location className="me-2" />
-                {props.address}
+              <div className="d-flex align-items-center f-cp2 text-black-700 d-webkit-box text-overflow-ellipsis line-clamp-2 webkit-box-orient-vertical">
+                <Location className="mnw-4" />
+                <p
+                  title={props.address}
+                  className="mb-0 ms-1"
+                  style={{
+                    WebkitLineClamp: 1,
+                    WebkitBoxOrient: "vertical",
+                  }}
+                >
+                  {props.address}
+                </p>
               </div>
             </div>
           </div>
           <div className="row">
             <div className="col">
               <div className="d-flex">
-                <div className="d-flex align-items-center f-cp2 text-black-700 me-4">
-                  <Telephone className="me-2" />
-                  {props.phone}
+                <div className="d-flex flx-1 align-items-center f-cp2 text-black-700 d-webkit-box text-overflow-ellipsis line-clamp-2 webkit-box-orient-vertical">
+                  <Telephone width={18} className="mnw-4" />
+                  <p
+                    title={props.phone}
+                    className="mb-0 ms-1"
+                    style={{
+                      WebkitLineClamp: 1,
+                      WebkitBoxOrient: "vertical",
+                    }}
+                  >
+                    {props.phone}
+                  </p>
                 </div>
-                <div className="d-flex align-items-center f-cp2 text-black-700">
-                  <Clock className="me-2" />
-                  {props.time}
+                <div className="d-flex flx-2 align-items-center f-cp2 text-black-700">
+                  <Clock width={18} className="mnw-4" />
+                  <p
+                    title={props.time}
+                    className="mb-0 ms-1 overflow-hidden d-webkit-box text-overflow-ellipsis line-clamp-2 webkit-box-orient-vertical"
+                    style={{
+                      WebkitLineClamp: 1,
+                      WebkitBoxOrient: "vertical",
+                    }}
+                  >
+                    {props.time}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <p className="card-text f-bd2">{props?.info}</p>
+        <p
+          title={props?.info}
+          className="card-text f-bd2 overflow-hidden d-webkit-box text-overflow-ellipsis line-clamp-2 webkit-box-orient-vertical"
+          style={{
+            WebkitLineClamp: 5,
+            WebkitBoxOrient: "vertical",
+          }}
+        >
+          {props?.info}
+        </p>
       </div>
     </div>
   );
