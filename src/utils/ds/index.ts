@@ -1,4 +1,5 @@
 import * as Types from "types/";
+import noImg from "assets/picture/noImg.png";
 
 const generateScenicSpotsDS: (
   resData: Types.Utils.Apis.GetScenicSpots.Res["data"]
@@ -28,11 +29,13 @@ const generateScenicSpotsDS: (
       })();
 
       return {
-        photo: resDataItem.Picture.PictureUrl1,
+        photo: resDataItem.Picture.PictureUrl1
+          ? resDataItem.Picture.PictureUrl1
+          : noImg,
         title: resDataItem.ScenicSpotName,
-        address: resDataItem.Address,
-        phone: resDataItem.Phone,
-        time: resDataItem.OpenTime,
+        address: resDataItem.Address ? resDataItem.Address : "無",
+        phone: resDataItem.Phone ? resDataItem.Phone : "無",
+        time: resDataItem.OpenTime ? resDataItem.OpenTime : "無",
         info: resDataItem.Description,
         classes: _classes,
       };

@@ -54,12 +54,13 @@ const Card = (props: Types.Components.Card.Props) => {
           <div className="row">
             <div className="col">
               <div className="d-flex">
-                <div className="d-flex flx-1 align-items-center f-cp2 text-black-700 d-webkit-box text-overflow-ellipsis line-clamp-2 webkit-box-orient-vertical">
+                <div className="me-2 d-flex flx-2 align-items-center f-cp2 text-black-700 overflow-hidden d-webkit-box text-overflow-ellipsis line-clamp-2 webkit-box-orient-vertical">
                   <Telephone width={18} className="mnw-4" />
                   <p
                     title={props.phone}
-                    className="mb-0 ms-1"
+                    className="mb-0 ms-1 white-space-no-wrap"
                     style={{
+                      // whiteSpace: "nowrap",
                       WebkitLineClamp: 1,
                       WebkitBoxOrient: "vertical",
                     }}
@@ -67,7 +68,7 @@ const Card = (props: Types.Components.Card.Props) => {
                     {props.phone}
                   </p>
                 </div>
-                <div className="d-flex flx-2 align-items-center f-cp2 text-black-700">
+                <div className="d-flex flx-3 align-items-center f-cp2 text-black-700">
                   <Clock width={18} className="mnw-4" />
                   <p
                     title={props.time}
