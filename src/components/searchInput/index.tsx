@@ -1,4 +1,3 @@
-import Divider from "components/divider/";
 import Checkbox from "components/checkbox/";
 import Accordion from "components/accordion/";
 import { useState, useEffect, MouseEvent } from "react";
@@ -6,7 +5,6 @@ import { motion } from "framer-motion";
 import { ReactComponent as Magnifier } from "assets/icon/magnifier.svg";
 import { ReactComponent as Sieve } from "assets/icon/sieve.svg";
 import { ReactComponent as V } from "assets/icon/v.svg";
-import * as variables from "variables/";
 import type * as Types from "types/";
 
 const variants = {
@@ -15,17 +13,6 @@ const variants = {
   },
   open: {
     borderRadius: "5px 5px",
-  },
-};
-
-const hotKeyWordsDropdownVariants = {
-  open: { opacity: 1, y: "-14px", display: "block" },
-  closed: {
-    opacity: 0,
-    y: "0px",
-    transitionEnd: {
-      display: "none",
-    },
   },
 };
 
@@ -153,7 +140,12 @@ const SearchInput = (props: Types.Components.SearchInput.Props) => {
         className="cursor-pointer position-absolute top-50p end-4_5 translate-middle-y border-start-1 border-color-black-500 ps-2"
         onClick={onClickSieve}
       >
-        <Sieve width={18} height={18} className={""} />
+        <div className="position-relative">
+          <Sieve width={18} height={18} />
+          {props.showSieveHint && (
+            <div className="w-2 h-2 bg-default border-radius-5 position-absolute top-0_5 end-1_m" />
+          )}
+        </div>
       </i>
 
       <motion.div

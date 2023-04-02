@@ -40,6 +40,7 @@ type Classification = {
 
 type onChange = React.ChangeEventHandler<HTMLInputElement> | undefined;
 type OnEnter = () => void | undefined;
+type ShowSieveHint = boolean;
 
 type Props = {
   placeholder?: Placeholder;
@@ -47,6 +48,7 @@ type Props = {
   hotKeywords: HotKeywords;
   accordion?: Accordion;
   classification: Classification;
+  showSieveHint?: ShowSieveHint;
   onCloseFilterDropdown?: OnCloseFilterDropdown;
   onChange?: onChange;
   onEnter?: OnEnter;

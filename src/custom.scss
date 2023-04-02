@@ -218,7 +218,9 @@ $utilities: map-merge(
 // spacing
 $spacer: 1rem;
 $spacers: (
+    1_m: -$spacer * 0.25,
     0: 0,
+    0_5: $spacer * 0.125,
     1: $spacer * 0.25,
     2: $spacer * 0.5,
     2_5: $spacer * 0.625,
@@ -754,6 +756,8 @@ $utilities: map-merge(
             class: bg,
             values: (
                 bottom-gradient: linear-gradient(360deg, map-get($project-colors, "black-core"), transparent),
+                tint: map-get($project-colors, "tint"),
+                default: map-get($project-colors, "default"),
             ),
         ),
     )

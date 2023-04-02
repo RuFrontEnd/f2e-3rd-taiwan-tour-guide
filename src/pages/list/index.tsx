@@ -491,6 +491,13 @@ const List = () => {
       []
     );
 
+  const hasSelectedCities = Object.values(selectedCities).some(
+      (selectedCity) => selectedCity === true
+    ),
+    hasSelectedClassifications = Object.values(selectedClassifications).some(
+      (selectedClassification) => selectedClassification === true
+    );
+
   const hotkeyWords = [
     "台南文化",
     "嘉義觀光工廠",
@@ -916,6 +923,7 @@ const List = () => {
           hotKeywords={hotkeyWords}
           accordion={accordion}
           classification={classification}
+          showSieveHint={hasSelectedCities || hasSelectedClassifications}
           onCloseFilterDropdown={onCloseFilterDropdown}
           onChange={onChangeSearchInput}
           onEnter={onEnterSearchInput}

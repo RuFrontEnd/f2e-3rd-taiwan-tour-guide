@@ -218,16 +218,23 @@ const Home = () => {
       $top: dataCountPerFetching,
       $skip: 0,
     }),
-    [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10),
+    // [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10), // TODO: 後續研究滾動中途 fetch 資料
     [keyword, setKeyword] = useState(""),
     [openedAccordion, setOpenedAccordion] = useState<null | string>(null),
     [selectedCities, setSelectedCities] =
       useState<Types.Pages.Home.SelectedOptions>({}),
     [selectedClassifications, setSelectedClassifications] =
       useState<Types.Pages.Home.SelectedOptions>({}),
-    [loading, setLoading] = useState(false),  // TODO: 研究使用時機
+    [loading, setLoading] = useState(false), // TODO: 研究使用時機
     [finished, setFinished] = useState(false),
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]);
+
+  const hasSelectedCities = Object.values(selectedCities).some(
+      (selectedCity) => selectedCity === true
+    ),
+    hasSelectedClassifications = Object.values(selectedClassifications).some(
+      (selectedClassification) => selectedClassification === true
+    );
 
   const hotkeyWords = [
     "台南文化",
@@ -637,6 +644,7 @@ const Home = () => {
           hotKeywords={hotkeyWords}
           accordion={accordion}
           classification={classification}
+          showSieveHint={hasSelectedCities || hasSelectedClassifications}
           onCloseFilterDropdown={onCloseFilterDropdown}
           onChange={onChangeSearchInput}
           onEnter={onEnterSearchInput}
