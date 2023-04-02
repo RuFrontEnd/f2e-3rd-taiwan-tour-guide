@@ -1,8 +1,8 @@
-# 台灣旅遊景點導覽  <!-- | [Demo](https://johnsonmao.github.io/taiwan_tourguide/#/home) -->
+# 台灣旅遊景點導覽 <!-- | [Demo](https://johnsonmao.github.io/taiwan_tourguide/#/home) -->
 
 ## Introduction
 
-使用 React 串接 [TDX 運輸資料流通服務](https://tdx.transportdata.tw/) API，實作台灣旅遊景點導覽功能。
+使用 React 串接 [TDX 運輸資料流通服務](https://tdx.transportdata.tw/) 之 [觀光資訊](https://tdx.transportdata.tw/api-service/swagger/basic/cd0226cf-6292-4c35-8a0d-b595f0b15352#/Tourism/TourismApi_Hotel_2244) API，實作台灣旅遊景點導覽功能。
 
 ## Features
 
