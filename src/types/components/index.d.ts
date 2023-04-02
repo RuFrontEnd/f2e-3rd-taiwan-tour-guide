@@ -7,6 +7,7 @@ import type * as Label from "./label";
 import type * as SearchInput from "./searchInput";
 import type * as Swiper from "./swiper";
 import type * as Tag from "./tag";
+import type * as DataHint from "./dataHint";
 
 export type {
   Accordion,
@@ -18,4 +19,5 @@ export type {
   Label,
   Swiper,
   Tag,
+  DataHint
 };

@@ -13,13 +13,12 @@ import taitung from "assets/picture/cities/taitung.jpg";
 import nantou from "assets/picture/cities/nantou.jpg";
 import penghu from "assets/picture/cities/penghu.jpg";
 import kinmen from "assets/picture/cities/kinmen.jpg";
-import greenIsland from "assets/picture/cities/greenIsland.jpg";
 import Types from "types/";
 import Header from "./header";
 import Card from "components/card";
 import SearchInput from "components/searchInput";
 import Swiper from "components/swiper";
-import Tag from "components/tag";
+import DataHint from "components/dataHint";
 import * as variables from "variables";
 import * as utils from "utils";
 
@@ -218,16 +217,23 @@ const Home = () => {
       $top: dataCountPerFetching,
       $skip: 0,
     }),
-    [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10),
+    // [targetIndex, setTargetIndex] = useState(dataCountPerFetching - 10), // TODO: 後續研究滾動中途 fetch 資料
     [keyword, setKeyword] = useState(""),
     [openedAccordion, setOpenedAccordion] = useState<null | string>(null),
     [selectedCities, setSelectedCities] =
       useState<Types.Pages.Home.SelectedOptions>({}),
     [selectedClassifications, setSelectedClassifications] =
       useState<Types.Pages.Home.SelectedOptions>({}),
-    [loading, setLoading] = useState(false),  // TODO: 研究使用時機
+    [loading, setLoading] = useState(true), // TODO: 研究使用時機
     [finished, setFinished] = useState(false),
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]);
+
+  const hasSelectedCities = Object.values(selectedCities).some(
+      (selectedCity) => selectedCity === true
+    ),
+    hasSelectedClassifications = Object.values(selectedClassifications).some(
+      (selectedClassification) => selectedClassification === true
+    );
 
   const hotkeyWords = [
     "台南文化",
@@ -637,13 +643,16 @@ const Home = () => {
           hotKeywords={hotkeyWords}
           accordion={accordion}
           classification={classification}
+          showSieveHint={hasSelectedCities || hasSelectedClassifications}
           onCloseFilterDropdown={onCloseFilterDropdown}
           onChange={onChangeSearchInput}
           onEnter={onEnterSearchInput}
         />
         <div className="bg-white w-100p h-50p position-absolute bottom-0" />
       </div>
+
       <div className="container py-20">
+        <div className="f-5 pb-5">沒想法? 試試這些...</div>
         <Swiper
           scenes={hotCities}
           breakPoints={{
@@ -671,11 +680,15 @@ const Home = () => {
       </div>
       <div className="container-fluid container-lg">
         <div className="row gx-4">
+          <div className="f-5 pb-5">熱門景點</div>
           {scenicSpots.map((scenicSpot, scenicSpotIndex) => (
             <div className="col-md-4 col-sm-6">
-              <div className="position-relative">
+              <div
+                className="position-relative"
+                style={{ height: "calc(100% - 16px)" }}
+              >
                 <Card
-                  className="mb-4"
+                  className="mb-4 h-100p"
                   src={scenicSpot.photo}
                   title={scenicSpot.title}
                   address={scenicSpot.address}
@@ -698,13 +711,8 @@ const Home = () => {
             </div>
           ))}
         </div>
-        {finished ? (
-          <div style={{ background: "red" }}>已經沒有資料摟</div>
-        ) : (
-          <div id={"loading"} style={{ background: "red" }}>
-            loading...
-          </div>
-        )}
+
+        <DataHint finished={finished} loading={loading} />
       </div>
     </>
   );

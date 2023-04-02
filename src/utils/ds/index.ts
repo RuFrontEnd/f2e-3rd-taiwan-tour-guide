@@ -36,7 +36,7 @@ const generateScenicSpotsDS: (
         address: resDataItem.Address ? resDataItem.Address : "無",
         phone: resDataItem.Phone ? resDataItem.Phone : "無",
         time: resDataItem.OpenTime ? resDataItem.OpenTime : "無",
-        info: resDataItem.Description,
+        info: resDataItem.Description ? resDataItem.Description : "無",
         classes: _classes,
       };
     }

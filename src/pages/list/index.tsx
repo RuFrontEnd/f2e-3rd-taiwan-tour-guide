@@ -17,7 +17,7 @@ import Types from "types/";
 import Header from "./header";
 import Card from "components/card";
 import SearchInput from "components/searchInput";
-import Swiper from "components/swiper";
+import DataHint from "components/dataHint";
 import Tag from "components/tag";
 import { useEffect, useState } from "react";
 import * as variables from "variables";
@@ -483,12 +483,19 @@ const List = () => {
       useState<Types.Pages.Home.SelectedOptions>(initCities),
     [selectedClassifications, setSelectedClassifications] =
       useState<Types.Pages.Home.SelectedOptions>({}),
-    [loading, setLoading] = useState(false), // TODO: 研究使用時機
+    [loading, setLoading] = useState(true), // TODO: 研究使用時機
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]),
     [finished, setFinished] = useState(false),
     [activateCities, setActivateCities] = useState<string[]>([]),
     [activateClassifications, setActivateClassifications] = useState<string[]>(
       []
+    );
+
+  const hasSelectedCities = Object.values(selectedCities).some(
+      (selectedCity) => selectedCity === true
+    ),
+    hasSelectedClassifications = Object.values(selectedClassifications).some(
+      (selectedClassification) => selectedClassification === true
     );
 
   const hotkeyWords = [
@@ -916,6 +923,7 @@ const List = () => {
           hotKeywords={hotkeyWords}
           accordion={accordion}
           classification={classification}
+          showSieveHint={hasSelectedCities || hasSelectedClassifications}
           onCloseFilterDropdown={onCloseFilterDropdown}
           onChange={onChangeSearchInput}
           onEnter={onEnterSearchInput}
@@ -938,11 +946,15 @@ const List = () => {
       </div>
       <div className="container-fluid container-lg">
         <div className="row gx-4">
+          <div className="f-5 pb-5">熱門景點</div>
           {scenicSpots.map((scenicSpot, scenicSpotIndex) => (
             <div className="col-md-4 col-sm-6">
-              <div className="position-relative">
+              <div
+                className="position-relative"
+                style={{ height: "calc(100% - 16px)" }}
+              >
                 <Card
-                  className="mb-4"
+                  className="mb-4 h-100p"
                   src={scenicSpot.photo}
                   title={scenicSpot.title}
                   address={scenicSpot.address}
@@ -965,13 +977,7 @@ const List = () => {
             </div>
           ))}
         </div>
-        {finished ? (
-          <div style={{ background: "red" }}>已經沒有資料摟</div>
-        ) : (
-          <div id={"loading"} style={{ background: "red" }}>
-            loading...
-          </div>
-        )}
+        <DataHint finished={finished} loading={loading} />
       </div>
     </>
   );
