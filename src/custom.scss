@@ -478,6 +478,11 @@ $utilities: map-merge(
                 100: 100%,
             ),
         ),
+        "min-width": (
+            property: min-width,
+            class: mnw,
+            values: $spacers,
+        ),
         "viewport-width": (
             property: width,
             class: vw,
@@ -778,6 +783,101 @@ $utilities: map-merge(
             class: aspect-ratio,
             values: (
                 1x1: 1/1,
+            ),
+        ),
+    )
+);
+
+// text-overflow
+$utilities: map-merge(
+    $utilities,
+    (
+        "text-overflow": (
+            property: text-overflow,
+            values: (
+                ellipsis: ellipsis,
+            ),
+        ),
+    ),
+    (
+        // TODO: 後續研究如何 utilize webkit 屬性
+        //     "-webkit-line-clamp": (
+        //         property: -webkit-line-clamp,
+        //         class: line-clamp,
+        //         values: (
+        //             2: 2,
+        //             3: 3,
+        //         ),
+        //     ),
+        // ),
+        // (
+        //     "box-orient": (
+        //         property: -webkit-box-orient,
+        //         values: (
+        //             vertical: vertical,
+        //         ),
+        //     ),
+    )
+);
+
+// display
+$utilities: map-merge(
+    $utilities,
+    (
+        "display": (
+            responsive: true,
+            print: true,
+            property: display,
+            class: d,
+            values: (
+                inline: inline,
+                inline-block: inline-block,
+                block: block,
+                grid: grid,
+                table: table,
+                table-row: table-row,
+                table-cell: table-cell,
+                flex: flex,
+                inline-flex: inline-flex,
+                none: none,
+                webkit-box: -webkit-box,
+            ),
+        ),
+    )
+);
+
+// display
+$utilities: map-merge(
+    $utilities,
+    (
+        "flex": (
+            responsive: true,
+            print: true,
+            property: flex,
+            class: flx,
+            values: (
+                1: 1,
+                2: 2,
+                3: 3,
+                4: 4,
+                5: 5,
+                6: 6,
+                7: 7,
+                8: 8,
+            ),
+        ),
+    )
+);
+
+// white-space
+$utilities: map-merge(
+    $utilities,
+    (
+        "white-space": (
+            property: white-space,
+            class: white-space,
+            values: (
+                no-wrap: nowrap,
             ),
         ),
     )
