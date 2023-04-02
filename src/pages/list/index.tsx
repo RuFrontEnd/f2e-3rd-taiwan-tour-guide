@@ -17,7 +17,7 @@ import Types from "types/";
 import Header from "./header";
 import Card from "components/card";
 import SearchInput from "components/searchInput";
-import Swiper from "components/swiper";
+import DataHint from "components/dataHint";
 import Tag from "components/tag";
 import { useEffect, useState } from "react";
 import * as variables from "variables";
@@ -483,7 +483,7 @@ const List = () => {
       useState<Types.Pages.Home.SelectedOptions>(initCities),
     [selectedClassifications, setSelectedClassifications] =
       useState<Types.Pages.Home.SelectedOptions>({}),
-    [loading, setLoading] = useState(false), // TODO: 研究使用時機
+    [loading, setLoading] = useState(true), // TODO: 研究使用時機
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]),
     [finished, setFinished] = useState(false),
     [activateCities, setActivateCities] = useState<string[]>([]),
@@ -976,13 +976,7 @@ const List = () => {
             </div>
           ))}
         </div>
-        {finished ? (
-          <div style={{ background: "red" }}>已經沒有資料摟</div>
-        ) : (
-          <div id={"loading"} style={{ background: "red" }}>
-            loading...
-          </div>
-        )}
+        <DataHint finished={finished} loading={loading} />
       </div>
     </>
   );

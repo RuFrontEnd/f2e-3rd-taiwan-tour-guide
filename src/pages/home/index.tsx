@@ -2,6 +2,7 @@ import _, { cloneDeep } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import ClipLoader from "react-spinners/BeatLoader";
 import taipei from "assets/picture/cities/taipei.jpg";
 import newTaipei from "assets/picture/cities/new-taipei.jpg";
 import taoyuan from "assets/picture/cities/taoyuan.jpg";
@@ -13,13 +14,12 @@ import taitung from "assets/picture/cities/taitung.jpg";
 import nantou from "assets/picture/cities/nantou.jpg";
 import penghu from "assets/picture/cities/penghu.jpg";
 import kinmen from "assets/picture/cities/kinmen.jpg";
-import greenIsland from "assets/picture/cities/greenIsland.jpg";
 import Types from "types/";
 import Header from "./header";
 import Card from "components/card";
 import SearchInput from "components/searchInput";
 import Swiper from "components/swiper";
-import Tag from "components/tag";
+import DataHint from "components/dataHint";
 import * as variables from "variables";
 import * as utils from "utils";
 
@@ -225,7 +225,7 @@ const Home = () => {
       useState<Types.Pages.Home.SelectedOptions>({}),
     [selectedClassifications, setSelectedClassifications] =
       useState<Types.Pages.Home.SelectedOptions>({}),
-    [loading, setLoading] = useState(false), // TODO: 研究使用時機
+    [loading, setLoading] = useState(true), // TODO: 研究使用時機
     [finished, setFinished] = useState(false),
     [scenicSpots, setScenicSpots] = useState<Types.Pages.Home.ScenicSpots>([]);
 
@@ -709,13 +709,8 @@ const Home = () => {
             </div>
           ))}
         </div>
-        {finished ? (
-          <div style={{ background: "red" }}>已經沒有資料摟</div>
-        ) : (
-          <div id={"loading"} style={{ background: "red" }}>
-            loading...
-          </div>
-        )}
+
+        <DataHint finished={finished} loading={loading} />
       </div>
     </>
   );
