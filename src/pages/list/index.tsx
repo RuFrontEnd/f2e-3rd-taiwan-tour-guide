@@ -948,9 +948,12 @@ const List = () => {
         <div className="row gx-4">
           {scenicSpots.map((scenicSpot, scenicSpotIndex) => (
             <div className="col-md-4 col-sm-6">
-              <div className="position-relative">
+              <div
+                className="position-relative"
+                style={{ height: "calc(100% - 16px)" }}
+              >
                 <Card
-                  className="mb-4"
+                  className="mb-4 h-100p"
                   src={scenicSpot.photo}
                   title={scenicSpot.title}
                   address={scenicSpot.address}
