@@ -2,7 +2,6 @@ import _, { cloneDeep } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import ClipLoader from "react-spinners/BeatLoader";
 import taipei from "assets/picture/cities/taipei.jpg";
 import newTaipei from "assets/picture/cities/new-taipei.jpg";
 import taoyuan from "assets/picture/cities/taoyuan.jpg";
