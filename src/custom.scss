@@ -111,51 +111,51 @@ $utilities: map-merge(
 $font-family-noto-sans: "Noto Sans";
 
 $font: (
-    1: $font-weight-bold
+    1: 900
         (
             $h1-font-size,
         ) / $line-height-base $font-family-noto-sans,
-    2: $font-weight-bold
+    2: 900
         (
             $h2-font-size,
         ) / $line-height-base $font-family-noto-sans,
-    3: $font-weight-bold
+    3: 900
         (
             $h3-font-size,
         ) / $line-height-base $font-family-noto-sans,
-    4: $font-weight-bold
+    4: 900
         (
             $h4-font-size,
         ) / $line-height-lg $font-family-noto-sans,
-    5: $font-weight-bold
+    5: 900
         (
             $h5-font-size,
         ) / $line-height-lg $font-family-noto-sans,
-    6: $font-weight-bold
+    6: 900
         (
             $h6-font-size,
         ) / $line-height-lg $font-family-noto-sans,
-    t: $font-weight-bold
+    t: 400
         (
             $t-font-size,
         ) / $line-height-lg $font-family-noto-sans,
-    st: $font-weight-bold
+    st: 400
         (
             $st-font-size,
         ) / $line-height-lg $font-family-noto-sans,
-    bd1: $font-weight-normal
+    bd1: 400
         (
             $bd1-font-size,
         ) / $line-height-lg $font-family-noto-sans,
-    bd2: $font-weight-normal
+    bd2: 400
         (
             $bd2-font-size,
         ) / $line-height-lg $font-family-noto-sans,
-    cp1: $font-weight-bold
+    cp1: 900
         (
             $cp1-font-size,
         ) / $line-height-lg $font-family-noto-sans,
-    cp2: $font-weight-normal
+    cp2: 400
         (
             $cp2-font-size,
         ) / $line-height-lg $font-family-noto-sans,

@@ -946,6 +946,7 @@ const List = () => {
       </div>
       <div className="container-fluid container-lg">
         <div className="row gx-4">
+          <div className="f-5 pb-5">熱門景點</div>
           {scenicSpots.map((scenicSpot, scenicSpotIndex) => (
             <div className="col-md-4 col-sm-6">
               <div
